@@ -1,4 +1,4 @@
-Generated code layout
+Generated code layout version 1.0
 
 
 //////////////////////////////////////////////////
