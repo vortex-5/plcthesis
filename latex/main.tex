@@ -1,0 +1,59 @@
+\documentclass[final,12pt,twoside]{mcthesis}
+
+\usepackage{pstricks}
+\usepackage{epsf}
+\usepackage{epsfig}
+\usepackage{ulem}
+\usepackage{hhline}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx} 
+\usepackage{fancyhdr}
+
+\begin{document}
+
+\sloppy
+\frontmatter
+\thesistitle{warning document title undefined}
+\shorttitle{warning doc title undefined}
+\thesisauthor{FanFan Huang} 
+\thesisdegree{M.A.Sc}
+\thesisauthprevdeg{B.Eng}
+\thesisauthprevdeguni{McMaster University}
+\thesissupervisor{Dr. Martin von Mohrenschildt}
+\thesisdate{\today}
+
+\makepretitle
+\maketitle
+
+%list of custom definitions
+\newcommand{\imgsmall}{100px}
+\newcommand{\imgmedsmall}{120px}
+\newcommand{\imgmedium}{300px}
+
+
+%\dsp
+\addcontentsline{toc}{chapter}{Abstract}
+%\input{./Chapters/absctract.tex}
+\newpage
+\addcontentsline{toc}{chapter}{Acknowledgements}
+%\input{./Chapters/acknowledge.tex}
+\tableofcontents
+\listoftables
+\listoffigures
+
+\label{pre end}
+\mainmatter
+
+\input{./Chapters/ladderlogicintro.tex}
+
+
+
+
+%\bibliography{main.bib}
+%\bibliographystyle{mcthesis}
+%\appendix
+%\input{./Chapters/append.tex}
+\label{body end}
+\end{document}
