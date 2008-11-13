@@ -142,7 +142,8 @@ public class StoreBlockFigure extends CodeBlockFigure{
             if (e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_ID) != null)
             {
                 edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_ID);
-                edit.identifier = ((TextFigure)e.getFigure()).getText();
+                //TODO: add variable name checking for variable names here
+                edit.identifier = ((TextFigure)e.getFigure()).getText().trim();
                 
                 System.out.println("got ID");
                 System.out.println(edit.identifier);
@@ -150,7 +151,8 @@ public class StoreBlockFigure extends CodeBlockFigure{
             else if(e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_VAL) != null)
             {
                 edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_VAL);
-                edit.value = ((TextFigure)e.getFigure()).getText();
+                //TODO: add variable checking for variable values here (might choose to omit)
+                edit.value = ((TextFigure)e.getFigure()).getText().trim();
                 
                 System.out.println("got Val");
             }

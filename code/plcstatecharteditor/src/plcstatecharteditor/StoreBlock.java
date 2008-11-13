@@ -7,6 +7,7 @@ package plcstatecharteditor;
 
 import java.util.List;
 import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
@@ -96,6 +97,29 @@ public class StoreBlock extends CodeBlock{
         }
         
         return strout;
+    }
+
+    public List<String> getDeclaration() throws TypeNotPresentException{
+        List<String> listout = new ArrayList<String>();
+
+        //TODO: finish implementing the variable declaration blocks
+        for(storeobj item : storelist)
+        {
+            if (item.type.getType() == CodeVarType.VarType.Undefined)
+            {
+                throw new TypeNotPresentException(item.identifier, new Exception());
+            }
+            else
+            {
+                //valid type found attempt to compile into a declaration string;
+                String newitem = item.type.toCompileString() + " " + item.identifier + ";\n";
+                listout.add(newitem);
+            }
+        }
+
+
+        return listout;
+
     }
     
     public void addItem()

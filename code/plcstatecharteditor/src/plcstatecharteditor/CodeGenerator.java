@@ -7,6 +7,7 @@ package plcstatecharteditor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import org.jhotdraw.draw.*;
 import java.util.List;
 import java.util.Vector;
@@ -26,12 +27,34 @@ public class CodeGenerator implements ActionListener {
 
     public void actionPerformed(ActionEvent arg0) {
         
-        List<Figure> allfigs = new Vector<Figure>(editor.getActiveView().getDrawing().getChildren());
+        List<Figure> allfigs = new ArrayList<Figure>(editor.getActiveView().getDrawing().getChildren());
         
         //Search for start block
         int startblocksfound = 0;
         
         String compiledbuffer = "CODE GENERATION FAILED!\n";
+
+        //TODO: check and test the variable declaration block
+        //Variable declarations are done first before any code is actually compiled
+
+
+        //we perform a for each on every block and extract all the variables from
+        //each store block first
+
+        List<String> declarelist = new ArrayList<String>();
+
+        for (int i=0;i<allfigs.size();i++) {
+            Typed t = (Typed)allfigs.get(i);
+
+            if (t.getType() == CodeType.Store) {
+                for(String declaration : (StoreBlockFigure)allfigs.get(i).get)
+
+            }
+        }
+
+
+
+
         
         CodeBlockFigure startfig=null; //used to maintain start code priority aka at top of file
         
