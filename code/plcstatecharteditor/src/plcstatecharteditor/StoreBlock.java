@@ -13,18 +13,18 @@ import java.util.Vector;
  * @author Vortex-5
  */
 public class StoreBlock extends CodeBlock{
-    public enum Type {Integer, Float, Double, String, Char, Boolean};   
     
-    
+
     public class storeobj 
-    {       
-        public Type type;
+    {              
+
+        public CodeVarType type;
         public String identifier;
         public String value;
         
         storeobj()
         {
-            type = Type.String;
+            type = new CodeVarType(CodeVarType.VarType.Undefined);
             identifier = "";
             value = "";
         }
@@ -43,7 +43,7 @@ public class StoreBlock extends CodeBlock{
             {
                 if(this.identifier.equals(var.identifier))
                 {
-                    if (this.type != var.type)
+                    if (this.type.getType() != var.type.getType())
                     {
                         ret = true;
                         break;
@@ -63,6 +63,8 @@ public class StoreBlock extends CodeBlock{
         {
             throw new Exception("Not Implimented yet!");
         }
+
+
     }
     
     private List<storeobj> storelist; 
@@ -79,6 +81,7 @@ public class StoreBlock extends CodeBlock{
     public String getTypeString() {
         return "STORE";
     }
+
 
     @Override
     public String getCode() {
@@ -107,7 +110,19 @@ public class StoreBlock extends CodeBlock{
     {
         storelist.remove(ref);
     }
-    
+
+
+    public void removeItemWith(CodeVarType.VarType type, String identifier)
+    {
+        for(int i=0;i<storelist.size();i++)
+        {
+            if (storelist.get(i).type.getType() == type && storelist.get(i).identifier.equals(identifier))
+            {
+                storelist.remove(i);
+                i--;
+            }
+        }
+    }
     public void removeItemWith(String identifier, String value)
     {
         for(int i=0;i<storelist.size();i++)
@@ -122,7 +137,7 @@ public class StoreBlock extends CodeBlock{
     
     public void removeItemWith(String identifier)
     {
-                for(int i=0;i<storelist.size();i++)
+        for(int i=0;i<storelist.size();i++)
         {
             if (storelist.get(i).identifier.equals(identifier))
             {
@@ -135,9 +150,21 @@ public class StoreBlock extends CodeBlock{
     public void updateEntries()
     {
         removeItemWith("");
-        removeItemWith("<name>");
+        removeItemWith(CodeVarType.VarType.Undefined,"<name>");
         
         addItem();
+    }
+
+    public boolean contains(String identifier)
+    {
+        for(storeobj item : storelist)
+        {
+            if (item.identifier.equals(identifier))
+            {
+                return true;
+            }
+        }
+        return false;
     }
     
     public List<storeobj> getStores()
