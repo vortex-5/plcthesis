@@ -45,7 +45,7 @@ public class TextFigureWithClickEvent extends TextFigure {
         Figure source = this.findFigureInside(p);
 
         //safety of object is ensured by making sure the type attribute is linked to an object
-        CodeVarType target = (CodeVarType)source.getAttribute(SpecialAttributeKeys.MODIFY_LINK_TYPEOBJ);
+        CodeVarType target = (CodeVarType)source.getAttribute(SpecialAttributeKeys.MODIFY_LINK_TYPE);
         if (target != null)
         {
             //attempt to retrieve our object it would be unsafe but luckilywe

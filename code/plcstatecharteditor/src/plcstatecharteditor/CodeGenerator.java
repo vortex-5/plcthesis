@@ -12,6 +12,7 @@ import org.jhotdraw.draw.*;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +20,7 @@ import javax.swing.JFrame;
  */
 public class CodeGenerator implements ActionListener {
     private DrawingEditor editor;
+    private CodeViewer codeview;
     
     public CodeGenerator(DrawingEditor editor)
     {
@@ -32,24 +34,60 @@ public class CodeGenerator implements ActionListener {
         //Search for start block
         int startblocksfound = 0;
         
-        String compiledbuffer = "CODE GENERATION FAILED!\n";
+        String compiledbuffer = "";
 
-        //TODO: check and test the variable declaration block
-        //Variable declarations are done first before any code is actually compiled
+        //SANITY CHECKS
+
+        List<StoreBlock.storeobj> allstores = new ArrayList<StoreBlock.storeobj>();
+
+        //Check the variable types and make sure we don't have a type conflict
+        for (int i=0;i<allfigs.size();i++)
+        { //Grab all declarations
+            Typed t = (Typed)allfigs.get(i);
+
+            if (t.getType() == CodeType.Store) {
+                allstores.addAll(((StoreBlockFigure)allfigs.get(i)).getModel().getStores());
+            }
+        }
 
 
         //we perform a for each on every block and extract all the variables from
         //each store block first
 
+        compiledbuffer += "// VARIABLE DECLARATIONS //\n";
+
         List<String> declarelist = new ArrayList<String>();
 
-        for (int i=0;i<allfigs.size();i++) {
+        for (int i=0;i<allfigs.size();i++) { //sort all declarations make sure we have no duplicates
             Typed t = (Typed)allfigs.get(i);
 
             if (t.getType() == CodeType.Store) {
-                for(String declaration : (StoreBlockFigure)allfigs.get(i).get)
 
+                //Sanity check get precheck type conflict
+                for(StoreBlock.storeobj store : ((StoreBlockFigure)allfigs.get(i)).getModel().getStores())
+                {
+                    if (store.isInTypeConflict(allstores))
+                    {
+                        compiledbuffer = "COMPILE FAILED DUE TO TYPE CONFLICT ON " + store.identifier;
+                        ShowViewer(compiledbuffer);
+
+                        return;
+                    }
+                }
+
+                for(String declaration : ((StoreBlockFigure)allfigs.get(i)).getModel().getDeclaration())
+                {
+                    if (!declarelist.contains(declaration))
+                    {
+                        declarelist.add(declaration);
+                    }
+                }
             }
+        }
+
+        for (String declaration : declarelist) //output list of non duplicated declarations
+        {
+            compiledbuffer += declaration;
         }
 
 
@@ -64,7 +102,7 @@ public class CodeGenerator implements ActionListener {
             if (t.getType() == CodeType.Start) {
                 startblocksfound++;
                 startfig = (CodeBlockFigure)allfigs.get(i);
-                compiledbuffer = startfig.getModel().getCode() + "\n"; 
+                compiledbuffer += startfig.getModel().getCode() + "\n";
 
                 allfigs.remove(i);
                 i--;
@@ -107,12 +145,22 @@ public class CodeGenerator implements ActionListener {
         }
         
         compiledbuffer += "EOF:\n"; //add the EOF directive so that any unmapped edges get dumped to end.
-        
-        CodeViewer cdview = new CodeViewer();
-        cdview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        cdview.setCode(compiledbuffer);
-        cdview.setVisible(true);
-        
+
+        ShowViewer(compiledbuffer);
+    }
+
+    private void ShowViewer(String compiledbuffer)
+    {
+        if (codeview != null)
+        {
+            codeview.dispose();
+            codeview = null;
+        }
+        codeview = new CodeViewer();
+
+        codeview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        codeview.setCode(compiledbuffer);
+        codeview.setVisible(true);
     }
     
     private String getJumps(CodeBlockFigure block, List<DirectedLineConnectionFigure> edges)

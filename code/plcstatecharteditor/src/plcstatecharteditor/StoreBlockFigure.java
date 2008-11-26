@@ -71,7 +71,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
             storetype.setEditable(false);
 
             //add link information so we can edit it
-            storetype.setAttribute(SpecialAttributeKeys.MODIFY_LINK_TYPEOBJ, store.type);
+            storetype.setAttribute(SpecialAttributeKeys.MODIFY_LINK_TYPE, store.type);
             line.add(storetype);
 
             TextFigure space = new TextFigure(" ");
@@ -107,6 +107,12 @@ public class StoreBlockFigure extends CodeBlockFigure{
         updateAttributesFromData();
         this.changed();
 
+    }
+
+    @Override
+    public StoreBlock getModel()
+    {
+        return (StoreBlock)accociatedcode;
     }
 
 
@@ -196,10 +202,14 @@ public class StoreBlockFigure extends CodeBlockFigure{
     @Override
     public boolean handleMouseClick(Double p, MouseEvent evt, DrawingView view) {
         if (DEBUG) System.out.println("Got click event form composite figure StoreBlockFigure class");
+        try
+        {
             Figure target = this.findFigureInside(p);
             target.handleMouseClick(p, evt, view);  //propigate the event downwards
-
-
+        }
+        catch (Exception ex)
+        {
+        }
 
         return super.handleMouseClick(p, evt, view);
     }    

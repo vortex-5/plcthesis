@@ -14,5 +14,5 @@ import org.jhotdraw.draw.AttributeKey;
 public class SpecialAttributeKeys {
     public static final AttributeKey<StoreBlock.storeobj> MODIFY_LINK_ID = new AttributeKey("MODIFY_LINK_ID");
     public static final AttributeKey<StoreBlock.storeobj> MODIFY_LINK_VAL = new AttributeKey("MODIFY_LINK_VAL");
-    public static final AttributeKey<CodeVarType> MODIFY_LINK_TYPEOBJ = new AttributeKey("MODIFY_LINK_TYPEOBJ");
+    public static final AttributeKey<CodeVarType> MODIFY_LINK_TYPE = new AttributeKey("MODIFY_LINK_TYPE");
 }

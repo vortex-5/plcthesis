@@ -93,13 +93,14 @@ public class StoreBlock extends CodeBlock{
         
         for (storeobj store : storelist)
         {
-            strout += store.identifier + " = " + store.value + ";" + newline;
+            if (store.type.getType() != CodeVarType.VarType.Undefined)
+                strout += store.identifier + " = " + store.value + ";" + newline;
         }
         
         return strout;
     }
 
-    public List<String> getDeclaration() throws TypeNotPresentException{
+    public List<String> getDeclaration() {
         List<String> listout = new ArrayList<String>();
 
         //TODO: finish implementing the variable declaration blocks
@@ -107,7 +108,7 @@ public class StoreBlock extends CodeBlock{
         {
             if (item.type.getType() == CodeVarType.VarType.Undefined)
             {
-                throw new TypeNotPresentException(item.identifier, new Exception());
+                //throw new TypeNotPresentException(item.identifier, new Exception());
             }
             else
             {
