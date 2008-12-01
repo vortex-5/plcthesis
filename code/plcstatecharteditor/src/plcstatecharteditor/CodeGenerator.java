@@ -169,7 +169,7 @@ public class CodeGenerator implements ActionListener {
         //find any edges that exit this block
         for (DirectedLineConnectionFigure edge : edges) {
             if (edge.getStartFigure().equals(block)) {
-                    gotobuffer += ((CodeBlockFigure)edge.getEndFigure()).accociatedcode.getUIDStringJump() + "\n";
+                    gotobuffer += edge.getGuardCode() + ((CodeBlockFigure)edge.getEndFigure()).accociatedcode.getUIDStringJump() + "\n";
             }
         }
         

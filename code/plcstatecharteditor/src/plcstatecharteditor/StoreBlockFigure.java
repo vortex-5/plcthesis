@@ -96,7 +96,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
             attrib.add(line);
         }
         
-        System.out.println(accociatedcode.getCode());
+        //System.out.println(accociatedcode.getCode());
         
         update_base();
     }
@@ -130,48 +130,37 @@ public class StoreBlockFigure extends CodeBlockFigure{
         }
 
         public void areaInvalidated(FigureEvent e) {
-            System.out.println("detected area invalid");
         }
 
         public void attributeChanged(FigureEvent e) {
-            System.out.println("detected attrib changed");
         }
 
         public void figureAdded(FigureEvent e) {  
-            System.out.println("detected fig added");
         }
 
         public void figureChanged(FigureEvent e) {
             storeobj edit;
             
-            System.out.println("Got Change Event");
             if (e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_ID) != null)
             {
                 edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_ID);
                 //TODO: add variable name checking for variable names here
                 edit.identifier = ((TextFigure)e.getFigure()).getText().trim();
-                
-                System.out.println("got ID");
-                System.out.println(edit.identifier);
             }
             else if(e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_VAL) != null)
             {
                 edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_VAL);
                 //TODO: add variable checking for variable values here (might choose to omit)
                 edit.value = ((TextFigure)e.getFigure()).getText().trim();
-                
-                System.out.println("got Val");
             }
             
             //accociatedcode.updateEntries();
 
             //update regardless since we recieved a change in a figure
             caller.update();
-            //System.out.println(accociatedcode.getCode());
         }
 
         public void figureHandlesChanged(FigureEvent e) {
-            System.out.println("Detected handles changed");
         }
 
         public void figureRemoved(FigureEvent e) {   
@@ -179,7 +168,6 @@ public class StoreBlockFigure extends CodeBlockFigure{
         }
 
         public void figureRequestRemove(FigureEvent e) {
-            System.out.println("Detected removed req");
         }
     }
 
@@ -192,7 +180,6 @@ public class StoreBlockFigure extends CodeBlockFigure{
         }
 
         public void actionPerformed(ActionEvent arg0) {
-            System.out.println("Got update action request executing");
             _sender.update();
         }
     }

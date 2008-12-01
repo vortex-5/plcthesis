@@ -14,7 +14,6 @@ import org.jhotdraw.draw.*;
  */
 public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure implements ConnectionFigure, Typed {
     private LineDecoration decoration;
-    private DirectedLineConnectionModel accociatedcode = new DirectedLineConnectionModel();
     
     DirectedLineConnectionFigure()
     {
@@ -23,14 +22,13 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
         
         this.setAttribute(AttributeKeys.END_DECORATION, decoration); //make our graph object directed
 
-        update();
+        addTextLabel("true");
     }
+
 
     @Override
     public void addNotify(Drawing arg0) {
         super.addNotify(arg0);
-        
-        //TODO: add section to get code 
     }  
     
     public CodeType getType() {
@@ -41,20 +39,24 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
         return "GOTO";
     }
 
-    private void update()
-    {
-        this.removeAllChildren();
-        addTextLabel(accociatedcode.getDisplayLabel());
-        this.invalidate();
-    }
     
     private void addTextLabel(String text)
     {
         this.setLayouter(new LocatorLayouter());
         TextFigure label = new TextFigure(text);
         LocatorLayouter.LAYOUT_LOCATOR.set(label, new BezierLabelLocator(0.3, -Math.PI / 4, 10.0));
-        //TODO: add logic to hook onto a text change event so we can update the fields
         this.add(label);
     }
+
+    public String getGuardCode() //this is used during code generation to update the guard conditions
+    {
+        TextFigure label = (TextFigure)getChild(0);
+        String buffer = "";
+        if (!label.getText().equals("true"))
+            buffer = "if (" + label.getText() + ") ";
+        return buffer;
+    }
+
+
 }
     
