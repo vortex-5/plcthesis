@@ -98,7 +98,6 @@ public class StoreBlock extends CodeBlock{
     public List<String> getDeclaration() {
         List<String> listout = new ArrayList<String>();
 
-        //TODO: finish implementing the variable declaration blocks
         for(storeobj item : storelist)
         {
             if (item.type.getType() == CodeVarType.VarType.Undefined)

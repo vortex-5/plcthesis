@@ -53,7 +53,6 @@ public class StoreBlockFigure extends CodeBlockFigure{
             line = new GraphicalCompositeFigure();
             line.setLayouter(new HorizontalLayouter());
 
-            //TODO: Figure out how to get a combo box to show up for types
             TextFigure storetype = new TextFigureWithClickEvent(store.type.toDisplayString(), updatelistener);
             storetype.setEditable(false);
 
