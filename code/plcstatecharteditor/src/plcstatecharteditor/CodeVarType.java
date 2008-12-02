@@ -5,15 +5,10 @@
 
 package plcstatecharteditor;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -23,7 +18,7 @@ import javax.swing.JPopupMenu;
  *
  * @author huangkf
  */
-public class CodeVarType {
+public class CodeVarType implements CreatesContextMenu{
     public enum VarType {Bool, Char, Int, Long, Float, Double, Undefined};
     private Hashtable types;
     private VarType key;

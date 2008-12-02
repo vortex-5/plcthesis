@@ -117,6 +117,7 @@ public class DrawApplicationModel extends DefaultApplicationModel {
         addToolTo(tb, editor, new CreationTool(new StartBlockFigure()), "Start");
         addToolTo(tb, editor, new CreationTool(new StoreBlockFigure()), "Store");
         addToolTo(tb, editor, new CreationTool(new DelayBlockFigure()), "Delay");
+        addToolTo(tb, editor, new CreationTool(new OutputBlockFigure()), "Output");
         addToolTo(tb, editor, new ConnectionTool(new DirectedLineConnectionFigure()), "Transition");
 
     }     

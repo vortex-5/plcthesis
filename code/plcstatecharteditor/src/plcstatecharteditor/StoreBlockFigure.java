@@ -1,19 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package plcstatecharteditor;
 
-import com.sun.tools.javac.resources.javac;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D.Double;
-import java.util.Collection;
-import javax.swing.Action;
-import javax.swing.JComboBox;
-import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.FigureEvent;
 import org.jhotdraw.draw.FigureListener;
@@ -33,10 +23,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
     private TextChangedListener txtchange;
     private ActionListener updatelistener;
 
-    @Override
-    public GraphicalCompositeFigure clone() {
-        return super.clone();
-    }
+
     
     
     @Override
@@ -71,7 +58,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
             storetype.setEditable(false);
 
             //add link information so we can edit it
-            storetype.setAttribute(SpecialAttributeKeys.MODIFY_LINK_TYPE, store.type);
+            storetype.setAttribute(SpecialAttributeKeys.MODIFY_LINK_CREATESCONTEXTMENU, store.type);
             line.add(storetype);
 
             TextFigure space = new TextFigure(" ");
@@ -81,7 +68,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
             
             TextFigure storeid = new TextFigure(store.identifier);
             storeid.addFigureListener(txtchange);
-            storeid.setAttribute(SpecialAttributeKeys.MODIFY_LINK_ID, store);
+            storeid.setAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_ID, store);
             line.add(storeid);
             
             TextFigure eq = new TextFigure(" = ");
@@ -91,7 +78,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
             
             TextFigure storeval = new TextFigure(store.value);
             storeval.addFigureListener(txtchange);
-            storeval.setAttribute(SpecialAttributeKeys.MODIFY_LINK_VAL, store);
+            storeval.setAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_VAL, store);
             line.add(storeval);
             attrib.add(line);
         }
@@ -141,15 +128,15 @@ public class StoreBlockFigure extends CodeBlockFigure{
         public void figureChanged(FigureEvent e) {
             storeobj edit;
             
-            if (e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_ID) != null)
+            if (e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_ID) != null)
             {
-                edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_ID);
+                edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_ID);
                 //TODO: add variable name checking for variable names here
                 edit.identifier = ((TextFigure)e.getFigure()).getText().trim();
             }
-            else if(e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_VAL) != null)
+            else if(e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_VAL) != null)
             {
-                edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_VAL);
+                edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_VAL);
                 //TODO: add variable checking for variable values here (might choose to omit)
                 edit.value = ((TextFigure)e.getFigure()).getText().trim();
             }

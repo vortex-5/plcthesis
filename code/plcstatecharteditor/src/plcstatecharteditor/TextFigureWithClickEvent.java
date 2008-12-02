@@ -21,7 +21,7 @@ import org.jhotdraw.draw.Figure;
  *
  * @author huangkf
  */
-public class TextFigureWithClickEvent extends TextFigure {
+public class TextFigureWithClickEvent extends TextFigure{
     public static final boolean DEBUG = true;
     public ActionListener _listener = null;
 
@@ -45,7 +45,7 @@ public class TextFigureWithClickEvent extends TextFigure {
         Figure source = this.findFigureInside(p);
 
         //safety of object is ensured by making sure the type attribute is linked to an object
-        CodeVarType target = (CodeVarType)source.getAttribute(SpecialAttributeKeys.MODIFY_LINK_TYPE);
+        CreatesContextMenu target = (CreatesContextMenu)source.getAttribute(SpecialAttributeKeys.MODIFY_LINK_CREATESCONTEXTMENU);
         if (target != null)
         {
             //attempt to retrieve our object it would be unsafe but luckilywe
