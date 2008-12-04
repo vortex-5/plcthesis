@@ -6,11 +6,12 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+
 /**
  *
  * @author huangkf
  */
-public class OutputBlock extends CodeBlock implements CreatesContextMenu{
+public class OutputBlock extends CodeBlock implements CreatesContextMenu {
     public enum PORTS {PortA,PortB,PortC,PortD} //ports we can be mapped to
     
     private PORTS port;
@@ -83,7 +84,11 @@ public class OutputBlock extends CodeBlock implements CreatesContextMenu{
 
     @Override
     public String getCode() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return getUIDStringLabel() + newline +
+                "//////////////////////////////////////" + newline +
+                "//        OUTPUT                    //" + newline +
+                "//////////////////////////////////////" + newline +
+                getCompiledPort() + " = " + getValue() + ";";
     }
 
     public JPopupMenu getContextMenu(ActionListener listener) {

@@ -9,7 +9,7 @@ package plcstatecharteditor;
  *
  * @author huangkf
  */
-public class DelayBlock extends CodeBlock{
+public class DelayBlock extends CodeBlock {
     private long delaytime = 0;
     
     

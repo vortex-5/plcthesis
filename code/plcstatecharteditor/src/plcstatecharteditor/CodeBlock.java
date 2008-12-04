@@ -5,13 +5,14 @@
 
 package plcstatecharteditor;
 
-import java.util.List;
+import org.jhotdraw.xml.DOMStorable;
 
 /**
  *
  * @author huangkf
  */
-public abstract class CodeBlock implements Typed{
+// TODO: implement DOM storable so each object can be written to file will require a full week to get full support working
+public abstract class CodeBlock implements Typed {
     
     protected CodeType ctype;
     protected int uid=-1; //unique     identifier used in debugging
