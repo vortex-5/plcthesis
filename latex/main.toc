@@ -1,4 +1,0 @@
-\contentsline {chapter}{Abstract}{iii}
-\contentsline {chapter}{Acknowledgements}{iii}
-\contentsline {chapter}{\numberline {1}Introduction to Ladder Logic}{1}
-\contentsline {section}{\numberline {1.1}Background of Ladder Logic}{1}
