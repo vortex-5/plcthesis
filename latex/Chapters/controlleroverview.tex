@@ -7,3 +7,13 @@ Programmable Logic Controllers (PLC) have been around for over 30 years and as s
 
 Mitsubishi Automation, Siemens, and Omron are just a few of the big producers of industry standard PLC's although the shape and form factor differ between manufacturers differ PLC's always consist of 3 distinct parts.  The input module, the main controller unit and the output module. This separation exists due to varying requirements for analog inputs and different output level requirements in order to drive heavy machinery. I/O modules may consist of thermo sensors, ambient light sensors, resistive sensors, or a direct connection the the external circuitry. Likewise the output module may also be composed of both analog or digital output pins.
 
+%source http://www.sea.siemens.com/step/templates/lesson.mason?plcs:2:3:1
+Programs are executed from the main PLC control unit. An iteration of execution is refered to as a scan. A scan is broken up into 4 phases: Self-Test, Input scan, Logic solve / scan, and Output scan.
+
+\begin{itemize}
+	\item\textbf{Self-Test:} All PLC's contain self diagnostic routines, this includes communication checks between the main control unit and the I/O modules. If a fault is found it is handled here before any of the execution is allowed to proceed.
+	\item\textbf{Input Scan:} All inputs both from the input modules and from the internal memory are scaned. This is done in a single step to make sure that all future calculations for the currently executing scan has consistent data. You may note that updates are not read until the next input scan.
+	\item\textbf{Logic Solve / Scan:} Calculations and computations from the user programs are computed in this step if values are to be stored back into internal registers they are now put into temporary registers. Similarily if external output is required it is written to a temporary internal register that will hold the output until the output phase is executed.
+	\item\textbf{Output Scan:} Internal temporary registers are written to their destination registers in one step. External outputs take on the values held by the registers that stored data for the output modules all outputs also take place in one step.
+\end{itemize}
+
