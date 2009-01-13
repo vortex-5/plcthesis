@@ -23,8 +23,16 @@ Mitsubishi Automation\ref{img:mitsubishiplc}, Siemens, and Omron are just a few 
 \end{figure}
 
 %source http://www.sea.siemens.com/step/templates/lesson.mason?plcs:2:3:1
-Programs are executed from the main PLC control unit. An iteration of execution is refered to as a scan. A scan is broken up into 4 phases: Self-Test, Input scan, Logic solve / scan, and Output scan. In detail each phase and their specific jobs are:
+Programs are executed from the main PLC control unit. An iteration of execution is refered to as a scan. A scan is broken up into 4 phases: Self-Test, Input scan, Logic solve / scan, and Output scan. Figure \ref{fig:plcexecution} shows the order in which these steps are executed. Each step contains various jobs, in more detail they are:
 
+\pagebreak{4}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=\imgmedphoto]{./images/plcexecution.pdf}
+    \caption{PLC Execution Loop}
+    \label{fig:plcexecution}
+\end{figure}
 
 %todo: draw a flow chart of the following stages
 \begin{itemize}
