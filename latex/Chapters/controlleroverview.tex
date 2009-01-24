@@ -59,17 +59,21 @@ All input and output modules contain some common  features which allow for modul
 %TODO: add here
 
 %source ISBN 0-13-025603-X
-Due to the varying requirements of manufacturing over the years a wide variety of I/O modules now exist to fill in every need a short list of common I/O modules is listed below:
+Due to the varying requirements of manufacturing over the years a wide variety of I/O modules now exist to fill in every need a short list of common I/O modules for the Allen-Bradley SLC500 series of PLC's is given below \cite{slc500}.
 \begin{itemize}
-	\item \textbf{Analog Input Module \cite{slc500}:} Reads in analog voltages converts them into digital values and sends the information to the control unit.
-	\item \textbf{Analog Output Module \cite{slc500}:} Takes in digital values and produces an apporpreate analog voltage level.
-	\item \textbf{ASCII Input Module \cite{slc500}:} These modules take in character information usually via serial links (RS-232) and convert them into a form the PLC controllers can understand\cite{slc500}.
-	\item \textbf{ASCII Output Module \cite{slc500}:} Takes PLC information converts it to an character representation and sends it out via RS-232.
-	\item \textbf{Barrel-Temperature Module \cite{slc500}:} This module monitors four zones of an autotuned PID heating or cooling unit for temperature control. Molding machines and extruder employ these modules for controlling barrel temperature while injecting material\cite{slc500}.
-	\item \textbf{BCD Input Module \cite{slc500}:} This module reads in inputs from devices that output binary-coded decimal (a method of representation where each decimal digit is represented by four bits). An example of such a device is a thumb wheel\cite{slc500}.
-	\item \textbf{BCD Output Module \cite{slc500}:} Essentially does the reverse of the input module usually used for compatability sake when devices expect data in BCD format.
-	\item \textbf{*****************Currently working on this section there's about 6 more I'd like to add once I get my references sorted*******}
-	
+	\item \textbf{Analog Input Module:} Reads in analog voltages converts them into digital values and sends the information to the control unit.
+	\item \textbf{Analog Output Module:} Takes in digital values and produces an apporpreate analog voltage level.
+	\item \textbf{ASCII Input Module:} These modules take in character information usually via serial links (RS-232) and convert them into a form the PLC controllers can understand\cite{slc500}.
+	\item \textbf{ASCII Output Module:} Takes PLC information converts it to an character representation and sends it out via RS-232.
+	\item \textbf{Barrel-Temperature Module:} This module monitors four zones of an autotuned PID heating or cooling unit for temperature control. Molding machines and extruder employ these modules for controlling barrel temperature while injecting material\cite{slc500}.
+	\item \textbf{BCD Input Module:} This module reads in inputs from devices that output binary-coded decimal (a method of representation where each decimal digit is represented by four bits). An example of such a device is a thumb wheel\cite{slc500}.
+	\item \textbf{BCD Output Module:} Essentially does the reverse of the input module usually used for compatability sake when devices expect data in BCD format.
+	\item \textbf{Discrete Input Module:} These are isolated digital inputs.
+	\item \textbf{Discrete Output Module:} These are isolated digital output modules.
+	\item \textbf{Encoder Counter Module:} Keeps track of angular positioning of shafts.
+	\item \textbf{Gray Encoder Module:} Recieves gray-code signals from a device that produces gray-code.
+	\item \textbf{High-Speed Counter-Encoder Module:} This type of module allows counting and encoding at a much faster rate than is normally possible inside a PLC program.
+	\item \textbf{PID Module:} These modules enable the user to perform closed loop automatic control based on proportional integral and derivative values. If properly tuned the module can hold a process at the desired set point.
 \end{itemize}
 
 Programmable logic controllers can classified into three categories: Integrated as seen in figure \ref{img:mitsubishiplc}, Modular as seen in figure \ref{img:plcrender_1}, and Large Scale automation. The integrated category includes small one board solutions generally better suited for low power or embedded applications. The modular category consists of PLC's that have a rack that houses the power supply, and several modular slots for both the microcontroller and the input output modules.
