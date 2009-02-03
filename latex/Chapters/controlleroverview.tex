@@ -7,26 +7,22 @@ Programmable Logic Controllers (PLC) have been around for over 30 years and as s
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=\imgmedphoto]{./images/c01_mitsubishiplc.jpg}
+    \includegraphics[width=\imgsmlphoto]{./images/c01_mitsubishiplc.jpg}
     \caption{Mitsubishi PLC All In One Unit \cite{img_c01_MitsubishiPlc}}
     \label{img:mitsubishiplc}
 \end{figure}
-
 Mitsubishi Automation\ref{img:mitsubishiplc}, Siemens, and Omron are just a few of the big producers of industry standard PLC's although the shape and form factor differ between manufacturers differ PLC's always consist of 3 distinct parts.  The input module, the main controller unit and the output module (please refer to figure \ref{img:plcrender_1}). This separation exists due to varying requirements for analog inputs and different output level requirements in order to drive heavy machinery. I/O modules may consist of thermo sensors, ambient light sensors, resistive sensors, or a direct connection the the external circuitry. Likewise the output module may also be composed of both analog or digital output pins.
-
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=\imgmedphoto]{./images/c02_plcdev.jpg}
-    \includegraphics[width=\imgmedphoto]{./images/c04_plcdev.jpg}
+    \includegraphics[width=\imgsmlphoto]{./images/c02_plcdev.jpg}
+    \includegraphics[width=\imgsmlphoto]{./images/c04_plcdev.jpg}
     \caption{3D Diagram of A Modular PLC \cite{img_c02_PlcDev,img_c04_PlcDev}}
     \label{img:plcrender_1}
 \end{figure}
 
+\pagebreak
 %source http://www.sea.siemens.com/step/templates/lesson.mason?plcs:2:3:1
 Programs are executed from the main PLC control unit. An iteration of execution is refered to as a scan. A scan is broken up into 4 phases: Self-Test, Input scan, Logic solve / scan, and Output scan. Figure \ref{fig:plcexecution} shows the order in which these steps are executed. Each step contains various jobs, in more detail they are:
-
-\pagebreak{4}
-
 \begin{figure}[htp]
     \centering
     \includegraphics[width=\imgmedphoto]{./images/plcexecution.pdf}
@@ -42,9 +38,10 @@ Programs are executed from the main PLC control unit. An iteration of execution 
 	\item\textbf{Output Scan:} Internal temporary registers are written to their destination registers in one step. External outputs take on the values held by the registers that stored data for the output modules all outputs also take place in one step.
 \end{itemize}
 
+
 Each of these phases semantically can be assumed to execute cocurrently thus, the order of individual instructions in each phase is of no consequence. This closely follows the Ladder Logic (please see section \ref{section:ladderlogic}) in that the entire program executes cocurrently on multiple rungs. Internally however PLC's do have a sequential deterministic order in which instructions are executed, this is a side effect of using microcontrollers in the main control unit. In this way it can be said that each phase is considered concurrent if we consider a cycle time greater than the time it takes to execute the last instruction. If an external device takes samples at this rate it is irrelevent from its perspective that the processing is not actually happening cocurrently to the observing device the two behaviors are equivalent.
 
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\imgmedphoto]{./images/c03_plcdev.jpg}
     \includegraphics[width=\imgmedphoto]{./images/c05_plcdev.jpg}
