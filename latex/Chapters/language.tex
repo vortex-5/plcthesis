@@ -1,0 +1,11 @@
+\chapter{Language}
+\section{Problems with Ladder Logic}
+TODO: mainly focused on how programs and microcontrollers work in a sequential fashion so to replicate this way with ladder logic not only require effort but hardware
+\section{State Chart Semantics}
+TODO: this section will cover all semantics of traditional state charts and specific semantics relating to how our program will handle it.
+\section{Transitioning from Ladder Logic to State Charts}
+TODO: in this section we will attempt to look at example programs from different ladder programs in each category (Basic / Logic / Calculations / Simulated seq logic / Parallel logic). Provide translations into state charts but more importantly discuss how to translate them we might explore how to do this in an automated fashion.
+\section{Limitations of State Charts vs Ladder Logic}
+TODO: Take a look at programs that are inherently parallel or work in the same fashion as traditional relays. These programs are inherently simpler to express in ladder logic. I expect in the end ladder logic works for really easy programs that can be expressed with relays but as soon as more complex sequencing is required it is just terrible. However show how state charts don't improve things if sequencing is not really required.
+\section{The Intermediate Language}
+TODO: Show how we are using a C based language but we are writing it in such a way so that it operates as an intermediate language and would be remappable to any microcontroller configuration.
