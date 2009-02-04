@@ -1,6 +1,11 @@
 \chapter{Language}
 \section{Problems with Ladder Logic}
-TODO: mainly focused on how programs and microcontrollers work in a sequential fashion so to replicate this way with ladder logic not only require effort but hardware
+Ladder logic because it was based on conventional circuits does not inherently lend itself well to representing how microcontrollers actually operate. It also is difficult to use because human beings think of algorithms and procedures in a sequential fashion. In order for microcontrollers to behave in a parallel fashion analogous to how circuits work a lot of careful but extra design was put in so that the hardware behaved like it was parallel providided everything works fast enough. At the same time in order to work in this paradigm human beings were required to take their sequential logic for their algorithm and use work arounds to either get the circuits to behave sequentially or to translate their algorithm so that it would work well in a parallel fashion while represented by circuits. Not suprisingly this double translation is a lot of work both for the hardware designers and the programmers when the simpler solution is to instead of pretending the hardware is still parallel just to let the programmer execute his instructions in a sequential fashion (because this is what happens anyways). This makes both the hardware and the programs much simpler to construct as the hardware no longer is required to simulate a method of running that isn't what it natively does and the programmer is also not required to translate his program into circuits.
+
+Suppose a programmer wanted to create the following program in ladder logic: After button A is pressed button B is enabled and will directly control a motor. The corresponding program in ladder logic would look like the following.
+
+%TODO: draw diagram for ladder logic of the program
+
 \section{State Chart Semantics}
 TODO: this section will cover all semantics of traditional state charts and specific semantics relating to how our program will handle it.
 \section{Transitioning from Ladder Logic to State Charts}
