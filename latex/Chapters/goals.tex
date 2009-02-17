@@ -5,7 +5,7 @@ This project aims to improve on current industrial programmable logic controller
 
 Due to the scope of this project we must deliver several components in order to achieve an acceptable proof of concept. The componets and their subgoals are as follows:
 
-We must deliver a main controller unit with an onboard embedded OS this main controller will serve as our CPU sending commands to the input and output units and run our program. The main controller must be able to execute adequately fast in order to compete against commercial PLC's. Since the user is not concerned with the execution speed of each instruction we measure fast by the time it takes for an input to trigger an output and we compare this to the same semantically equivalent program written for an off the shelf PLC. We hope to achieve this speed up with cheaper hardware by allowing the user to specify instructions in a more natural manner and thus reducing the actual instructions required to perform a task. Our hardware will aim to eliminate the concept of a scan\ref{fig:plcexecution} and in doing so we hope to open up new methods of better making use of available hardware.
+We must deliver a main controller unit with an onboard embedded OS this main controller will serve as our CPU sending commands to the input and output units and run our program. The main controller must be able to execute adequately fast in order to compete against commercial PLC's. Since the user is not concerned with the execution speed of each instruction we measure fast by the time it takes for an input to trigger an output and we compare this to the same semantically equivalent program written for an off the shelf PLC. We hope to achieve this speed up with cheaper hardware by allowing the user to specify instructions in a more natural manner and thus reducing the actual instructions required to perform a task. Our hardware will aim to eliminate the concept of a scan (see section \ref{fig:plcexecution}) and in doing so we hope to open up new methods of better making use of available hardware.
 
 This project also aims to deliver a reference input and ouput unit that will be modest in driving capacity but will allow for future upgrades where applications demand more heavy duty hardware. The purpose of the input and output units is to establish a base communication protocol so that new modules can be swappable.
 
@@ -15,3 +15,4 @@ The final layer that will be added is a software to hardware compiler that will 
 
 By delivering an initial proof of concept software and hardware ecosystem this project would allow for further development for modernizing programmable logic controllers.
 
+%TODO: You might need a dataflow diagram right here to demonstrate how the new system will be put together
