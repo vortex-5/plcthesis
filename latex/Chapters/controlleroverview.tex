@@ -30,7 +30,6 @@ Programs are executed from the main PLC control unit. An iteration of execution 
     \label{fig:plcexecution}
 \end{figure}
 
-%todo: draw a flow chart of the following stages
 \begin{itemize}
 	\item\textbf{Self-Test:} All PLC's contain self diagnostic routines, this includes communication checks between the main control unit and the I/O modules. If a fault is found it is handled here before any of the execution is allowed to proceed.
 	\item\textbf{Input Scan:} All inputs both from the input modules and from the internal memory are scaned. This is done in a single step to make sure that all future calculations for the currently executing scan has consistent data. You may note that updates are not read until the next input scan.
@@ -53,7 +52,6 @@ The input and output modules generally connect to the main module via serial lin
 
 %source http://www.toolingu.com/class-450240-plc-inputs-and-outputs.html
 All input and output modules contain some common  features which allow for modularity. Each I/O module is assigned a unique address so that the controller unit running the PLC program can access it. Each controller also has what is referred to a backpane which contains the necessary connectors to connect to the bus in which the CPU can access. Most I/O modules have multiple channel where each channel is either a single ended wire or a differential pairs. Differential can be commonly seen in analog input modules where it is preferable to compare a signal with the sensor's reference ground in order to avoid problems with the ground from the PLC not matching up with the ground form the sensor. Such a mismatch would produce a floating ground and would induce a perminent error on the input channel. Most modules are designed so that the external input and output enviroments are completely isolated form the internal circuitry. As such, the internal half is connected to common ground via the serial bus while the external half is usually connected to the powersupply via a ground screw (usually marked "common"). In analog input modules conversion circuitry exist to convert the sensed input values into quantized values to be sent over the serial bus. The same is true for output modules but in reverse. In digital inputs conversion is not needed however another circuitry still allows for isolation of the internal bus from the external input, and where applicable the module itself may perform noise correction before the actual input enters the PLC itself. In addition to individual modules some PLC manufacturers opted to have the I/O modules embedded into the main CPU unit. These are generally more commonly found in the micro sized PLC's and are generally less expensive then their expandable counterparts. Although externally they are not expandable internally the configuration of the input modules are actually identical.
-%TODO: add here
 
 %source ISBN 0-13-025603-X
 Due to the varying requirements of manufacturing over the years a wide variety of I/O modules now exist to fill in every need a short list of common I/O modules for the Allen-Bradley SLC500 series of PLC's is given below \cite{slc500}.
