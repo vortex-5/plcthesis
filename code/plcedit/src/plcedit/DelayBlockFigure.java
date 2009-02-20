@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package plcstatecharteditor;
+package plcedit;
 
 import org.jhotdraw.draw.*;
 

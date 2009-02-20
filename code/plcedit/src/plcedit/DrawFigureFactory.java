@@ -12,7 +12,7 @@
  * the copyright holders. For details see accompanying license terms. 
  */
 
-package plcstatecharteditor;
+package plcedit;
 
 import java.util.*;
 import org.jhotdraw.draw.*;

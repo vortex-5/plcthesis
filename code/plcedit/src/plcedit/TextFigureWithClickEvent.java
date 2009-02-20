@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package plcstatecharteditor;
+package plcedit;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;

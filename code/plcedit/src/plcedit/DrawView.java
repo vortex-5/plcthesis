@@ -12,7 +12,7 @@
  * the copyright holders. For details see accompanying license terms. 
  *
  */
-package plcstatecharteditor;
+package plcedit;
 
 //import com.ibm.jvm.j9.dump.commandconsole.Console;
 

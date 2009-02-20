@@ -1,4 +1,4 @@
-package plcstatecharteditor;
+package plcedit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +13,7 @@ import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.VerticalLayouter;
 import org.jhotdraw.draw.Figure;
 
-import plcstatecharteditor.StoreBlock.storeobj;
+import plcedit.StoreBlock.storeobj;
 /**
  *
  * @author Vortex-5

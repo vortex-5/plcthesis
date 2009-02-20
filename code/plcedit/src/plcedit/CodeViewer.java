@@ -4,7 +4,7 @@
  * Created on June 9, 2008, 1:57 PM
  */
 
-package plcstatecharteditor;
+package plcedit;
 
 /**
  *

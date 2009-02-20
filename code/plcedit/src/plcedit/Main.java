@@ -12,7 +12,7 @@
  * the copyright holders. For details see accompanying license terms. 
  */
 
-package plcstatecharteditor;
+package plcedit;
 
 import javax.swing.*;
 import org.jhotdraw.app.*;
@@ -43,7 +43,7 @@ public class Main {
         model.setVersion(Main.class.getPackage().getImplementationVersion());
         model.setCopyright("Copyright 2006-2008 (c) by the authors of JHotDraw\n" +
                 "This software is licensed under LGPL or Creative Commons 3.0 BY");
-        model.setViewClassName("plcstatecharteditor.DrawView");
+        model.setViewClassName("plcedit.DrawView");
       
         app.setModel(model);
         app.launch(args);
