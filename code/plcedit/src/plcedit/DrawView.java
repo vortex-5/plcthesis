@@ -123,7 +123,7 @@ public class DrawView extends AbstractView {
     protected Drawing createDrawing() {
         Drawing drawing = new QuadTreeDrawing();
         DOMStorableInputOutputFormat ioFormat =
-                new DOMStorableInputOutputFormat(new DrawFigureFactory());
+                new DOMStorableInputOutputFormat(new PlceditFigureFactory());
         
         drawing.addInputFormat(ioFormat);
         ImageFigure prototype = new ImageFigure();
