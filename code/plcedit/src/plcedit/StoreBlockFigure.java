@@ -39,12 +39,13 @@ public class StoreBlockFigure extends CodeBlockFigure{
     }
     
     
-    
-    protected void updateAttributesFromData()
+    public void update()
     {
+        this.willChange();
+
         ((StoreBlock)accociatedcode).updateEntries();
 
-        createAttributeDisplay();
+        createAttributeDisplay(); //create our display area
 
         attrib.setLayouter(new VerticalLayouter());
         GraphicalCompositeFigure line;
@@ -64,33 +65,26 @@ public class StoreBlockFigure extends CodeBlockFigure{
             line.add(space);
 
 
-            
+
             TextFigure storeid = new TextFigure(store.identifier);
             storeid.addFigureListener(txtchange);
             storeid.setAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_ID, store);
             line.add(storeid);
-            
+
             TextFigure eq = new TextFigure(" = ");
             eq.setEditable(false);
-            
+
             line.add(eq);
-            
+
             TextFigure storeval = new TextFigure(store.value);
             storeval.addFigureListener(txtchange);
             storeval.setAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_VAL, store);
             line.add(storeval);
             attrib.add(line);
         }
-        
-        //System.out.println(accociatedcode.getCode());
-        
+
         update_base();
-    }
-    
-    public void update()
-    {
-        this.willChange();
-        updateAttributesFromData();
+
         this.changed();
 
     }

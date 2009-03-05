@@ -23,23 +23,18 @@ public class DelayBlockFigure extends CodeBlockFigure{
     @Override
     protected void initialize_component() {
         update();
-    }
-    
-    
-    private void updateAttributesFromData(){
-        createAttributeDisplay();
+    } 
+   
+    public void update(){
+        willChange();
+        createAttributeDisplay(); //create our display area
 
         attrib.setLayouter(new HorizontalLayouter());
         TextFigure textdelay = new TextFigure(((DelayBlock)accociatedcode).getStringDelayTime());
         textdelay.setAttribute(MODIFY_LINK_VAL, (DelayBlock)accociatedcode);
         attrib.add(textdelay);
-        
-        update_base();        
-    }
-    
-    public void update(){
-        willChange();
-        updateAttributesFromData();
+
+        update_base();
         changed();
     }
             

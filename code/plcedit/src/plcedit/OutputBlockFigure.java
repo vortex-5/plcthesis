@@ -45,14 +45,8 @@ public class OutputBlockFigure extends CodeBlockFigure {
     public void update()
     {
         this.willChange();
-        updateAttributesFromData();
-        this.changed();
 
-    }
-
-    protected void updateAttributesFromData()
-    {
-        createAttributeDisplay();
+        createAttributeDisplay(); //create our display area
 
         attrib.setLayouter(new HorizontalLayouter());
 
@@ -71,9 +65,10 @@ public class OutputBlockFigure extends CodeBlockFigure {
 
 
         update_base();
+
+        this.changed();
+
     }
-
-
 
 
     //Event handler handles when text is changed in any of the boxes.
