@@ -13,7 +13,7 @@ import org.jhotdraw.draw.*;
  */
 public class DelayBlockFigure extends CodeBlockFigure{
     private final AttributeKey<DelayBlock> MODIFY_LINK_VAL = new AttributeKey("MODIFY_LINK_VAL");
-    private TextChangedListener txtchange;
+    //private TextChangedListener txtchange;
 
     @Override
     protected void createModel() {
@@ -27,7 +27,8 @@ public class DelayBlockFigure extends CodeBlockFigure{
     
     
     private void updateAttributesFromData(){
-        attrib.removeAllChildren();
+        createAttributeDisplay();
+
         attrib.setLayouter(new HorizontalLayouter());
         TextFigure textdelay = new TextFigure(((DelayBlock)accociatedcode).getStringDelayTime());
         textdelay.setAttribute(MODIFY_LINK_VAL, (DelayBlock)accociatedcode);

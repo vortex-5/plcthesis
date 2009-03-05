@@ -43,9 +43,9 @@ public class StoreBlockFigure extends CodeBlockFigure{
     protected void updateAttributesFromData()
     {
         ((StoreBlock)accociatedcode).updateEntries();
-       
-        attrib = new GraphicalCompositeFigure();
-        
+
+        createAttributeDisplay();
+
         attrib.setLayouter(new VerticalLayouter());
         GraphicalCompositeFigure line;
         for(storeobj store : ((StoreBlock)accociatedcode).getStores())

@@ -52,7 +52,8 @@ public class OutputBlockFigure extends CodeBlockFigure {
 
     protected void updateAttributesFromData()
     {
-        attrib = new GraphicalCompositeFigure();
+        createAttributeDisplay();
+
         attrib.setLayouter(new HorizontalLayouter());
 
         TextFigureWithClickEvent port = new TextFigureWithClickEvent(getModel().getDisplayedPort(),updatelistener);

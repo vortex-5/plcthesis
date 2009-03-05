@@ -73,7 +73,12 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
         createModel();
         initialize_component();
     }
-    
+
+    public void createAttributeDisplay()
+    {
+        attrib.removeAllChildren();
+        attrib = new GraphicalCompositeFigure();
+    }
     
     
     public TextFigure getNameFigure()
