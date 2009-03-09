@@ -5,8 +5,15 @@
 
 package plcedit;
 
+import java.awt.geom.Rectangle2D;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.samples.pert.figures.SeparatorLineFigure;
+
+import org.jhotdraw.xml.DOMInput;
+import org.jhotdraw.xml.DOMOutput;
+import java.io.IOException;
+
+
 /**
  *
  * @author Vortex-5
@@ -107,5 +114,36 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
 
     public String getTypeString() {
         return accociatedcode.getTypeString();
+    }
+
+    @Override
+    public void write(DOMOutput out) throws IOException { //TODO: Change this to abstract
+        throw new IOException("Save to disk feature not yet implimented!");
+
+    }
+
+    @Override
+    public void read(DOMInput in) throws IOException { //TODO: Change this to abstract
+        throw new IOException("Read from disk feature not yet implimented!");
+    }
+
+    /**
+     * Saves the bounding box of an drawing object
+     */
+    public void writeBoundingBox (DOMOutput out) throws IOException {
+        Rectangle2D.Double r = getBounds();
+        out.addAttribute("x", r.x);
+        out.addAttribute("y", r.y);
+        out.addAttribute("w", r.width);
+        out.addAttribute("h", r.height);
+    }
+
+    public Bounds readBoundingBox (DOMInput in) throws IOException {
+        double x = in.getAttribute("x", 0d);
+        double y = in.getAttribute("y", 0d);
+        double w = in.getAttribute("w", 0d);
+        double h = in.getAttribute("h", 0d);
+
+        return new Bounds(x,y,w,h);
     }
 }

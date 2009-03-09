@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * WARNING!! this class is required to allow proper saving please make sure you
+ * update this file with each new object type to ensure proper saving.
  */
 
 package plcedit;
@@ -41,6 +41,7 @@ public class PlceditFigureFactory extends DefaultDOMFactory {
 
         { ElbowLiner.class, "elbowLiner" },
 
+        //TODO: all savable code blocks will go here once completed
         { StartBlockFigure.class, "startBlockFigure"},
     };
     private final static Object[][] enumTagArray = {
