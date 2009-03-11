@@ -43,6 +43,7 @@ public class PlceditFigureFactory extends DefaultDOMFactory {
 
         //TODO: all savable code blocks will go here once completed
         { StartBlockFigure.class, "startBlockFigure"},
+        { StoreBlockFigure.class, "storeBlockFigure"},
     };
     private final static Object[][] enumTagArray = {
         { AttributeKeys.StrokePlacement.class, "strokePlacement" },

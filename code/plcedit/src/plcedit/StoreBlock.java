@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class StoreBlock extends CodeBlock{
     
 
-    public class storeobj 
+    public class storeobj
     {              
 
         public CodeVarType type;
@@ -124,6 +124,16 @@ public class StoreBlock extends CodeBlock{
         newitem.value = "<value>";
         storelist.add(newitem);
     }
+
+    public void addItem(String id, String val, CodeVarType type)
+    {
+        storeobj newitem = new storeobj();
+        newitem.type = type;
+        newitem.identifier = id;
+        newitem.value = val;
+        storelist.add(newitem);
+
+    }
     
     public void removeItem(storeobj ref)
     {
@@ -168,10 +178,15 @@ public class StoreBlock extends CodeBlock{
     
     public void updateEntries()
     {
-        removeItemWith("");
-        removeItemWith(CodeVarType.VarType.Undefined,"<name>");
+        removeUnsavedEntries();
         
         addItem();
+    }
+
+    public void removeUnsavedEntries()
+    {
+        removeItemWith("");
+        removeItemWith(CodeVarType.VarType.Undefined,"<name>");
     }
 
     public boolean contains(String identifier)

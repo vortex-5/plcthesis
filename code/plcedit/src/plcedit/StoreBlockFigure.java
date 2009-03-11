@@ -13,6 +13,13 @@ import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.VerticalLayouter;
 import org.jhotdraw.draw.Figure;
 
+
+import org.jhotdraw.xml.DOMInput;
+import org.jhotdraw.xml.DOMOutput;
+import java.io.IOException;
+
+import java.util.List;
+
 import plcedit.StoreBlock.storeobj;
 /**
  *
@@ -23,12 +30,19 @@ public class StoreBlockFigure extends CodeBlockFigure{
     private TextChangedListener txtchange;
     private ActionListener updatelistener;
 
+    private StoreBlock SavedBlock;
+
 
     
     
     @Override
     protected void createModel() {
-        accociatedcode = new StoreBlock();
+        if (SavedBlock == null) {
+            accociatedcode = new StoreBlock();
+        }
+        else {
+            accociatedcode = SavedBlock;
+        }
         txtchange = new TextChangedListener(this,(StoreBlock)accociatedcode);
         updatelistener = new UpdateListener(this);
     }
@@ -179,5 +193,54 @@ public class StoreBlockFigure extends CodeBlockFigure{
         }
 
         return super.handleMouseClick(p, evt, view);
-    }    
+    }
+
+    @Override
+    public void write(DOMOutput out) throws IOException {
+        writeBoundingBox(out); //save our position data
+
+        //get rid of garbage
+        ((StoreBlock)accociatedcode).removeUnsavedEntries();
+
+        //prepare for export
+        List<storeobj> store = ((StoreBlock)accociatedcode).getStores();
+
+        for (int i=0;i<store.size();i++){
+            out.addAttribute("data_type" + Integer.toString(i), store.get(i).type.getSaveString());
+            out.addAttribute("data_id" + Integer.toString(i), store.get(i).identifier);
+            out.addAttribute("data_val" + Integer.toString(i), store.get(i).value);
+        }
+
+
+        writeAttributes(out); //export all attributes
+    }
+
+    @Override
+    public void read(DOMInput in) throws IOException {
+        Bounds box = readBoundingBox(in);
+        setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
+
+        SavedBlock = new StoreBlock();
+
+        String strType = "INIT";
+        String strId = "INIT";
+        String strVal = "INIT";
+
+        int i=0;
+        while (!strType.equals("UNDEFINED") && !strId.equals("UNDEFINED") && ! strVal.equals("UNDEFINED")) {
+                strType = in.getAttribute("data_type" + Integer.toString(i), "UNDEFINED");
+                strId = in.getAttribute("data_id" + Integer.toString(i), "UNDEFINED");
+                strVal = in.getAttribute("data_val" + Integer.toString(i), "UNDEFINED");
+
+                if (!strType.equals("UNDEFINED") && !strId.equals("UNDEFINED") && ! strVal.equals("UNDEFINED"))
+                {
+                    CodeVarType newtype = new CodeVarType(CodeVarType.VarType.Undefined);
+                    newtype.setFromSaveString(strType);
+                    SavedBlock.addItem(strId, strVal, newtype);
+                }
+                i++;
+        }
+
+        readAttributes(in);
+    }
 }

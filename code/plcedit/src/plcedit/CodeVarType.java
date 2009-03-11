@@ -7,6 +7,7 @@ package plcedit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.Hashtable;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
@@ -39,8 +40,6 @@ public class CodeVarType implements CreatesContextMenu{
         }
     }
 
-
-
     public CodeVarType(VarType key)
     {
 
@@ -58,7 +57,18 @@ public class CodeVarType implements CreatesContextMenu{
 
         this.key = key;
     }
-    
+
+    public String getSaveString(){
+        return toCompileString();
+    }
+
+    public void setFromSaveString (String CompileString){
+        for(CodeString type : (Collection<CodeString>)types.values()){
+            if (CompileString.equals(type.CodeString)){
+                this.key = type.key;
+            }
+        }
+    }
     
     public void setKey(VarType key)
     {
