@@ -14,10 +14,17 @@ import java.io.IOException;
  * @author Vortex-5
  */
 public class StartBlockFigure extends CodeBlockFigure {
+    private StartBlock SavedBlock = null;
     
     protected void createModel()
     {
-        accociatedcode = new StartBlock();
+        if (SavedBlock == null) {
+            accociatedcode = new StartBlock();
+        }
+        else {
+            accociatedcode = SavedBlock;
+            SavedBlock = null;
+        }
     }
 
     @Override
@@ -33,7 +40,9 @@ public class StartBlockFigure extends CodeBlockFigure {
         writeBoundingBox(out);
         // Start blocks don't have any useful accociated code so we can accept
         // that they are rebuilt on read
-        writeAttributes(out);
+        writeUID(out);
+
+        //writeAttributes(out);
 
     }
 
@@ -41,7 +50,10 @@ public class StartBlockFigure extends CodeBlockFigure {
     public void read(DOMInput in) throws IOException {
         Bounds box = readBoundingBox(in);
         setBounds(box.getTopLeft(), box.getBottomRight());
-        readAttributes(in);
+
+        SavedBlock = new StartBlock(readUID(in));
+        
+        //readAttributes(in);
         // Normally we would load the accocciated code here but the start block
         // has none so we can accept auto generating it.
     }

@@ -155,10 +155,12 @@ public class OutputBlockFigure extends CodeBlockFigure {
     public void write(DOMOutput out) throws IOException {
         writeBoundingBox(out); //save our position data
 
+        writeUID(out);
+
         out.addAttribute("data_port", getModel().getDisplayedPort());
         out.addAttribute("data_val", getModel().getValue());
 
-        writeAttributes(out); //export all attributes
+        //writeAttributes(out); //export all attributes
     }
 
     @Override
@@ -166,14 +168,16 @@ public class OutputBlockFigure extends CodeBlockFigure {
         Bounds box = readBoundingBox(in);
         setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
 
+
+
         String data = in.getAttribute("data_port", "UNDEFINED");
         String val = in.getAttribute("data_val", "UNDEFINED");
         if (!data.equals("UNDEFINED") && !val.equals("UNDEFINED")) {
-            SavedBlock = new OutputBlock(OutputBlock.portFromString(data));
+            SavedBlock = new OutputBlock(readUID(in), OutputBlock.portFromString(data));
             SavedBlock.setValue(val);
         }
         
-        readAttributes(in);
+        //readAttributes(in);
     }
 
 }

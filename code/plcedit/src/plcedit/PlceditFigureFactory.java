@@ -5,7 +5,6 @@
 
 package plcedit;
 
-import java.util.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.xml.DefaultDOMFactory;
 
@@ -20,6 +19,7 @@ public class PlceditFigureFactory extends DefaultDOMFactory {
         { DiamondFigure.class, "diamond" },
         { TriangleFigure.class, "triangle" },
         { BezierFigure.class, "bezier" },
+        { BezierLabelLocator.class, "bezier_ll" },
         { RectangleFigure.class, "r" },
         { RoundRectangleFigure.class, "rr" },
         { LineFigure.class, "l" },
@@ -46,6 +46,7 @@ public class PlceditFigureFactory extends DefaultDOMFactory {
         { StoreBlockFigure.class, "storeBlockFigure"},
         { OutputBlockFigure.class, "outputBlockFigure"},
         { DelayBlockFigure.class, "delayBlockFigure"},
+        { DirectedLineConnectionFigure.class, "directedLineConnectionFigure"},
     };
     private final static Object[][] enumTagArray = {
         { AttributeKeys.StrokePlacement.class, "strokePlacement" },

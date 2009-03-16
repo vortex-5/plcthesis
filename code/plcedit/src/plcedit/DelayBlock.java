@@ -11,11 +11,14 @@ package plcedit;
  */
 public class DelayBlock extends CodeBlock {
     private long delaytime = 0;
-    
-    
-    public DelayBlock() {
-        this.uid = UIDGenerator.getNext();
+
+    public DelayBlock(int uid) {
+        this.uid = uid;
         this.ctype = CodeType.Delay;
+    }
+
+    public DelayBlock() {
+        this(UIDGenerator.getNext());
     }
     
     public void setDelayTime(long newtime)

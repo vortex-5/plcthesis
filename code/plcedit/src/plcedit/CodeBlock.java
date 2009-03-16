@@ -18,6 +18,14 @@ public abstract class CodeBlock implements Typed {
     protected int uid=-1; //unique     identifier used in debugging
     
     protected static String newline = System.getProperty("line.separator");
+
+    public int getUID() {
+        return uid;
+    }
+
+    public void setUID(int newuid) {
+        uid = newuid;
+    }
     
     /**
      * Can be used to recieve the type of code block being rendered

@@ -109,9 +109,11 @@ public class DelayBlockFigure extends CodeBlockFigure{
     public void write(DOMOutput out) throws IOException {
         writeBoundingBox(out); //save our position data
 
+        writeUID(out);
+        
         out.addAttribute("delay", getModel().getStringDelayTime());
 
-        writeAttributes(out); //export all attributes
+        //writeAttributes(out); //export all attributes
     }
 
     @Override
@@ -119,9 +121,13 @@ public class DelayBlockFigure extends CodeBlockFigure{
         Bounds box = readBoundingBox(in);
         setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
 
-        SavedBlock = new DelayBlock();
-        SavedBlock.setDelayTime(in.getAttribute("delay", "-1"));
+        String delay = in.getAttribute("delay", "-1");
 
-        readAttributes(in);
+        SavedBlock = new DelayBlock();
+
+        SavedBlock.setUID(readUID(in));
+        SavedBlock.setDelayTime(Integer.parseInt(delay));
+
+        //readAttributes(in);
     }
 }

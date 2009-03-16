@@ -11,10 +11,15 @@ package plcedit;
  */
 public class StartBlock extends CodeBlock{
     
+    public StartBlock(int uid)
+    {
+        this.uid = uid;
+        this.ctype = CodeType.Start;
+    }
+
     public StartBlock()
     {
-        this.uid = UIDGenerator.getNext();
-        this.ctype = CodeType.Start;
+        this(UIDGenerator.getNext());
     }
 
     @Override

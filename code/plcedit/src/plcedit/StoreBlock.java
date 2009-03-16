@@ -66,11 +66,16 @@ public class StoreBlock extends CodeBlock{
     private List<storeobj> storelist; 
     
     
-    public StoreBlock()
+    public StoreBlock(int uid)
     {
-        this.uid = UIDGenerator.getNext();
+        this.uid = uid;
         this.ctype = CodeType.Store;
         this.storelist = new Vector<storeobj>();
+    }
+
+    public StoreBlock()
+    {
+        this(UIDGenerator.getNext());
     }
 
     @Override

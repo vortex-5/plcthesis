@@ -202,13 +202,14 @@ public class DrawView extends AbstractView {
                             sfi.read(f, drawing);
                             success = true;
                             break;
-                        } catch (Exception e) {
+                        } catch (IOException e) {
+                            throw e;
                         // try with the next input format
                         }
                     }
             if (!success) {
                 ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
-                throw new IOException(labels.getFormatted("errorUnsupportedFileFormat", f.getName()));
+                throw new IOException("errorUnsupportedFileFormat: " + f.getName());
             }
             SwingUtilities.invokeAndWait(new Runnable() {
 

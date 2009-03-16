@@ -18,11 +18,11 @@ public class OutputBlock extends CodeBlock implements CreatesContextMenu {
     private String value;
 
     public OutputBlock() {
-        this(PORTS.PortA);
+        this(UIDGenerator.getNext(), PORTS.PortA);
     }
 
-    public OutputBlock(PORTS port) {
-        this.uid = UIDGenerator.getNext();
+    public OutputBlock(int uid, PORTS port) {
+        this.uid = uid;
         this.ctype = CodeType.Output;
 
 

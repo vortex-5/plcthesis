@@ -200,6 +200,8 @@ public class StoreBlockFigure extends CodeBlockFigure{
     public void write(DOMOutput out) throws IOException {
         writeBoundingBox(out); //save our position data
 
+        writeUID(out);
+
         //get rid of garbage
         getModel().removeUnsavedEntries();
 
@@ -213,7 +215,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
         }
 
 
-        writeAttributes(out); //export all attributes
+        //writeAttributes(out); //export all attributes
     }
 
     @Override
@@ -221,7 +223,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
         Bounds box = readBoundingBox(in);
         setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
 
-        SavedBlock = new StoreBlock();
+        SavedBlock = new StoreBlock(readUID(in));
 
         String strType = "INIT";
         String strId = "INIT";
@@ -242,6 +244,6 @@ public class StoreBlockFigure extends CodeBlockFigure{
                 i++;
         }
 
-        readAttributes(in);
+        //readAttributes(in);
     }
 }

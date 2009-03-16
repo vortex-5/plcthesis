@@ -38,6 +38,7 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
         super(newBackgroundFigure);
     }
 
+
     @Override
     public void addNotify(Drawing drawing) {
         super.addNotify(drawing);
@@ -103,7 +104,7 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
         accociatedcode = cde;
     }
     
-    protected CodeBlock getModel()
+    public CodeBlock getModel()
     {
         return accociatedcode;
     }
@@ -145,5 +146,15 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
         double h = in.getAttribute("h", 0d);
 
         return new Bounds(x,y,w,h);
+    }
+
+    public void writeUID (DOMOutput out) throws IOException {
+        out.addAttribute("uid", Integer.toString(getModel().getUID()));
+    }
+
+    public int readUID (DOMInput in) throws IOException {
+        String uid = in.getAttribute("uid", "UNDEFINED");
+        UIDGenerator.jumpTo(Integer.parseInt(uid));
+        return Integer.parseInt(uid);
     }
 }

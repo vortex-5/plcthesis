@@ -17,11 +17,30 @@ public class UIDGenerator {
     {
         current = -1;
     }
-    
+
+    /**
+     * When loading from saved file we need to make sure our newly generated
+     * UID's don't conflict with existing UID's
+     * @param index
+     */
+    public static void jumpTo(int index)
+    {
+        if (current < index) current = index;
+        out();
+    }
+
     public static int getNext()
     {
         current++;
+
+        out();
+
         return current;
+    }
+
+    private static void out()
+    {
+        //System.out.println("CURRENT UID: [" + Integer.toString(current) + "]");
     }
 
 }
