@@ -30,7 +30,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
     private TextChangedListener txtchange;
     private ActionListener updatelistener;
 
-    private StoreBlock SavedBlock;
+    private StoreBlock SavedBlock = null;
 
 
     
@@ -42,6 +42,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
         }
         else {
             accociatedcode = SavedBlock;
+            SavedBlock = null;
         }
         txtchange = new TextChangedListener(this,(StoreBlock)accociatedcode);
         updatelistener = new UpdateListener(this);
@@ -200,10 +201,10 @@ public class StoreBlockFigure extends CodeBlockFigure{
         writeBoundingBox(out); //save our position data
 
         //get rid of garbage
-        ((StoreBlock)accociatedcode).removeUnsavedEntries();
+        getModel().removeUnsavedEntries();
 
         //prepare for export
-        List<storeobj> store = ((StoreBlock)accociatedcode).getStores();
+        List<storeobj> store = getModel().getStores();
 
         for (int i=0;i<store.size();i++){
             out.addAttribute("data_type" + Integer.toString(i), store.get(i).type.getSaveString());

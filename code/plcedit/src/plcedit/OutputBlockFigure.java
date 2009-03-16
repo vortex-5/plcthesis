@@ -12,10 +12,14 @@ import java.awt.geom.Point2D.Double;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.FigureEvent;
 import org.jhotdraw.draw.FigureListener;
-import org.jhotdraw.draw.GraphicalCompositeFigure;
 import org.jhotdraw.draw.HorizontalLayouter;
 import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.Figure;
+
+import org.jhotdraw.xml.DOMInput;
+import org.jhotdraw.xml.DOMOutput;
+import java.io.IOException;
+
 /**
  *
  * @author Vortex-5
@@ -24,9 +28,17 @@ public class OutputBlockFigure extends CodeBlockFigure {
     private TextChangedListener txtchange; //used for user set text box
     private ActionListener updatelistener; //used for triggering a context menu update
 
+    private OutputBlock SavedBlock = null;
+
     @Override
     protected void createModel() {
-        accociatedcode = new OutputBlock();
+        if (SavedBlock == null) {
+            accociatedcode = new OutputBlock();
+        }
+        else {
+            accociatedcode = SavedBlock;
+            SavedBlock = null;
+        }
         txtchange = new TextChangedListener(this,(OutputBlock)accociatedcode);
         updatelistener = new UpdateListener(this);
     }
@@ -138,5 +150,30 @@ public class OutputBlockFigure extends CodeBlockFigure {
     }
 
 
+
+    @Override
+    public void write(DOMOutput out) throws IOException {
+        writeBoundingBox(out); //save our position data
+
+        out.addAttribute("data_port", getModel().getDisplayedPort());
+        out.addAttribute("data_val", getModel().getValue());
+
+        writeAttributes(out); //export all attributes
+    }
+
+    @Override
+    public void read(DOMInput in) throws IOException {
+        Bounds box = readBoundingBox(in);
+        setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
+
+        String data = in.getAttribute("data_port", "UNDEFINED");
+        String val = in.getAttribute("data_val", "UNDEFINED");
+        if (!data.equals("UNDEFINED") && !val.equals("UNDEFINED")) {
+            SavedBlock = new OutputBlock(OutputBlock.portFromString(data));
+            SavedBlock.setValue(val);
+        }
+        
+        readAttributes(in);
+    }
 
 }

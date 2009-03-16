@@ -7,17 +7,34 @@ package plcedit;
 
 import org.jhotdraw.draw.*;
 
+import org.jhotdraw.xml.DOMInput;
+import org.jhotdraw.xml.DOMOutput;
+import java.io.IOException;
+
 /**
  *
  * @author Vortex-5
  */
 public class DelayBlockFigure extends CodeBlockFigure{
     private final AttributeKey<DelayBlock> MODIFY_LINK_VAL = new AttributeKey("MODIFY_LINK_VAL");
+    private DelayBlock SavedBlock = null;
     //private TextChangedListener txtchange;
 
     @Override
     protected void createModel() {
-        accociatedcode = new DelayBlock();
+        if (SavedBlock == null) {
+            accociatedcode = new DelayBlock();
+        }
+        else {
+            accociatedcode = SavedBlock;
+            SavedBlock = null;
+        }
+    }
+
+    @Override
+    public DelayBlock getModel()
+    {
+        return (DelayBlock)accociatedcode;
     }
 
     @Override
@@ -84,5 +101,27 @@ public class DelayBlockFigure extends CodeBlockFigure{
         public void figureRequestRemove(FigureEvent e) {
             System.out.println("Detected removed req");
         }
+    }
+
+
+
+    @Override
+    public void write(DOMOutput out) throws IOException {
+        writeBoundingBox(out); //save our position data
+
+        out.addAttribute("delay", getModel().getStringDelayTime());
+
+        writeAttributes(out); //export all attributes
+    }
+
+    @Override
+    public void read(DOMInput in) throws IOException {
+        Bounds box = readBoundingBox(in);
+        setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
+
+        SavedBlock = new DelayBlock();
+        SavedBlock.setDelayTime(in.getAttribute("delay", "-1"));
+
+        readAttributes(in);
     }
 }

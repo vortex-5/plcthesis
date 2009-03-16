@@ -22,6 +22,11 @@ public class DelayBlock extends CodeBlock {
     {
         delaytime = newtime;
     }
+
+    public void setDelayTime(String newtime)
+    {
+        delaytime = Long.parseLong(newtime);
+    }
     
     public long getDelayTime()
     {

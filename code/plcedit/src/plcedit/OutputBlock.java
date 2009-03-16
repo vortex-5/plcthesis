@@ -18,12 +18,16 @@ public class OutputBlock extends CodeBlock implements CreatesContextMenu {
     private String value;
 
     public OutputBlock() {
+        this(PORTS.PortA);
+    }
+
+    public OutputBlock(PORTS port) {
         this.uid = UIDGenerator.getNext();
         this.ctype = CodeType.Output;
 
 
         //TODO: determine if we want a default port at all
-        this.port = PORTS.PortA;
+        this.port = port;
         this.value = "0x0";
     }
 
@@ -33,6 +37,25 @@ public class OutputBlock extends CodeBlock implements CreatesContextMenu {
 
     public String getDisplayedPort() {
         return getDisplayedPort(this.port);
+    }
+
+    public static PORTS portFromString(String Port) {
+        if (Port.equals("PORTA")) {
+            return PORTS.PortA;
+        }
+        else if (Port.equals("PORTB")) {
+            return PORTS.PortB;
+        }
+        else if (Port.equals("PORTC")) {
+            return PORTS.PortC;
+        }
+        else if (Port.equals("PORTD")) {
+            return PORTS.PortD;
+        }
+        else
+        {
+            return PORTS.PortA;
+        }
     }
 
     public String getDisplayedPort(PORTS port) {
