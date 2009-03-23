@@ -39,13 +39,8 @@
 #pragma config WDT = OFF //disable watchdog timer
 #pragma config LVP = OFF //disable low power programming
 
-
 /* Public methods */
 void delay_ms(int);
-
-
-/* MUST IMPLEMENT THE FOLLOWING METHOD */
-void program (void);
 
 /* Private methods below DO NOT USE */
 void init_chip(void); //private method to initialize chip to the 
