@@ -27,20 +27,19 @@ one such state the light is on.
     \label{fig:state_blink_light}
 \end{figure}
 
-We observe that transitions must always be connected on the tail end and the tip to a state. In addition if a transition can be taken it must be taken immediately. Transitions may also have a guard condition accociated with them. If a guard condition does not exist then it is assumed the transition can always be taken. In addition to a guard condition each transition may have an output accociated with them. Moore style state machines do not contain outputs on transition edges, Mealy machines do contain an extra output per transition.
+We observe that transitions must always be connected on the tail end and the tip to a state. In addition if a transition can be taken it must be taken immediately. Transitions may also have a guard condition accociated with them. If a guard condition does not exist then it is assumed the transition can always be taken. In addition to a guard condition each transition may have an output accociated with them. Moore style state machines do not contain outputs on transition edges, Mealy machines do contain an extra output per transition (see: figure /ref{fig:state_moore_mealy}). The output edge on a mealy machine are denoted by a "/" symbol. Although figure /ref{fig:state_moore_mealy} contains outputs for all edges, we can define ourselves a null output or a no change output in order to simulate an edge having no output as well. For purposes of our state chart language we did not require the power of a mealy machine and thus we chose to stay with a simpler moore machine. More details of this decision can be found in the language section \ref{sec:lang:statesemantics}.
 
 %diagram for Moore + Mealy state machines
 \begin{figure}[htp]
     \centering
-    \includegraphics[trim= 10mm 150mm 10mm 10mm, clip ,width=\imgmedsmall]{./images/state_moore.pdf} 
-    \includegraphics[trim= 10mm 150mm 10mm 10mm, clip ,width=\imgmedsmall]{./images/state_mealy.pdf}    
+    \includegraphics[trim= 15mm 150mm 15mm 10mm, clip ,width=200pt]{./images/state_moore.pdf} 
+    \includegraphics[trim= 15mm 150mm 15mm 10mm, clip ,width=200pt]{./images/state_mealy.pdf}    
     \caption{Moore and Mealy State Machines}
     \label{fig:state_moore_mealy}
 \end{figure}
 
-
 There are several ways a starting state can be defined as seen in figure \ref{fig:state_moore_mealy}.
-One such way is to draw a edge that has no state connected to its tail, this generally looks like an edge out of nowhere. In our system we choose to use the UML symbol where the start state edge has a solid dot connected to the tail as shown in figure \ref{fig:state_blink_light}.
+One such way is to draw a edge that has no state connected to its tail, this generally looks like an edge out of nowhere. In our system we choose to use the UML symbol where the start state edge has a solid dot connected to the tail as shown in figure TODOMAKEFIGURE %\ref{uml_start}.
 
 The accepting state is defined in state charts as any states where inputs are accepted. In other words this is generally a state in which the machine has successfully performed its task and is now ready to take on another one. Accepting states generally can reach all other states in the system. For our implimentation we do not need to model this behavior and therefor the concept of accepting states have been left out for practical purposes.
 
