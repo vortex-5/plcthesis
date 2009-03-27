@@ -17,14 +17,27 @@ Mathematically a state chart can be defined as $M = \lbrace Q, \Sigma, Z, \delta
 	\item \textbf{F:} Accepting states for the system, can also sometimes represent the final state. Drawn as a double outline to the state symbol.
 \end{itemize}
 
-A state can be thought of as a set of operating conditions that for example in figure %\ref{fig:state_blink_light}
+A state can be thought of as a set of operating conditions that for example in figure \ref{fig:state_blink_light}
 one such state the light is on.
 
-%digram simple state transition for a blinking light {fig:state_blink_light}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[trim= 10mm 150mm 10mm 10mm, clip ,width=\imgmedium]{./images/state_blink_light.pdf} %custom size
+    \caption{Simple Toggle Light}
+    \label{fig:state_blink_light}
+\end{figure}
 
 We observe that transitions must always be connected on the tail end and the tip to a state. In addition if a transition can be taken it must be taken immediately. Transitions may also have a guard condition accociated with them. If a guard condition does not exist then it is assumed the transition can always be taken. In addition to a guard condition each transition may have an output accociated with them. Moore style state machines do not contain outputs on transition edges, Mealy machines do contain an extra output per transition.
 
 %diagram for Moore + Mealy state machines
+\begin{figure}[htp]
+    \centering
+    \includegraphics[trim= 10mm 150mm 10mm 10mm, clip ,width=\imgmedsmall]{./images/state_moore.pdf} 
+    \includegraphics[trim= 10mm 150mm 10mm 10mm, clip ,width=\imgmedsmall]{./images/state_mealy.pdf}    
+    \caption{Moore and Mealy State Machines}
+    \label{fig:state_moore_mealy}
+\end{figure}
+
 
 There are several ways a starting state can be defined as seen in figure {TODO: FIGURE REF}.%\ref{fig:state_moore_mealy}
 One such way is to draw a edge that has no state connected to its tail, this generally looks like an edge out of nowhere. In our system we choose to use the UML symbol where the start state edge has a solid dot connected to the tail as shown in figure {TODO: FIGURE REF}. %\ref{fig:state_blink_light} // or other uml symbol
