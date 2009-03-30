@@ -16,9 +16,8 @@ import java.io.IOException;
  * @author Vortex-5
  */
 public class DelayBlockFigure extends CodeBlockFigure{
-    private final AttributeKey<DelayBlock> MODIFY_LINK_VAL = new AttributeKey("MODIFY_LINK_VAL");
+    private TextChangedListener txtchange; //used for user set text box
     private DelayBlock SavedBlock = null;
-    //private TextChangedListener txtchange;
 
     @Override
     protected void createModel() {
@@ -29,6 +28,8 @@ public class DelayBlockFigure extends CodeBlockFigure{
             accociatedcode = SavedBlock;
             SavedBlock = null;
         }
+
+        txtchange = new TextChangedListener(this, (DelayBlock)accociatedcode);
     }
 
     @Override
@@ -48,7 +49,8 @@ public class DelayBlockFigure extends CodeBlockFigure{
 
         attrib.setLayouter(new HorizontalLayouter());
         TextFigure textdelay = new TextFigure(((DelayBlock)accociatedcode).getStringDelayTime());
-        textdelay.setAttribute(MODIFY_LINK_VAL, (DelayBlock)accociatedcode);
+        textdelay.setAttribute(SpecialAttributeKeys.MODIFY_LINK_DELAY, (DelayBlock)accociatedcode);
+        textdelay.addFigureListener(txtchange);
         attrib.add(textdelay);
 
         update_base();
@@ -80,14 +82,11 @@ public class DelayBlockFigure extends CodeBlockFigure{
 
         public void figureChanged(FigureEvent e) {          
             System.out.println("Got Change Event (DELAY)");
-            if(e.getFigure().getAttribute(MODIFY_LINK_VAL) != null)
-            {
-                accociatedcode.setDelayTime(Integer.parseInt(((TextFigure)e.getFigure()).getText()));
-            }
-            
-            //accociatedcode.updateEntries();
+
+            DelayBlock edit = (DelayBlock)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_DELAY);
+            edit.setDelayTime(((TextFigure)e.getFigure()).getText());
+
             caller.update();
-            //System.out.println(accociatedcode.getCode());
         }
 
         public void figureHandlesChanged(FigureEvent e) {
@@ -110,8 +109,8 @@ public class DelayBlockFigure extends CodeBlockFigure{
         writeBoundingBox(out); //save our position data
 
         writeUID(out);
-        
-        out.addAttribute("delay", getModel().getStringDelayTime());
+      
+        out.addAttribute("data_delay", getModel().getStringDelayTime());
 
         //writeAttributes(out); //export all attributes
     }
@@ -121,13 +120,12 @@ public class DelayBlockFigure extends CodeBlockFigure{
         Bounds box = readBoundingBox(in);
         setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
 
-        String delay = in.getAttribute("delay", "-1");
+        String delay = in.getAttribute("data_delay", "-1");
 
         SavedBlock = new DelayBlock();
-
         SavedBlock.setUID(readUID(in));
         SavedBlock.setDelayTime(Integer.parseInt(delay));
 
-        //readAttributes(in);
+        readAttributes(in);
     }
 }

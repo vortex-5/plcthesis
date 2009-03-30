@@ -50,7 +50,7 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
 
     private void setTextLabel(TextFigure text)
     {
-        removeAllChildren();
+        //removeAllChildren();
         addTextLabel(text);
     }
 
@@ -90,7 +90,7 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
         out.closeElement();
 
         
-        out.openElement("Label");
+        out.openElement("data_label");
         out.writeObject(label);
         out.closeElement();
 
@@ -136,7 +136,7 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
         setEndConnector((Connector) in.readObject());
         in.closeElement();
         
-        in.openElement("Label");
+        in.openElement("data_label");
         setTextLabel((TextFigure) in.readObject());
         in.closeElement();
     }
