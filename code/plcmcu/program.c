@@ -1,4 +1,4 @@
-void program(void) //user generated program example
+void program(void) //user generated program example normally this is the output from the plcedit program
 {
 	while(1)
 	{
