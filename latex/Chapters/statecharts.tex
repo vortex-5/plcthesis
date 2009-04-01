@@ -39,7 +39,15 @@ We observe that transitions must always be connected on the tail end and the tip
 \end{figure}
 
 There are several ways a starting state can be defined as seen in figure \ref{fig:state_moore_mealy}.
-One such way is to draw a edge that has no state connected to its tail, this generally looks like an edge out of nowhere. In our system we choose to use the UML symbol where the start state edge has a solid dot connected to the tail as shown in figure TODOMAKEFIGURE %\ref{uml_start}.
+One such way is to draw a edge that has no state connected to its tail, this generally looks like an edge out of nowhere. In our system we choose to use the UML symbol where the start state edge has a solid dot connected to the tail as shown in figure \ref{fig:state_uml_light}.
+
+%diagram for UML state machines
+\begin{figure}[htp]
+    \centering
+    \includegraphics[trim= 15mm 200mm 15mm 10mm, clip ,width=\imgmedium]{./images/state_uml_light.pdf} 
+    \caption{UML State Chart of a Togglable Light}
+    \label{fig:state_uml_light}
+\end{figure}
 
 The accepting state is defined in state charts as any states where inputs are accepted. In other words this is generally a state in which the machine has successfully performed its task and is now ready to take on another one. Accepting states generally can reach all other states in the system. For our implimentation we do not need to model this behavior and therefor the concept of accepting states have been left out for practical purposes.
 
