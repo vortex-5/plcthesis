@@ -49,7 +49,9 @@ One such way is to draw a edge that has no state connected to its tail, this gen
     \label{fig:state_uml_light}
 \end{figure}
 
-The accepting state is defined in state charts as any states where inputs are accepted. In other words this is generally a state in which the machine has successfully performed its task and is now ready to take on another one. Accepting states generally can reach all other states in the system. For our implimentation we do not need to model this behavior and therefor the concept of accepting states have been left out for practical purposes.
+The accepting state is defined in state charts as any states where inputs are accepted. In other words this is generally a state in which the machine has successfully performed its task and is now ready to take on another one. Accepting states generally can reach all other states in the system. The symbol for an accepting state is a state with a double outline, this is shown in figure \ref{fig:state_moore_mealy}. For our implimentation we do not need to model this behavior and therefor the concept of accepting states have been left out for practical purposes.
+
+The UML defined state charts as showin in figure \ref{fig:state_uml_light} also allow for state titles in each state which can be seen at the top of each state. In addition, each state may contain executed actions that will occur. In this case "LightOn()" and "LightOff()" refer to executed routines that are called once the "On" and "Off" states are reached respectively. The behavior is then once the state "On" is reached "LightOn()" is executed right away.
 
 In a standard state chart a lot of implementation details can be hidden away and the diagram can be rather simple. In this example we see that there's no mention of how to turn on the light or turn off the light. Nor do we care if the light is connected to a particular port.
 
