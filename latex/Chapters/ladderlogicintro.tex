@@ -29,8 +29,8 @@ symbol $-\vert ~ ~ \vert-$. %need reference from tutorial
 Loads are boolean values and can be a negated input using the $-\vert/\vert-$ symbol. 
 In addition an address is usually assigned to each input referring to 
 which port on the physical PLC the input is connected to. Logical and 
-can be formed by having two logical loads on one rung\cite{ebookmorris}. 
-Similarily logical or can be formed by creating a branch along one 
+can be formed by having two logical loads on one rung \cite{ebookmorris}. 
+Similarly logical or can be formed by creating a branch along one 
 rung as shown in figure. %figure # %refer to figure here
 
 We can define the language of Ladder Logic as follows $Q = \langle M,S,C,F,R,P \rangle $
@@ -53,10 +53,10 @@ We can define the language of Ladder Logic as follows $Q = \langle M,S,C,F,R,P \
 The most basic structure of ladder logic is shown in figure \ref{fig:intro_fig1}. 
 We have 
 $$M=\lbrace in_1 \rbrace, S=\lbrace out_1 \rbrace, C=\lbrace out_1 \rbrace, R=\lbrace rung_1 \rbrace, P=\lbrace L,R \rbrace.$$
-Note that $rung_1$ is not explicitly labeled in ladder logic but we give it a name here
+Note that $rung_1$ is not explicitly labelled in ladder logic but we give it a name here
 so we may demonstrate our language framework.
 
-The symantics of figure \ref{fig:intro_fig1} is then: 
+The semantics of figure \ref{fig:intro_fig1} is then: 
 \begin{table}[htp]
     \centering
     \begin{tabular}{|l|l|l|}
@@ -74,7 +74,7 @@ The symantics of figure \ref{fig:intro_fig1} is then:
 
 
 Where $@T(<condition>)$ is used to denote the positive edge of a condition becoming true.
-We also assume negligable delay between the action occuring and the result being asserted.
+We also assume negligible delay between the action occurring and the result being asserted.
 It is important to note that our function table must be complete that is have an entry for
 all possible combinations in the input domain.
 
@@ -119,7 +119,7 @@ becoming true nor do we need to individually calculate the timing on $in_1$ or $
 \end{figure}
 
 
-In addition to mutiple actions connected to the same rung, actions can also be branched. A branched rung as
+In addition to multiple actions connected to the same rung, actions can also be branched. A branched rung as
 show in figure \ref{fig:intro_fig3} behaves like a logical OR. In addition two or more rungs can be joined
 as show in figure \ref{fig:intro_fig3a}. The semantics are equivalent in both figure \ref{fig:intro_fig3} and 
 figure \ref{fig:intro_fig3a}.
@@ -167,10 +167,10 @@ As before in table \ref{table:table_for_fig2} in table \ref{table:table_for_fig3
     \label{table:table_for_fig3a}
 \end{table}
 
-In table \ref{table:table_for_fig3a} we choose to represent $in_1$ and $in_2$ as seperate actions. This matches figure
+In table \ref{table:table_for_fig3a} we choose to represent $in_1$ and $in_2$ as separate actions. This matches figure
 \ref{fig:intro_fig3a} more closely but also makes any verification harder than table \ref{table:table_for_fig3}. For
 smaller examples table \ref{table:table_for_fig3} make more sense since you can verify relatively simple smaller functions
-quite fast. If a system becomes resonably large however there might be motivation to use the style shown in 
+quite fast. If a system becomes reasonably large however there might be motivation to use the style shown in 
 table \ref{table:table_for_fig3a} since it will allow more complex functions to be decomposed into simpler actions.
 Since semantically the two are equivalent this paper will focus to the first convention.
 
@@ -182,7 +182,7 @@ Since semantically the two are equivalent this paper will focus to the first con
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[trim= 50mm 140mm 50mm 10mm, clip ,width=\imgmedsmall]{./images/intro_and_graph.pdf} %custom size
+    \includegraphics[trim= 50mm 140mm 50mm 10mm, clip, width=\imgmedsmall]{./images/intro_and_graph.pdf} %custom size
     \caption{State chart conversion for table \ref{table:table_for_fig2}}
     \label{fig:intro_and_graph}
 \end{figure}
@@ -197,7 +197,7 @@ graph being the start state of the rung, and one sink for the graph being the en
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[trim= 50mm 140mm 50mm 10mm, clip ,width=\imgmedsmall]{./images/intro_or_graph.pdf} %custom size
+    \includegraphics[trim= 50mm 140mm 50mm 10mm, clip, width=\imgmedsmall]{./images/intro_or_graph.pdf} %custom size
     \caption{State chart conversion for table \ref{table:table_for_fig3}}
     \label{fig:intro_or_graph}
 \end{figure}
@@ -216,7 +216,7 @@ corresponding table \ref{table:table_for_fig3a}.
     \label{fig:intro_or_graph_3a}
 \end{figure}
 
-So far we've been looking at logic that has things happening instantaneously however ladder logic does contain methods for expressing more advance behavior. Suppose you have a light that you want to be able to turn on and stay on after you push a button. With any of the ladder diagrams shown above the light would go out as soon as the buttons were all released. In order to keep the light on and constantly on after the button is pressed we introduce the concept of a latch. We modify our diagram shown in figure \ref{fig:intro_fig3a} making the output feed back into one of the inputs to our OR circuit. The result is show in figure \ref{fig:intro_fig_latched}.
+So far we've been looking at logic that has things happening instantaneously however ladder logic does contain methods for expressing more advance behaviour. Suppose you have a light that you want to be able to turn on and stay on after you push a button. With any of the ladder diagrams shown above the light would go out as soon as the buttons were all released. In order to keep the light on and constantly on after the button is pressed we introduce the concept of a latch. We modify our diagram shown in figure \ref{fig:intro_fig3a} making the output feed back into one of the inputs to our OR circuit. The result is show in figure \ref{fig:intro_fig_latched}.
 
 %figure for latched circuits 
 \begin{figure}[htp]
@@ -226,4 +226,4 @@ So far we've been looking at logic that has things happening instantaneously how
     \label{fig:intro_fig_latched}
 \end{figure}
 
-The latched circuit operates the same way as the behavior show in \ref{table:table_for_fig3a} the key difference is the feedback of the OR circuit replaces the second row of the function table.
+The latched circuit operates the same way as the behaviour show in \ref{table:table_for_fig3a} the key difference is the feedback of the OR circuit replaces the second row of the function table.
