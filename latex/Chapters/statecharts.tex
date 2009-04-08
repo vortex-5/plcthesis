@@ -1,5 +1,5 @@
 %Introduction to state charts
-\section{State Charts}
+\section{Overview of State Charts} \label{sec:overviewstatechart}
 
 Our proposed visual programming language involves using directed state charts with guarded edges. Our languages differs in a few concepts from the usual state charts syntax in order to support features of the hardware. To better understand these differences we will first introduce all the syntax and semantics of a standard UML based state chart.
 
@@ -53,15 +53,20 @@ The accepting state is defined in state charts as any states where inputs are ac
 
 The UML defined state charts as showin in figure \ref{fig:state_uml_light} also allow for state titles in each state which can be seen at the top of each state. In addition, each state may contain executed actions that will occur. In this case "LightOn()" and "LightOff()" refer to executed routines that are called once the "On" and "Off" states are reached respectively. The behavior is then once the state "On" is reached "LightOn()" is executed right away.
 
-In a standard state chart a lot of implementation details can be hidden away and the diagram can be rather simple. In this example we see that there's no mention of how to turn on the light or turn off the light. Nor do we care if the light is connected to a particular port.
+%diagram for UML state machines
+\begin{figure}[htp]
+    \centering
+    \includegraphics[trim= 15mm 175mm 15mm 10mm, clip ,width=\imgmedium]{./images/state_uml2_syntax_21_4.pdf} 
+    \caption{UML2 State Chart Syntax \cite{UML2}}
+    \label{fig:state_uml2}
+\end{figure}
 
-%Source wikipedia
-TODO: The tyoe if state charts that we are using is a DIRECTED GRAPH with GUARDED EDGES. We have a starting state but not necessarily an ACCEPTING state.
+The syntax shown in figure \ref{fig:state_uml_light} is UML2. UML2's specifications of state charts allows for additional information in each state. In figure \ref{fig:state_uml2} we note the additional features of UML2. Each state in UML2 can contain the following information. This inherent flexibility makes UML2 more useful for representing more practical programs. In addition UML2 has a more precise syntax when compared to other methods of describing state charts.
 
-TODO: Our state chart is very similar to an UML state diagram.
+\begin{itemize}
+	\item \textbf{state name:} The state name is manditory for each UML2 state in cases where this is the only information the horizontal divider may be omitted.
+	\item \textbf{entry and exit actions:} Entry and exit options are optional, they are commonly used for initializers and finalizers that may occur upon each state.
+	\item \textbf{internal transitions:} These optional fields refer to simple transitions that may happen in the state itself generally these are simple enough to not require a separate diagram.
+	\item \textbf{internal activity:} Also optional but refer to activities that occur or are executed while in the state.
+\end{itemize}
 
-TODO: We might consider adapting our state chart to resemble UML digrams but that bit is under consideration. currently it does look very similar but edges do not have the correct formatting for guarded conditions on UML.
-
-TODO: Minor detail, all of our states have an implicit edge going to END and will be used if no other conditions are true. We might consider showing the difference in the two.
-
-TODO: Programming side, we need to enable saving because it's becoming a pain in the -bleep-.
