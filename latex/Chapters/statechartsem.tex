@@ -29,3 +29,12 @@ We would see that the result $v_1 = v_0$ it is important to note this since gene
 \end{figure}
 
 The advantage of sequential assignments over cocurrent assignments can be seen when trying to compute more complicated formulas as seen in figure \ref{fig:state_uml2_newtons}. Figure \ref{fig:state_uml2_newtons} computes the newton's approximation of $x^2$ given a starting point. If the same formula was to be computed with cocurrent assignments many more states would be required. Thus although this choice slightly deviates from UML2 state charts it was decided the benefits to usability was too great to strictly adhere to the UML2 semantics.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=\imgmedium]{./images/tool_transition_example.png}
+    \caption{PLC Edit with Transition}
+    \label{fig:tool_transition_example}
+\end{figure}
+
+Transitions in the language must be mutually exclusive that is if 

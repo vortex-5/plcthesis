@@ -23,7 +23,7 @@ import org.jhotdraw.xml.DOMStorable;
 
 public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure implements ConnectionFigure, Typed {
     private LineDecoration decoration;
-    private TextFigure label;
+    private TextFigure label = null;
     
     public DirectedLineConnectionFigure()
     {
@@ -50,7 +50,7 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
 
     private void setTextLabel(TextFigure text)
     {
-        //removeAllChildren();
+        removeChild(0);
         addTextLabel(text);
     }
 
@@ -69,7 +69,7 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
 
     public String getGuardCode() //this is used during code generation to update the guard conditions
     {
-        TextFigure label = (TextFigure)getChild(0);
+        label = (TextFigure)getChild(0);
         String buffer = "";
         if (!label.getText().equals("true"))
             buffer = "if (" + label.getText() + ") ";
@@ -127,6 +127,7 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
         readAttributes(in);
         readPoints(in);
 
+        willChange();
         
         in.openElement("startConnector");
         setStartConnector((Connector) in.readObject());
@@ -137,8 +138,10 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
         in.closeElement();
         
         in.openElement("data_label");
-        //setTextLabel((TextFigure) in.readObject()); (handled for me in attributes)
+        setTextLabel((TextFigure) in.readObject());
         in.closeElement();
+
+        changed();
     }
 
     @Override
