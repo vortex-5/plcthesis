@@ -33,8 +33,9 @@ The advantage of sequential assignments over cocurrent assignments can be seen w
 \begin{figure}[htp]
     \centering
     \includegraphics[width=\imgmedium]{./images/tool_transition_example.png}
-    \caption{PLC Edit with Transition}
+	\includegraphics[width=\imgmedium]{./images/tool_transition_example_bad.png}
+    \caption{PLC Edit Valid vs Invalid Transitions}
     \label{fig:tool_transition_example}
 \end{figure}
 
-Transitions in the language must be mutually exclusive that is if 
+Transitions in the language must be mutually exclusive that is if it is invalid to have two transitions that can both be taken at any point. If this does occur 
