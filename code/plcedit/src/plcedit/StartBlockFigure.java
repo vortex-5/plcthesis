@@ -48,8 +48,7 @@ public class StartBlockFigure extends CodeBlockFigure {
 
     @Override
     public void read(DOMInput in) throws IOException {
-        Bounds box = readBoundingBox(in);
-        setBounds(box.getTopLeft(), box.getBottomRight());
+        readSavedBounds(in);
 
         SavedBlock = new StartBlock(readUID(in));
         

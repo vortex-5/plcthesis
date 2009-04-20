@@ -165,10 +165,7 @@ public class OutputBlockFigure extends CodeBlockFigure {
 
     @Override
     public void read(DOMInput in) throws IOException {
-        Bounds box = readBoundingBox(in);
-        setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
-
-
+        readSavedBounds(in);
 
         String data = in.getAttribute("data_port", "UNDEFINED");
         String val = in.getAttribute("data_val", "UNDEFINED");

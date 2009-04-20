@@ -23,6 +23,8 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
     
     protected TextFigure name;
     protected GraphicalCompositeFigure attrib = new GraphicalCompositeFigure();
+
+    protected Bounds SavedBounds = null; //bug bounds not loaded per object
     /**
      * Creates a code block of various types provided with a correct prototype
      * block of code
@@ -68,6 +70,8 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
         add(attrib);
         
         setLayouter(new VerticalLayouter()); //set the default layouter
+
+        updatePositionFromSaved(); //extract pervious saved position if found
     }
     
     
@@ -75,6 +79,19 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
     
     //done by each individual inherited class this overrides any defaults that were done
     protected abstract void initialize_component();
+
+    protected void readSavedBounds(DOMInput in) throws IOException
+    {
+        SavedBounds = readBoundingBox(in);
+    }
+
+    protected void updatePositionFromSaved()
+    {
+        if (SavedBounds != null) {
+            setBounds(SavedBounds.getTopLeft(), SavedBounds.getBottomRight());
+            SavedBounds = null;
+        }
+    }
     
     public void refreshFromData()
     {
@@ -139,7 +156,7 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
         out.addAttribute("h", r.height);
     }
 
-    public Bounds readBoundingBox (DOMInput in) throws IOException {
+    private Bounds readBoundingBox (DOMInput in) throws IOException {
         double x = in.getAttribute("x", 0d);
         double y = in.getAttribute("y", 0d);
         double w = in.getAttribute("w", 0d);

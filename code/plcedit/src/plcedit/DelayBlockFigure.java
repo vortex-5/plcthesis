@@ -69,20 +69,15 @@ public class DelayBlockFigure extends CodeBlockFigure{
         }
 
         public void areaInvalidated(FigureEvent e) {
-            System.out.println("detected area invalid");
         }
 
         public void attributeChanged(FigureEvent e) {
-            System.out.println("detected attrib changed");
         }
 
         public void figureAdded(FigureEvent e) {  
-            System.out.println("detected fig added");
         }
 
         public void figureChanged(FigureEvent e) {          
-            System.out.println("Got Change Event (DELAY)");
-
             DelayBlock edit = (DelayBlock)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_DELAY);
             edit.setDelayTime(((TextFigure)e.getFigure()).getText());
 
@@ -90,7 +85,6 @@ public class DelayBlockFigure extends CodeBlockFigure{
         }
 
         public void figureHandlesChanged(FigureEvent e) {
-            System.out.println("Detected handles changed");
         }
 
         public void figureRemoved(FigureEvent e) {   
@@ -98,7 +92,6 @@ public class DelayBlockFigure extends CodeBlockFigure{
         }
 
         public void figureRequestRemove(FigureEvent e) {
-            System.out.println("Detected removed req");
         }
     }
 
@@ -117,8 +110,7 @@ public class DelayBlockFigure extends CodeBlockFigure{
 
     @Override
     public void read(DOMInput in) throws IOException {
-        Bounds box = readBoundingBox(in);
-        setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
+        readSavedBounds(in);
 
         String delay = in.getAttribute("data_delay", "-1");
 

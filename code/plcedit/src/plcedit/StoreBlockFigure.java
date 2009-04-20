@@ -31,9 +31,6 @@ public class StoreBlockFigure extends CodeBlockFigure{
     private ActionListener updatelistener;
 
     private StoreBlock SavedBlock = null;
-
-
-    
     
     @Override
     protected void createModel() {
@@ -42,7 +39,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
         }
         else {
             accociatedcode = SavedBlock;
-            SavedBlock = null;
+            SavedBlock = null;           
         }
         txtchange = new TextChangedListener(this,(StoreBlock)accociatedcode);
         updatelistener = new UpdateListener(this);
@@ -183,7 +180,6 @@ public class StoreBlockFigure extends CodeBlockFigure{
     private static final boolean DEBUG = true;
     @Override
     public boolean handleMouseClick(Double p, MouseEvent evt, DrawingView view) {
-        if (DEBUG) System.out.println("Got click event form composite figure StoreBlockFigure class");
         try
         {
             Figure target = this.findFigureInside(p);
@@ -220,8 +216,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
 
     @Override
     public void read(DOMInput in) throws IOException {
-        Bounds box = readBoundingBox(in);
-        setBounds(box.getTopLeft(), box.getBottomRight()); //set our object location
+        readSavedBounds(in);
 
         SavedBlock = new StoreBlock(readUID(in));
 

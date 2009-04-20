@@ -137,7 +137,7 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
         in.closeElement();
         
         in.openElement("data_label");
-        setTextLabel((TextFigure) in.readObject());
+        //setTextLabel((TextFigure) in.readObject()); (handled for me in attributes)
         in.closeElement();
     }
 
