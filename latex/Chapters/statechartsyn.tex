@@ -1,2 +1,14 @@
 %State Chart Syntax
 \section{Syntax of The State Chart Language}
+
+Abstract syntax of our state chart language:
+
+\begin{itemize}
+	\item Expression := Expression Op Expression | Op Expression
+	\item Var := Expression | Constant
+	\item Type := Char | Int | Long | Bool | Float
+	\item Identifier := [a-zA-Z]+[a-zA-Z0-9_]*  
+	
+	\item StoreBlock := Type Identifier = Var | Type Identifier = Var; StoreBlock
+	
+\end{itemize}
