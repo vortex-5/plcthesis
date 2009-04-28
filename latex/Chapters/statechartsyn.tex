@@ -7,7 +7,7 @@ Abstract syntax of our state chart language:
 	\item Expression := Expression Op Expression | Op Expression
 	\item Var := Expression | Constant
 	\item Type := Char | Int | Long | Bool | Float
-	\item Identifier := [a-zA-Z]+[a-zA-Z0-9_]*  
+	\item Identifier := [a-zA-Z$\_$]+[a-zA-Z0-9$\_$]*  
 	
 	\item StoreBlock := Type Identifier = Var | Type Identifier = Var; StoreBlock
 
