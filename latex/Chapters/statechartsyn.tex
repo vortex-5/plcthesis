@@ -10,5 +10,11 @@ Abstract syntax of our state chart language:
 	\item Identifier := [a-zA-Z]+[a-zA-Z0-9_]*  
 	
 	\item StoreBlock := Type Identifier = Var | Type Identifier = Var; StoreBlock
+
+	\item Condition := Var Eq Var | Var Eq Condition | Condition Eq Condition
+	
+	\item Eq := $=$ | $\neq$ | $<$ | $\leq$ | $>$ | $\geq$	
+	
+	\item Transition := StoreBlock | Condition | Storeblock
 	
 \end{itemize}
