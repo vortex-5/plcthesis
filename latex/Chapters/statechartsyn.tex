@@ -14,8 +14,10 @@ Abstract syntax of our state chart language:
 	\item Condition := Var Eq Var | Var Eq Condition | Condition Eq Condition
 	
 	\item Eq := $=$ | $\neq$ | $<$ | $\leq$ | $>$ | $\geq$	
+
+	\item StateBlock := StoreBlock	
 	
-	\item Transition := StoreBlock | Condition | Storeblock
+	\item Transition := StateBlock Condition StateBlock
 \end{itemize}
 
 \begin{figure}[htp]
@@ -27,5 +29,6 @@ Abstract syntax of our state chart language:
 
 In figure \ref{fig:state_storeblock} we see a store block represented as it would be drawn in the tool. Each line of a store block has the format shown in our abstract syntax. A line consists of a type (which in figure \ref{fig:state_storeblock} we have int, and char) an identifier, the equals symbol, and a value. A value can take the form of several expressions as show in figure \ref{fig:state_storeblock}. Our abstract syntax also allows for many lines to occur in each StoreBlock. This basic design choice allows formulae to be computed much easier in sequence rather than have several blocks to perform one set of operations.
 
+Transitions in our system must start from a  
 TODO: Draw transitions point out coundition
 
