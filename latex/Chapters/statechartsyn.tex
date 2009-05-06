@@ -15,19 +15,21 @@ Abstract syntax of our state chart language:
 	
 	\item Eq := $=$ | $\neq$ | $<$ | $\leq$ | $>$ | $\geq$	
 
-	\item StateBlock := StoreBlock	
+	\item Block := StoreBlock	
 	
 	\item Transition := StateBlock Condition StateBlock
 \end{itemize}
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[trim= 20mm 170mm 20mm 10mm, clip, width=\imgmedium]{./images/state_storeblock.pdf}
+    \includegraphics[trim= 20mm 175mm 20mm 10mm, clip, width=\imgmedium]{./images/state_storeblock.pdf}
     \caption{Example Of A Store Block As Implemented In PLCEdit}
     \label{fig:state_storeblock}
 \end{figure}
 
 In figure \ref{fig:state_storeblock} we see a store block represented as it would be drawn in the tool. Each line of a store block has the format shown in our abstract syntax. A line consists of a type (which in figure \ref{fig:state_storeblock} we have int, and char) an identifier, the equals symbol, and a value. A value can take the form of several expressions as show in figure \ref{fig:state_storeblock}. Our abstract syntax also allows for many lines to occur in each StoreBlock. This basic design choice allows formulae to be computed much easier in sequence rather than have several blocks to perform one set of operations.
+
+Transitions in our system must start from an initial block object and must terminate at another block. Transitions must be mutually exclusive to be valid that is for all edges leaving the block conditions formed by expressions $E_1, E_2, E_3...E_n$: $\forall(i \neq j \rightarrow E_i \cap E_j = \emptyset)$. In addition given a set of conditions $E_1 \cup E_2 \cup E_3 \cup ... \cup E_n = \mathbb{U}$. In simpler terms all transition conditions must be mutually exclusive and must cover the entire space. It is syntax error in our language if you have a condition that can occur that is not explicitly described. It is valid to have a transition begin and terminate from the same block. 
 
 \begin{figure}[htp]
     \centering
@@ -36,6 +38,6 @@ In figure \ref{fig:state_storeblock} we see a store block represented as it woul
     \label{fig:state_transition}
 \end{figure}
 
-Transitions in our system must start from a  
+
 
 
