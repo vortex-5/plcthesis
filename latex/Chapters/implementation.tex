@@ -1,0 +1,32 @@
+%Implementation
+\section{Implementation}
+\subsection{GUI and IDE}
+\subsubsection{Introduction}
+
+The gui and ide are both implemented in JAVA with the JHotDraw 7.1 framework chosen as a basis. The gui was decided early on to function like other popular tools for drawing state charts such as Visio, IBM's Rational software, and Dia. All of these tools choose to be interactive in the drawing phase rather than compile a graph in post. The reason for enforcing interactive drawing is that this tool is design to simplify the original implementation of ladder logic, and building it on a textual graphical language will significantly hurt the primary goal of ease of use. Secondly JAVA was chosen for portability as it was simplier to test one deployment version than multiple ports for the short duration of this project.
+
+The gui itself remains minimal %refer to figure
+there is a simple toolbar in which objects can be selected from the pallete and drawn. Properties of an object are directly editable on the object itself %ref figure
+instead of the original design of a seperate property palette. Again this design descision was chosen as it is simpler and more immediately understandable by the user.
+
+%figure goes here
+
+\subsubsection{Using the Gui}
+\paragraph{Parts of the Gui}
+\subparagraph{The tools pallate}
+The tools pallate is were the user selects their tool to use on the canvas. Only one tool can be used at a time. All tools except for compile and simulation are selected on click. Compile and Simulaiton are immediately executed on click.
+%TODO: Add simulation tool
+The tools listed on the tool pallate are as shown in figure %create figure tool pallate
+and have the functionality as follows
+\begin{itemize}
+\item \textbf{Selection Tool}: This tool allows you to select one or multiple objects. Or edit properties of objects. You can move the object around the canvas by first selecting the object with a single click, then clicking and draging the object to the desired location. Editing properties are accomplished by double clicking the property you would like to edit.
+\item \textbf{Transition Tool}: This tool draws transitions between one block to another. Before you draw a transition you must have created the two blocks you wish to connect. To draw the transition you start by clicking and holding down the left mouse button over the starting block then dragging until the line snaps over the ending block. On release of the left mouse button a transition is formed and the two blocks are linked. For layout purposes you may also double click on a transition  line to add more anchors. %ref figure
+\end{itemize}
+
+
+\subsection{Data Flow}
+..
+\subsection{Structure}
+..
+\subsection{Compilation}
+.. (maybe replaced by language section)
