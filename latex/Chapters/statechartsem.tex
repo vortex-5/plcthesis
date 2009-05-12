@@ -1,7 +1,7 @@
 %Semantics of state charts
 \section{Semantics of \plcchart}
 
-The semantics used for our project was purposely modelled after UML2. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state charts with extensions added on to describe behaviours in states. The motivation to using UML2 as a basis for our state chart system consists of three primary details. First UML2 is quite well known and popular, this improves the potential acceptance of our tool. Secondly UML2 state chart syntax is more concrete than the other forms of state charts, giving a strong basis to construct our language around. Finally UML2 has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
+The semantics used for our project was purposely modelled after \emphasize{UML2 State Charts}\cite{uml2}. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state charts with extensions added on to describe behaviours in states. The motivation to using \emphasize{UML2 State Charts}\cite{uml2} as a basis for our state chart system consists of three primary details. First \emphasize{UML2 State Charts}\cite{uml2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Charts}\cite{uml2} state chart syntax is more concrete than the other forms of state charts, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Charts}\cite{uml2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
 
 The semantics of our state charts can be expressed mathematically as follows:
 
@@ -21,7 +21,7 @@ v_1 := v_0 \label{eqn:assign0} \\
 v_0 := v_1 \label{eqn:assign1}
 \end{align}
 
-We would see that the result $v_1 = v_0$ it is important to note this since generally in state charts it is understood that assignments happen cocurrently in such a case equations \ref{eqn:assign0} and \ref{eqn:assign1} would produce a swap where $v'_1 = 'v_0$ and $v'_0 = 'v_1$. In normal state charts we read assignments such as in equations \ref{eqn:assign0} and \ref{eqn:assign1} as these assignments will take place upon entry of the state. For our semantics however, we read them in a sequential fashion for example: Upon entry of the state, first equation \ref{eqn:assign0} is assigned, then \ref{eqn:assign1} right afterwards.
+We would see that the result $v_1 = v_0$ it is important to note this since generally in \emphasize{State Charts}\cite{StateChartVis}  it is understood that assignments happen cocurrently in such a case equations \ref{eqn:assign0} and \ref{eqn:assign1} would produce a swap where $v'_1 = 'v_0$ and $v'_0 = 'v_1$ (where $'v$ denotes the value of $v$ before the assignments are executed and $v'$ the value of $v$ after the assignment is completed). In normal state charts we read assignments such as in equations \ref{eqn:assign0} and \ref{eqn:assign1} as these assignments will take place upon entry of the state. For our semantics however, we read them in a sequential fashion for example: Upon entry of the state, first equation \ref{eqn:assign0} is assigned, then \ref{eqn:assign1} right afterwards.
 
 \begin{figure}[htp]
     \centering
