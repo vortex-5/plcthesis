@@ -1,18 +1,20 @@
 %Semantics of state charts
-\section{Semantics of The State Chart Language}
+\section{Semantics of \plcchart}
 
 The semantics used for our project was purposely modelled after UML2. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state charts with extensions added on to describe behaviours in states. The motivation to using UML2 as a basis for our state chart system consists of three primary details. First UML2 is quite well known and popular, this improves the potential acceptance of our tool. Secondly UML2 state chart syntax is more concrete than the other forms of state charts, giving a strong basis to construct our language around. Finally UML2 has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
 
 The semantics of our state charts can be expressed mathematically as follows:
 
 \begin{itemize}
-	\item \textbf{Q:} A set of states.
-	\item \textbf{$\Sigma$:} A set of assignments. $Q \times (v_0,v_1 \in \Sigma \bullet v_0 := v_1)$
-	\item \textbf{$\tau$:} A set of transitions. $Q \times E \rightarrow Q$
-	\item \textbf{$q_0$:} An initial starting state.
+	\item \textbf{$Q$:} Set of states.
+	\item \textbf{$V$:} Set of values.
+	\item \textbf{$G$:} Set of guard conditions.
+	\item \textbf{$A$:} Set of assignments. $Q \rightarrow V \times V$
+	\item \textbf{$\tau$:} Set of transitions. $Q \times G \rightarrow Q$
+	\item \textbf{$q_0$:} $q_0 \in Q$ An initial starting state.
 \end{itemize}
 
-The set of states denoted by Q includes the starting state that is $(q_0 \in Q)$. Assignments in our system happen in sequence rather than all at once this method was chosen to allow sequential forumlae to be computed in our system easily. Assignments can be in the form of a constant or an equation. If a series of assignment were found in a single state as follows:
+Assignments in \plccharts happen in sequence rather than all at once this method was chosen to allow sequential forumlae to be computed in our system easily. Assignments can be in the form of a constant or an equation. If a series of assignment were found in a single state as follows:
 
 \begin{align}
 v_1 := v_0 \label{eqn:assign0} \\ 
