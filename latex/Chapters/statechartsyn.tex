@@ -4,16 +4,16 @@
 Abstract syntax of our state chart language:
 
 \begin{itemize}
-	\item Expression := Expression Op Expression $|$ Op Expression $|$ Variable $|$ Constant
+	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Variable $\mid$ Constant
 	\item Value := Expression
-	\item Type := Char | Int | Long | Bool | Float
+	\item Type := Char $\mid$ Int $\mid$ Long $\mid$ Bool $\mid$ Float
 	\item Identifier := [a-zA-Z$\_$]+[a-zA-Z0-9$\_$]*  
 	
-	\item StoreBlock := Type Identifier = Value | Type Identifier = Value; StoreBlock
+	\item StoreBlock := Type Identifier = Value $\mid$ Type Identifier = Value; StoreBlock
 
-	\item Condition := Var Eq Var | Var Eq Condition | Condition Eq Condition
+	\item Condition := Var Eq Var $\mid$ Var Eq Condition $\mid$ Condition Eq Condition
 	
-	\item Eq := $=$ | $\neq$ | $<$ | $\leq$ | $>$ | $\geq$	
+	\item Eq := $\; = \; \mid \; \neq \; \mid \; < \; \mid \; \leq \; \mid \; > \; \mid \; \geq$	
 
 	\item Block := StoreBlock	
 	

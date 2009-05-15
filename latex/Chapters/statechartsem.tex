@@ -1,7 +1,7 @@
 %Semantics of state charts
 \section{Semantics of \plcchart}
 
-The semantics used for our project was purposely modelled after \emphasize{UML2 State Charts}\cite{uml2}. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state charts with extensions added on to describe behaviours in states. The motivation to using \emphasize{UML2 State Charts}\cite{uml2} as a basis for our state chart system consists of three primary details. First \emphasize{UML2 State Charts}\cite{uml2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Charts}\cite{uml2} state chart syntax is more concrete than the other forms of state charts, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Charts}\cite{uml2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
+The semantics used for our project was purposely modelled after \emphasize{UML2 State Charts}\cite{UML2}. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state charts with extensions added on to describe behaviours in states. The motivation to using \emphasize{UML2 State Charts}\cite{UML2} as a basis for our state chart system consists of three primary details. First \emphasize{UML2 State Charts}\cite{UML2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Charts}\cite{UML2} state chart syntax is more concrete than the other forms of state charts, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Charts}\cite{UML2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
 
 The semantics of our state charts can be expressed mathematically as follows:
 
@@ -25,12 +25,12 @@ We would see that the result $v_1 = v_0$ it is important to note this since gene
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[trim= 10mm 110mm 10mm 10mm, clip, width=\imgmedium]{./images/state_uml2_newtons.pdf}
-    \caption{Newton's Method Approximation}
-    \label{fig:state_uml2_newtons}
+    \includegraphics[trim= 10mm 145mm 10mm 10mm, clip, width=\imgmedium]{./images/state_uml2_fir.pdf}
+    \caption{5 Tap Fir Filtering}
+    \label{fig:state_uml2_fir}
 \end{figure}
 
-The advantage of sequential assignments over cocurrent assignments can be seen when trying to compute more complicated formulas as seen in figure \ref{fig:state_uml2_newtons}. Figure \ref{fig:state_uml2_newtons} computes the newton's approximation of $x^2$ given a starting point. If the same formula was to be computed with cocurrent assignments many more states would be required. Thus although this choice slightly deviates from UML2 state charts it was decided the benefits to usability was too great to strictly adhere to the UML2 semantics.
+The advantage of sequential assignments over cocurrent assignments can be seen when trying to compute the 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are very useful for the initial step without it many more states would be required to do each simple assignement. Thus although this design choice slightly deviates from \emphasize{UML2 State Charts}\cite{UML2} it was decided the benefits to usability was too great to strictly adhere to the \emphasize{UML2 State Chart}\cite{UML2} semantics.
 
 \begin{figure}[htp]
     \centering
@@ -46,4 +46,4 @@ The advantage of sequential assignments over cocurrent assignments can be seen w
     \label{fig:tool_transition_example_bad}
 \end{figure}
 
-Transitions in the language must be mutually exclusive that is if it is invalid to have two transitions that can both be taken at any point. Figure \ref{fig:tool_transition_example} shows an example of this done correctly the two guard conditions "count < 10" and "count >= 10" ensure mutal exclusivity. When mutual exclusion is not ensured such as in figure \ref{fig:tool_transition_example_bad} the language is undefined. The state chart language currently does not allow for cocurrent execution. Therefore when drawn in our language this would be ambiguous and the outcome (as in which edge would be taken) is undefined.
+Transitions in the language must be mutually exclusive that is if it is invalid to have two transitions that can both be taken at any point. Figure \ref{fig:tool_transition_example} shows an example of this done correctly the two guard conditions "count $<$ 10" and "count $\geq$ 10" ensure mutal exclusivity. When mutual exclusion is not ensured such as in figure \ref{fig:tool_transition_example_bad} the language is undefined. The state chart language currently does not allow for cocurrent execution. Therefore when drawn in our language this would be ambiguous and the outcome (as in which edge would be taken) is undefined.
