@@ -20,7 +20,6 @@ import javax.swing.*;
 import org.jhotdraw.app.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.action.*;
-import static org.jhotdraw.draw.AttributeKeys.*;
 import java.awt.event.*;
 
 /**
@@ -86,13 +85,20 @@ public class DrawApplicationModel extends DefaultApplicationModel {
 
         return list;
     }
-    
+
+
+    /**
+     * This metod adds any additional buttons to our toolbar in our case we use
+     * it to add the compile and simulator buttons.
+     * @param tb The toolbar to add the buttons to
+     * @param editor The editor the link to so we can pull the drawing parameters
+     */
     private void addCodeButtonsTo(JToolBar tb, DrawingEditor editor)
     {
-        JButton btn = new JButton("Compile");
-        btn.addActionListener(new CodeGenerator(editor));
+        JButton btnCompile = new JButton("Compile");
+        btnCompile.addActionListener(new CodeGenerator(editor));
         tb.setName("Code Generation Tools");
-        tb.add(btn);
+        tb.add(btnCompile);
                
         
     }

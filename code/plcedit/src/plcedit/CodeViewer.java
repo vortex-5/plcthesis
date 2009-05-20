@@ -53,6 +53,7 @@ public class CodeViewer extends javax.swing.JFrame {
     /**
     * @param args the command line arguments
     */
+    /*
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -60,6 +61,7 @@ public class CodeViewer extends javax.swing.JFrame {
             }
         });
     }
+    */
     
     public void setCode(String str){
         txtCodeBox.setText(str);
