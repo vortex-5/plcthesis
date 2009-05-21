@@ -11,6 +11,13 @@
 
 package plcedit;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.JToolBar;
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.Figure;
 
@@ -18,12 +25,16 @@ import org.jhotdraw.draw.Figure;
  *
  * @author huangkf
  */
-public class Simulator extends javax.swing.JFrame {
+public class Simulator extends javax.swing.JFrame implements ActionListener {
+    private Color colourNormal = Color.white;
+    private Color colourHilight = Color.yellow;
+    private List<JToolBar> editorTools;
 
     /** Creates new form SimulatorViewer */
-    public Simulator(DrawingEditor editor) {
+    public Simulator(DrawingEditor editor, List<JToolBar> tools) {
         initComponents();
         this.editor = editor;
+        this.editorTools = tools;
     }
 
     private DrawingEditor editor;
@@ -43,7 +54,14 @@ public class Simulator extends javax.swing.JFrame {
         btnReset = new javax.swing.JButton();
         btnStepNext = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         VariableTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -89,7 +107,7 @@ public class Simulator extends javax.swing.JFrame {
                 .add(btnStepOnce)
                 .add(18, 18, 18)
                 .add(btnStepNext)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -107,8 +125,26 @@ public class Simulator extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        // TODO add your handling code here:
+        reset();
     }//GEN-LAST:event_btnResetActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        editor.getActiveView().clearSelection();
+        editor.getActiveView().setEnabled(false);
+        editor.setEnabled(false);
+        setEnabledToolbars(false);
+    }//GEN-LAST:event_formWindowActivated
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        editor.getActiveView().getDrawing().willChange();
+        for (Figure item: editor.getActiveView().getDrawing().getChildren())
+        {
+            item.setAttribute(AttributeKeys.FILL_COLOR, colourNormal);
+        }
+        editor.getActiveView().getDrawing().changed();
+        editor.getActiveView().setEnabled(true);
+        setEnabledToolbars(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
     * @param args the command line arguments
@@ -140,21 +176,46 @@ public class Simulator extends javax.swing.JFrame {
 
         for (Figure block : editor.getActiveView().getDrawing().getChildren())
         {
-            if (((CodeBlockFigure)block).getType() == CodeType.Start)
+            if (((Typed)block).getType() == CodeType.Start)
             {
                 startfig = (CodeBlockFigure)block;
                 FigCount++;
             }
         }
 
-        if (FigCount > 1)
+        if (FigCount == 1)
         {
-
+            return startfig;
         }
+        else
+        {
+            return null;
+        }
+    }
 
-        //FIXME: FIND THE ATTRIBUTE TO CHANGE COLOUR
-        //startfig.setAttribute( , rootPane);
+    //External action performed method
+    public void actionPerformed(ActionEvent evt)
+    {
+        this.setVisible(true);
+    }
 
-        return startfig;
+    private void reset()
+    {
+        CodeBlockFigure startfigure = findStartBlock();
+        startfigure.willChange();
+        startfigure.setAttribute(AttributeKeys.FILL_COLOR, colourHilight);
+        startfigure.changed();
+    }
+
+    private void setEnabledToolbars(boolean isEnabled)
+    {
+        for (JToolBar toolbar: editorTools)
+        {
+            toolbar.setEnabled(isEnabled);
+            for(Component control: toolbar.getComponents())
+            {
+                control.setEnabled(isEnabled);
+            }
+        }
     }
 }

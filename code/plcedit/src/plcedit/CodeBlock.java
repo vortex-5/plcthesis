@@ -5,13 +5,10 @@
 
 package plcedit;
 
-import org.jhotdraw.xml.DOMStorable;
-
 /**
  *
  * @author huangkf
  */
-// TODO: implement DOM storable so each object can be written to file will require a full week to get full support working
 public abstract class CodeBlock implements Typed {
     
     protected CodeType ctype;

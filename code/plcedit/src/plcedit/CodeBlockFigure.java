@@ -135,13 +135,13 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
     }
 
     @Override
-    public void write(DOMOutput out) throws IOException { //TODO: Change this to abstract
+    public void write(DOMOutput out) throws IOException {
         throw new IOException("Save to disk feature not yet implimented!");
 
     }
 
     @Override
-    public void read(DOMInput in) throws IOException { //TODO: Change this to abstract
+    public void read(DOMInput in) throws IOException {
         throw new IOException("Read from disk feature not yet implimented!");
     }
 

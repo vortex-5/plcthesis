@@ -35,6 +35,9 @@ public class DrawApplicationModel extends DefaultApplicationModel {
      * This editor is shared by all views.
      */
     private DefaultDrawingEditor sharedEditor;
+
+    //FIXME: HACK toolbars
+    private List<JToolBar> toolbars;
     
     /** Creates a new instance. */
     public DrawApplicationModel() {
@@ -71,19 +74,20 @@ public class DrawApplicationModel extends DefaultApplicationModel {
             editor = p.getEditor();
         }
         
-        LinkedList<JToolBar> list = new LinkedList<JToolBar>();
+        toolbars = new LinkedList<JToolBar>();
         JToolBar tb;
         tb = new JToolBar();
         addCreationButtonsTo(tb, editor);
         tb.setName(labels.getString("drawToolBarTitle"));
-        list.add(tb);
+        toolbars.add(tb);
         
         tb = new JToolBar();
         addCodeButtonsTo(tb, editor);
-        list.add(tb);
+        toolbars.add(tb);
         
+        //FIXME: HACK toolbars
 
-        return list;
+        return toolbars;
     }
 
 
@@ -100,7 +104,9 @@ public class DrawApplicationModel extends DefaultApplicationModel {
         tb.setName("Code Generation Tools");
         tb.add(btnCompile);
                
-        
+        JButton btnSimulate = new JButton("Simulator");
+        btnSimulate.addActionListener(new Simulator(editor,toolbars));
+        tb.add(btnSimulate);
     }
     private void addCreationButtonsTo(JToolBar tb, DrawingEditor editor) {
         addDefaultCreationButtonsTo(tb, editor, 
