@@ -16,10 +16,19 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JToolBar;
+import net.christopherschultz.evaluator.EvaluationContext;
 import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.Figure;
+
+import net.christopherschultz.evaluator.Expression;
+import net.christopherschultz.evaluator.parser.ExpressionParser;
+import net.christopherschultz.evaluator.parser.ParseException;
+import net.christopherschultz.evaluator.util.DefaultEvaluationContext;
+import net.christopherschultz.evaluator.EvaluationException;
+import net.christopherschultz.evaluator.function.BinaryOperator;
 
 /**
  *
@@ -30,11 +39,15 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     private Color colourHilight = Color.yellow;
     private List<JToolBar> editorTools;
 
+    private CheckVariables varlist;
+
     /** Creates new form SimulatorViewer */
     public Simulator(DrawingEditor editor, List<JToolBar> tools) {
         initComponents();
         this.editor = editor;
         this.editorTools = tools;
+
+        this.varlist = new CheckVariables(editor.getActiveView().getDrawing().getChildren());
     }
 
     private DrawingEditor editor;
@@ -85,6 +98,11 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         TableScrollablePane.setViewportView(VariableTable);
 
         btnStepOnce.setText("Step Once");
+        btnStepOnce.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStepOnceActionPerformed(evt);
+            }
+        });
 
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +117,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(TableScrollablePane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+            .add(TableScrollablePane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(btnReset)
@@ -145,6 +163,32 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         editor.getActiveView().setEnabled(true);
         setEnabledToolbars(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnStepOnceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepOnceActionPerformed
+        String testExpr = "(5/2.0) * 2.0";
+
+        EvaluationContext context = new DefaultEvaluationContext();
+        context.set("+", new BinaryOperator.Add());
+        context.set("*", new BinaryOperator.Multiply());
+        context.set("/", new BinaryOperator.Divide());
+
+
+        try
+        {
+            Expression expr = ExpressionParser.parseExpression(testExpr);
+            Double result = (Double)expr.evaluate(context);
+            System.out.println(result);
+        }
+        catch (ParseException ex)
+        { 
+            System.out.println(ex.toString());
+        }
+        catch (EvaluationException ex)
+        { 
+            System.out.println(ex.toString());
+        }
+
+    }//GEN-LAST:event_btnStepOnceActionPerformed
 
     /**
     * @param args the command line arguments
@@ -217,5 +261,13 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                 control.setEnabled(isEnabled);
             }
         }
+    }
+
+    /**
+     * Updates the screen list based on the variables
+     */
+    private void updateVariableView()
+    {
+
     }
 }

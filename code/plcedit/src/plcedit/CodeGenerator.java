@@ -54,40 +54,25 @@ public class CodeGenerator implements ActionListener {
         //we perform a for each on every block and extract all the variables from
         //each store block first
 
+
+
         compiledbuffer += "// VARIABLE DECLARATIONS //\n";
 
-        List<String> declarelist = new ArrayList<String>();
+        CheckVariables varlist = new CheckVariables(allfigs);
 
-        for (int i=0;i<allfigs.size();i++) { //sort all declarations make sure we have no duplicates
-            Typed t = (Typed)allfigs.get(i);
-
-            if (t.getType() == CodeType.Store) {
-
-                //Sanity check get precheck type conflict
-                for(StoreBlock.storeobj store : ((StoreBlockFigure)allfigs.get(i)).getModel().getStores())
-                {
-                    if (store.isInTypeConflict(allstores))
-                    {
-                        compiledbuffer = "COMPILE FAILED DUE TO TYPE CONFLICT ON " + store.identifier;
-                        ShowViewer(compiledbuffer);
-
-                        return;
-                    }
-                }
-
-                for(String declaration : ((StoreBlockFigure)allfigs.get(i)).getModel().getDeclaration())
-                {
-                    if (!declarelist.contains(declaration))
-                    {
-                        declarelist.add(declaration);
-                    }
-                }
-            }
-        }
-
-        for (String declaration : declarelist) //output list of non duplicated declarations
+        if (varlist.isInConflict)
         {
-            compiledbuffer += declaration;
+            compiledbuffer =    "Cannot continue the compilation you have\n"
+                            +   "used the same variable identifier but have defined it\n "
+                            +   "with more than one data type in one of your store\n"
+                            +   "blocks types.\n\n";
+        }
+        else
+        {
+            for (String declaration : varlist.VariableList) //output list of non duplicated declarations
+            {
+                compiledbuffer += declaration;
+            }
         }
 
 
