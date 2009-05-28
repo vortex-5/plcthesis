@@ -15,9 +15,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
+import javax.swing.table.DefaultTableModel;
 import net.christopherschultz.evaluator.EvaluationContext;
 import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.DrawingEditor;
@@ -39,15 +43,13 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     private Color colourHilight = Color.yellow;
     private List<JToolBar> editorTools;
 
-    private CheckVariables varlist;
+    private List<Variable> simVarList = new ArrayList<Variable>();
 
     /** Creates new form SimulatorViewer */
     public Simulator(DrawingEditor editor, List<JToolBar> tools) {
         initComponents();
         this.editor = editor;
         this.editorTools = tools;
-
-        this.varlist = new CheckVariables(editor.getActiveView().getDrawing().getChildren());
     }
 
     private DrawingEditor editor;
@@ -165,19 +167,32 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnStepOnceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepOnceActionPerformed
-        String testExpr = "(5/2.0) * 2.0";
+        String testExpr = "5>3";
 
-        EvaluationContext context = new DefaultEvaluationContext();
-        context.set("+", new BinaryOperator.Add());
-        context.set("*", new BinaryOperator.Multiply());
-        context.set("/", new BinaryOperator.Divide());
-
+        EvaluationContext context = getContext();
 
         try
         {
             Expression expr = ExpressionParser.parseExpression(testExpr);
-            Double result = (Double)expr.evaluate(context);
-            System.out.println(result);
+            Object rawResult = expr.evaluate(context);
+            if (rawResult == null)
+            {
+            }
+            else if (rawResult instanceof Double)
+            {
+                double result = (Double)rawResult;
+                System.out.println(result);
+            }
+            else if (rawResult instanceof Integer)
+            {
+                int result = (Integer)rawResult;
+                System.out.println(result);
+            }
+            else if (rawResult instanceof Boolean)
+            {
+                boolean result = (Boolean)rawResult;
+                System.out.println(result);
+            }
         }
         catch (ParseException ex)
         { 
@@ -189,6 +204,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         }
 
     }//GEN-LAST:event_btnStepOnceActionPerformed
+
 
     /**
     * @param args the command line arguments
@@ -245,10 +261,50 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
 
     private void reset()
     {
+        simVarList.clear();
+
+        CheckVariables varlist = new CheckVariables(editor.getActiveView().getDrawing().getChildren());
+        for(StoreBlock.storeobj var : varlist.VariableList)
+        {
+            switch(var.type.getType())
+            {
+                case Bool:
+                    simVarList.add(new Variable(var,false));
+                    break;
+                case Char:
+                    simVarList.add(new Variable(var,'0'));
+                    break;
+                case Double:
+                    simVarList.add(new Variable(var,0.0));
+                    break;
+                case Float:
+                    simVarList.add(new Variable(var,0.0f));
+                    break;
+                case Int:
+                    simVarList.add(new Variable(var,0));
+                    break;
+                case Long:
+                    simVarList.add(new Variable(var,0));
+                    break;
+                case Undefined:
+                    //don't add anything in this case.
+                    break;
+            }
+
+            updateVariableView();
+        }
+
         CodeBlockFigure startfigure = findStartBlock();
-        startfigure.willChange();
-        startfigure.setAttribute(AttributeKeys.FILL_COLOR, colourHilight);
-        startfigure.changed();
+        if (startfigure == null)
+        {
+            JOptionPane.showMessageDialog(this, "No Start Block Found!\nCannot start simulation.");
+        }
+        else
+        {
+            startfigure.willChange();
+            startfigure.setAttribute(AttributeKeys.FILL_COLOR, colourHilight);
+            startfigure.changed();
+        }
     }
 
     private void setEnabledToolbars(boolean isEnabled)
@@ -268,6 +324,33 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
      */
     private void updateVariableView()
     {
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Variable", "Value"}, 0);
 
+        for (Variable var : simVarList)
+        {
+           model.addRow(new String[]{var.identity.identifier, var.value.toString()});
+        }
+
+        VariableTable.setModel(model);
+    }
+
+    private EvaluationContext getContext()
+    {
+        EvaluationContext context = new DefaultEvaluationContext();
+        context.set("+", new BinaryOperator.Add());
+        context.set("&&", new BinaryOperator.And());
+        context.set("/", new BinaryOperator.Divide());
+        context.set("==", new BinaryOperator.Equal());
+        context.set(">", new BinaryOperator.Greater());
+        context.set(">=", new BinaryOperator.GreaterEqual());
+        context.set("<", new BinaryOperator.Less());
+        context.set("<=", new BinaryOperator.LessEqual());
+        context.set("%", new BinaryOperator.Modulus());
+        context.set("*", new BinaryOperator.Multiply());
+        context.set("!=", new BinaryOperator.NotEqual());
+        context.set("||", new BinaryOperator.Or());
+        context.set("-", new BinaryOperator.Subtract());
+
+        return context;
     }
 }

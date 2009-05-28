@@ -16,7 +16,7 @@ import org.jhotdraw.draw.*;
  */
 public class CheckVariables {
     public boolean isInConflict = false;
-    public List<String> VariableList = new ArrayList<String>();
+    public List<StoreBlock.storeobj> VariableList = new ArrayList<StoreBlock.storeobj>();
 
     public CheckVariables(List<Figure> figs)
     {
@@ -39,7 +39,7 @@ public class CheckVariables {
 
                 if (!isInConflict)
                 {
-                    for(String declaration : ((StoreBlockFigure)figs.get(i)).getModel().getDeclaration())
+                    for(StoreBlock.storeobj declaration : ((StoreBlockFigure)figs.get(i)).getModel().getStores())
                     {
                         if (!VariableList.contains(declaration))
                         {
