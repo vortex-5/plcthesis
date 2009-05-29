@@ -39,11 +39,13 @@ import net.christopherschultz.evaluator.function.BinaryOperator;
  * @author huangkf
  */
 public class Simulator extends javax.swing.JFrame implements ActionListener {
-    private Color colourNormal = Color.white;
-    private Color colourHilight = Color.yellow;
+    private final Color colourNormal = Color.white;
+    private final Color colourHilight = Color.yellow;
     private List<JToolBar> editorTools;
 
     private List<Variable> simVarList = new ArrayList<Variable>();
+
+    private CodeBlockFigure currentBlock;
 
     /** Creates new form SimulatorViewer */
     public Simulator(DrawingEditor editor, List<JToolBar> tools) {
@@ -114,12 +116,17 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         });
 
         btnStepNext.setText("Step Next");
+        btnStepNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStepNextActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(TableScrollablePane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+            .add(TableScrollablePane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(btnReset)
@@ -127,7 +134,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                 .add(btnStepOnce)
                 .add(18, 18, 18)
                 .add(btnStepNext)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -152,18 +159,13 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         editor.getActiveView().clearSelection();
         editor.getActiveView().setEnabled(false);
         editor.setEnabled(false);
-        setEnabledToolbars(false);
+        setToolbarsTo(false);
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        editor.getActiveView().getDrawing().willChange();
-        for (Figure item: editor.getActiveView().getDrawing().getChildren())
-        {
-            item.setAttribute(AttributeKeys.FILL_COLOR, colourNormal);
-        }
-        editor.getActiveView().getDrawing().changed();
+        clearHilightAll();
         editor.getActiveView().setEnabled(true);
-        setEnabledToolbars(true);
+        setToolbarsTo(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void btnStepOnceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepOnceActionPerformed
@@ -204,6 +206,11 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         }
 
     }//GEN-LAST:event_btnStepOnceActionPerformed
+
+    private void btnStepNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepNextActionPerformed
+        currentBlock = takeNextEdge();
+        hilightBlock(currentBlock);
+    }//GEN-LAST:event_btnStepNextActionPerformed
 
 
     /**
@@ -301,13 +308,41 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         }
         else
         {
-            startfigure.willChange();
-            startfigure.setAttribute(AttributeKeys.FILL_COLOR, colourHilight);
-            startfigure.changed();
+            currentBlock = startfigure; //mark that we are moving to the start block
+            clearHilightAll();
+            hilightBlock(startfigure);
         }
     }
 
-    private void setEnabledToolbars(boolean isEnabled)
+    /**
+     * Highlights a block on the drawing with the assigned colour for highlighting
+     * @param block
+     */
+    private void hilightBlock(CodeBlockFigure block)
+    {
+        block.willChange();
+        block.setAttribute(AttributeKeys.FILL_COLOR, colourHilight);
+        block.changed();
+    }
+
+    /**
+     * Glears hilighting to all blocks
+     */
+    private void clearHilightAll()
+    {
+        editor.getActiveView().getDrawing().willChange();
+        for (Figure item: editor.getActiveView().getDrawing().getChildren())
+        {
+            item.setAttribute(AttributeKeys.FILL_COLOR, colourNormal);
+        }
+        editor.getActiveView().getDrawing().changed();
+    }
+
+    /**
+     * Disables or enables toolbars
+     * @param isEnabled
+     */
+    private void setToolbarsTo(boolean isEnabled)
     {
         for (JToolBar toolbar: editorTools)
         {
@@ -334,6 +369,10 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         VariableTable.setModel(model);
     }
 
+    /**
+     * Creates an evaluation context in order to evaluate C more advanced functions are not included
+     * @return
+     */
     private EvaluationContext getContext()
     {
         EvaluationContext context = new DefaultEvaluationContext();
@@ -352,5 +391,72 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         context.set("-", new BinaryOperator.Subtract());
 
         return context;
+    }
+
+    /**
+     * reads the currentblock we are on and takes the next edge leaving this block based on current variables.
+     * @return returns the new edge that we will arrive at if the edge is taken
+     */
+    private CodeBlockFigure takeNextEdge()
+    {
+        CodeBlockFigure nextBlock;
+
+        List<DirectedLineConnectionFigure> edges = findEdgesLeaving(currentBlock);
+
+
+        nextBlock = currentBlock;
+        
+        for (DirectedLineConnectionFigure edge : edges)
+        {
+            try
+            {
+                Expression expr = ExpressionParser.parseExpression(edge.getGuard());
+                if ((Boolean)expr.evaluate(getContext()))
+                {
+                    nextBlock = (CodeBlockFigure)edge.getEndFigure();
+                    break;
+                }
+            }
+            catch (ParseException ex)
+            {
+
+            }
+            catch (EvaluationException ex)
+            {
+
+            }
+
+        }
+        return nextBlock;
+    }
+
+    /**
+     * searches the entire diagram and creates a list of all edges leaving the specified block.
+     * @param block
+     * @return A list of found edges leaving the block
+     */
+    private List<DirectedLineConnectionFigure> findEdgesLeaving(CodeBlockFigure block)
+    {
+        List<DirectedLineConnectionFigure> edges = new ArrayList<DirectedLineConnectionFigure>();
+
+        for(Figure fig : editor.getActiveView().getDrawing().getChildren())
+        {
+            if (fig instanceof DirectedLineConnectionFigure)
+            {
+                edges.add((DirectedLineConnectionFigure)fig);
+            }
+        }
+
+        List<DirectedLineConnectionFigure> departingEdges = new ArrayList<DirectedLineConnectionFigure>();
+
+        for(DirectedLineConnectionFigure edge : edges)
+        {
+            if (edge.getStartFigure().equals(block))
+            {
+                departingEdges.add(edge);
+            }
+        }
+
+        return departingEdges;
     }
 }

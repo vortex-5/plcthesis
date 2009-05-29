@@ -69,9 +69,9 @@ public class CodeGenerator implements ActionListener {
         }
         else
         {
-            for (String declaration : varlist.VariableList) //output list of non duplicated declarations
+            for (StoreBlock.storeobj declaration : varlist.VariableList) //output list of non duplicated declarations
             {
-                compiledbuffer += declaration;
+                compiledbuffer += declaration.type.toCompileString() + " " + declaration.identifier + ";";
             }
         }
 

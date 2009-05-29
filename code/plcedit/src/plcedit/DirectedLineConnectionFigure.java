@@ -24,6 +24,11 @@ import org.jhotdraw.xml.DOMStorable;
 public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure implements ConnectionFigure, Typed {
     private LineDecoration decoration;
     private TextFigure label = null;
+
+    public String getGuard()
+    {
+        return label.getText();
+    }
     
     public DirectedLineConnectionFigure()
     {
