@@ -38,7 +38,7 @@ public class CodeGenerator implements ActionListener {
 
         //SANITY CHECKS
 
-        List<StoreBlock.storeobj> allstores = new ArrayList<StoreBlock.storeobj>();
+        List<StoreObj> allstores = new ArrayList<StoreObj>();
 
         //Check the variable types and make sure we don't have a type conflict
         for (int i=0;i<allfigs.size();i++)
@@ -69,7 +69,7 @@ public class CodeGenerator implements ActionListener {
         }
         else
         {
-            for (StoreBlock.storeobj declaration : varlist.VariableList) //output list of non duplicated declarations
+            for (StoreObj declaration : varlist.VariableList) //output list of non duplicated declarations
             {
                 compiledbuffer += declaration.type.toCompileString() + " " + declaration.identifier + ";";
             }

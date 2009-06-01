@@ -160,6 +160,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         editor.getActiveView().setEnabled(false);
         editor.setEnabled(false);
         setToolbarsTo(false);
+        reset();
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -169,7 +170,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnStepOnceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepOnceActionPerformed
-        String testExpr = "5>3";
+        String testExpr = "true";
 
         EvaluationContext context = getContext();
 
@@ -179,6 +180,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
             Object rawResult = expr.evaluate(context);
             if (rawResult == null)
             {
+                System.out.println("NULL REF AFTER EVALUATION!");
             }
             else if (rawResult instanceof Double)
             {
@@ -208,6 +210,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btnStepOnceActionPerformed
 
     private void btnStepNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepNextActionPerformed
+        clearHilightAll();
         currentBlock = takeNextEdge();
         hilightBlock(currentBlock);
     }//GEN-LAST:event_btnStepNextActionPerformed
@@ -271,7 +274,8 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         simVarList.clear();
 
         CheckVariables varlist = new CheckVariables(editor.getActiveView().getDrawing().getChildren());
-        for(StoreBlock.storeobj var : varlist.VariableList)
+
+        for(StoreObj var : varlist.VariableList)
         {
             switch(var.type.getType())
             {
@@ -389,6 +393,8 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         context.set("!=", new BinaryOperator.NotEqual());
         context.set("||", new BinaryOperator.Or());
         context.set("-", new BinaryOperator.Subtract());
+        context.set("true", new Boolean(true));
+        context.set("false", new Boolean(false));
 
         return context;
     }
@@ -404,7 +410,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         List<DirectedLineConnectionFigure> edges = findEdgesLeaving(currentBlock);
 
 
-        nextBlock = currentBlock;
+        nextBlock = null;
         
         for (DirectedLineConnectionFigure edge : edges)
         {
@@ -458,5 +464,13 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         }
 
         return departingEdges;
+    }
+
+    /**
+     * Performs one step of the code block and returns true if all steps are done.
+     */
+    public boolean step(CodeBlockFigure block)
+    {
+        return false;
     }
 }

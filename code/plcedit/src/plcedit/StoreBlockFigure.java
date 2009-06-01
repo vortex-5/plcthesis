@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import java.util.List;
 
-import plcedit.StoreBlock.storeobj;
 /**
  *
  * @author Vortex-5
@@ -61,7 +60,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
 
         attrib.setLayouter(new VerticalLayouter());
         GraphicalCompositeFigure line;
-        for(storeobj store : ((StoreBlock)accociatedcode).getStores())
+        for(StoreObj store : ((StoreBlock)accociatedcode).getStores())
         {
             line = new GraphicalCompositeFigure();
             line.setLayouter(new HorizontalLayouter());
@@ -131,17 +130,17 @@ public class StoreBlockFigure extends CodeBlockFigure{
         }
 
         public void figureChanged(FigureEvent e) {
-            storeobj edit;
+            StoreObj edit;
             
             if (e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_ID) != null)
             {
-                edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_ID);
+                edit = (StoreObj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_ID);
                 //TODO: add variable name checking for variable names here
                 edit.identifier = ((TextFigure)e.getFigure()).getText().trim();
             }
             else if(e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_VAL) != null)
             {
-                edit = (storeobj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_VAL);
+                edit = (StoreObj)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_VAL);
                 //TODO: add variable checking for variable values here (might choose to omit)
                 edit.value = ((TextFigure)e.getFigure()).getText().trim();
             }
@@ -202,7 +201,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
         getModel().removeUnsavedEntries();
 
         //prepare for export
-        List<storeobj> store = getModel().getStores();
+        List<StoreObj> store = getModel().getStores();
 
         for (int i=0;i<store.size();i++){
             out.addAttribute("data_type" + Integer.toString(i), store.get(i).type.getSaveString());

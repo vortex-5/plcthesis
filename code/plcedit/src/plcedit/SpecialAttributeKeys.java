@@ -13,12 +13,12 @@ import org.jhotdraw.draw.AttributeKey;
  */
 public class SpecialAttributeKeys {
     /*Used globally*/
-    public static final AttributeKey<StoreBlock.storeobj> MODIFY_LINK_CREATESCONTEXTMENU = new AttributeKey("MODIFY_LINK_CREATESCONTEXTMENU");
+    public static final AttributeKey<StoreObj> MODIFY_LINK_CREATESCONTEXTMENU = new AttributeKey("MODIFY_LINK_CREATESCONTEXTMENU");
 
 
     /*Used in store blocks*/
-    public static final AttributeKey<StoreBlock.storeobj> MODIFY_LINK_STORE_ID = new AttributeKey("MODIFY_LINK_STORE_ID");
-    public static final AttributeKey<StoreBlock.storeobj> MODIFY_LINK_STORE_VAL = new AttributeKey("MODIFY_LINK_STORE_VAL");
+    public static final AttributeKey<StoreObj> MODIFY_LINK_STORE_ID = new AttributeKey("MODIFY_LINK_STORE_ID");
+    public static final AttributeKey<StoreObj> MODIFY_LINK_STORE_VAL = new AttributeKey("MODIFY_LINK_STORE_VAL");
     public static final AttributeKey<CodeVarType> MODIFY_LINK_STORE_TYPE = new AttributeKey("MODIFY_LINK_STORE_TYPE");
     
     /*Used in transitions*/

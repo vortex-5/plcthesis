@@ -31,7 +31,7 @@
               <Component id="btnStepOnce" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnStepNext" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="209" max="32767" attributes="0"/>
+              <EmptySpace pref="281" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

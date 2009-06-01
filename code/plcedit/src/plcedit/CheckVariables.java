@@ -16,11 +16,11 @@ import org.jhotdraw.draw.*;
  */
 public class CheckVariables {
     public boolean isInConflict = false;
-    public List<StoreBlock.storeobj> VariableList = new ArrayList<StoreBlock.storeobj>();
+    public List<StoreObj> VariableList = new ArrayList<StoreObj>();
 
     public CheckVariables(List<Figure> figs)
     {
-        List<StoreBlock.storeobj> allstores = new ArrayList<StoreBlock.storeobj>();
+        List<StoreObj> allstores = new ArrayList<StoreObj>();
 
         for (int i=0;i<figs.size();i++) { //sort all declarations make sure we have no duplicates
             Typed t = (Typed)figs.get(i);
@@ -28,7 +28,7 @@ public class CheckVariables {
             if (t.getType() == CodeType.Store) {
 
                 //Sanity check get precheck type conflict
-                for(StoreBlock.storeobj store : ((StoreBlockFigure)figs.get(i)).getModel().getStores())
+                for(StoreObj store : ((StoreBlockFigure)figs.get(i)).getModel().getStores())
                 {
                     if (store.isInTypeConflict(allstores))
                     {
@@ -39,7 +39,7 @@ public class CheckVariables {
 
                 if (!isInConflict)
                 {
-                    for(StoreBlock.storeobj declaration : ((StoreBlockFigure)figs.get(i)).getModel().getStores())
+                    for(StoreObj declaration : ((StoreBlockFigure)figs.get(i)).getModel().getStores())
                     {
                         if (!VariableList.contains(declaration))
                         {

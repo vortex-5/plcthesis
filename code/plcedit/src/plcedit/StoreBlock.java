@@ -9,68 +9,15 @@ import java.util.ArrayList;
  * @author Vortex-5
  */
 public class StoreBlock extends CodeBlock{
-    
-
-    public class storeobj
-    {              
-
-        public CodeVarType type;
-        public String identifier;
-        public String value;
-        
-        storeobj()
-        {
-            type = new CodeVarType(CodeVarType.VarType.Undefined);
-            identifier = "";
-            value = "";
-        }
-        
-        /**
-         * When the compile button is hit a type conflict on all variables are checked. Since in the gui editor design currently
-         * there will be no support for local variables we are doing a type conflict check on all variables.
-         * 
-         * @param allvariables
-         * @return
-         */
-        public boolean isInTypeConflict(List<storeobj> allvariables)
-        {
-            boolean ret = false;
-            for(storeobj var : allvariables)
-            {
-                if(this.identifier.equals(var.identifier))
-                {
-                    if (this.type.getType() != var.type.getType())
-                    {
-                        ret = true;
-                        break;
-                    }
-                }
-            }
-            
-            return ret;
-        }
-        
-        /**
-         * Checks to see if the input data can be converted to the correct data type
-         * and if any parsing errors could be created by the compliled coded.
-         * @return
-         */
-        public boolean isDataValid() throws Exception
-        {
-            throw new Exception("Not Implimented yet!");
-        }
-
-
-    }
-    
-    private List<storeobj> storelist; 
+       
+    private List<StoreObj> storelist;
     
     
     public StoreBlock(int uid)
     {
         this.uid = uid;
         this.ctype = CodeType.Store;
-        this.storelist = new Vector<storeobj>();
+        this.storelist = new Vector<StoreObj>();
     }
 
     public StoreBlock()
@@ -91,7 +38,7 @@ public class StoreBlock extends CodeBlock{
                "//        STORE                     //" + newline +
                "//////////////////////////////////////" + newline;
         
-        for (storeobj store : storelist)
+        for (StoreObj store : storelist)
         {
             if (store.type.getType() != CodeVarType.VarType.Undefined)
                 strout += store.identifier + " = " + store.value + ";" + newline;
@@ -103,7 +50,7 @@ public class StoreBlock extends CodeBlock{
     public List<String> getDeclaration() {
         List<String> listout = new ArrayList<String>();
 
-        for(storeobj item : storelist)
+        for(StoreObj item : storelist)
         {
             if (item.type.getType() == CodeVarType.VarType.Undefined)
             {
@@ -124,7 +71,7 @@ public class StoreBlock extends CodeBlock{
     
     public void addItem()
     {
-        storeobj newitem = new storeobj();
+        StoreObj newitem = new StoreObj();
         newitem.identifier = "<name>";
         newitem.value = "<value>";
         storelist.add(newitem);
@@ -132,15 +79,12 @@ public class StoreBlock extends CodeBlock{
 
     public void addItem(String id, String val, CodeVarType type)
     {
-        storeobj newitem = new storeobj();
-        newitem.type = type;
-        newitem.identifier = id;
-        newitem.value = val;
+        StoreObj newitem = new StoreObj(type,id,val);
         storelist.add(newitem);
 
     }
     
-    public void removeItem(storeobj ref)
+    public void removeItem(StoreObj ref)
     {
         storelist.remove(ref);
     }
@@ -196,7 +140,7 @@ public class StoreBlock extends CodeBlock{
 
     public boolean contains(String identifier)
     {
-        for(storeobj item : storelist)
+        for(StoreObj item : storelist)
         {
             if (item.identifier.equals(identifier))
             {
@@ -206,7 +150,7 @@ public class StoreBlock extends CodeBlock{
         return false;
     }
     
-    public List<storeobj> getStores()
+    public List<StoreObj> getStores()
     {
         return storelist;
     }
