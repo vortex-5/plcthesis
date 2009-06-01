@@ -41,11 +41,14 @@ import net.christopherschultz.evaluator.function.BinaryOperator;
 public class Simulator extends javax.swing.JFrame implements ActionListener {
     private final Color colourNormal = Color.white;
     private final Color colourHilight = Color.yellow;
+    private boolean isClosed = true;
+
     private List<JToolBar> editorTools;
 
     private List<Variable> simVarList = new ArrayList<Variable>();
-
     private CodeBlockFigure currentBlock;
+
+
 
     /** Creates new form SimulatorViewer */
     public Simulator(DrawingEditor editor, List<JToolBar> tools) {
@@ -71,12 +74,18 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         btnReset = new javax.swing.JButton();
         btnStepNext = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+        });
+        addWindowStateListener(new java.awt.event.WindowStateListener() {
+            public void windowStateChanged(java.awt.event.WindowEvent evt) {
+                formWindowStateChanged(evt);
             }
         });
 
@@ -134,7 +143,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                 .add(btnStepOnce)
                 .add(18, 18, 18)
                 .add(btnStepNext)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -160,53 +169,22 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         editor.getActiveView().setEnabled(false);
         editor.setEnabled(false);
         setToolbarsTo(false);
-        reset();
+        if (isClosed)
+        {
+            reset();
+            isClosed = false;
+        }
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         clearHilightAll();
         editor.getActiveView().setEnabled(true);
         setToolbarsTo(true);
+        isClosed = true;
     }//GEN-LAST:event_formWindowClosing
 
     private void btnStepOnceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepOnceActionPerformed
-        String testExpr = "true";
-
-        EvaluationContext context = getContext();
-
-        try
-        {
-            Expression expr = ExpressionParser.parseExpression(testExpr);
-            Object rawResult = expr.evaluate(context);
-            if (rawResult == null)
-            {
-                System.out.println("NULL REF AFTER EVALUATION!");
-            }
-            else if (rawResult instanceof Double)
-            {
-                double result = (Double)rawResult;
-                System.out.println(result);
-            }
-            else if (rawResult instanceof Integer)
-            {
-                int result = (Integer)rawResult;
-                System.out.println(result);
-            }
-            else if (rawResult instanceof Boolean)
-            {
-                boolean result = (Boolean)rawResult;
-                System.out.println(result);
-            }
-        }
-        catch (ParseException ex)
-        { 
-            System.out.println(ex.toString());
-        }
-        catch (EvaluationException ex)
-        { 
-            System.out.println(ex.toString());
-        }
-
+        //TODO: implement this button
     }//GEN-LAST:event_btnStepOnceActionPerformed
 
     private void btnStepNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepNextActionPerformed
@@ -214,6 +192,10 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         currentBlock = takeNextEdge();
         hilightBlock(currentBlock);
     }//GEN-LAST:event_btnStepNextActionPerformed
+
+    private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowStateChanged
 
 
     /**
@@ -395,6 +377,12 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         context.set("-", new BinaryOperator.Subtract());
         context.set("true", new Boolean(true));
         context.set("false", new Boolean(false));
+        
+
+        for (Variable var : simVarList)
+        {
+            context.set(var.identity.identifier, var.value); //add memory list of variables
+        }
 
         return context;
     }
@@ -467,10 +455,79 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     }
 
     /**
-     * Performs one step of the code block and returns true if all steps are done.
+     * Steps through each of the instructions of a block one at a time
+     * @param block The block to step through
+     * @param lastIndex Which instruction was last processed (can be -1 if not yet executed)
+     * @return the index of the instruction processed, or -1 if nothing is processed and you should move to next block
      */
-    public boolean step(CodeBlockFigure block)
+    public int step(CodeBlock block, int lastIndex)
     {
-        return false;
+        List<StoreObj> storelist;
+        int executedIndex = -1;
+
+        if (block instanceof StoreBlock)
+        {
+            storelist = ((StoreBlock)block).getStores();
+            executedIndex = lastIndex+1;
+
+            if (executedIndex >= storelist.size())
+            {
+                return -1; //signal finished execution
+            }
+
+            //try and parse the string
+            EvaluationContext context = getContext();
+
+            try
+            {
+                Expression expr = ExpressionParser.parseExpression(storelist.get(executedIndex).value);
+                Object rawResult = expr.evaluate(context);
+                for(Variable simvar : simVarList)
+                {
+                    //try and find our entry for this variable
+                    if (simvar.identity.identifier.equals(storelist.get(executedIndex).identifier))
+                    {
+                        //update it's value to reflect the changes
+                        //we must be careful to recast it to the right type
+                        switch(simvar.identity.type.getType())
+                        {
+                            case Bool:
+                                simvar.value = (Boolean)rawResult;
+                                break;
+                            case Char:
+                                simvar.value = (Character)rawResult;
+                                break;
+                            case Double:
+                                simvar.value = (Double)rawResult;
+                                break;
+                            case Float:
+                                simvar.value = (Float)rawResult;
+                                break;
+                            case Int:
+                                simvar.value = (Integer)rawResult;
+                                break;
+                            case Long:
+                                simvar.value = (Long)rawResult;
+                                break;
+                            case Undefined:
+                                throw new RuntimeException("Cannot Cast to an Undefined type!");
+                        }
+                        break; //we don't need to loop anymore since vars are a set
+                    }
+                }
+            }
+            catch (ParseException ex)
+            {
+                System.out.println(ex.toString());
+            }
+            catch (EvaluationException ex)
+            {
+                System.out.println(ex.toString());
+            }
+
+        }
+
+        return executedIndex;
+        
     }
 }
