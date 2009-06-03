@@ -44,7 +44,7 @@ public class CodeVarType implements CreatesContextMenu{
     {
 
         // All code types are referenced here
-        addType(new CodeString(VarType.Bool, "bool","int"));
+        addType(new CodeString(VarType.Bool, "bool","bool"));
         addType(new CodeString(VarType.Char, "char","char"));
         addType(new CodeString(VarType.Int, "int", "int"));
         addType(new CodeString(VarType.Long, "long", "long"));
