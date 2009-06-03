@@ -12,8 +12,6 @@ import org.jhotdraw.xml.DOMOutput;
 import org.jhotdraw.geom.BezierPath;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import org.jhotdraw.xml.DOMStorable;
 
 /**
  *
@@ -40,11 +38,22 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
         addTextLabel("true");
     }
 
-    @Override
-    public void addNotify(Drawing arg0) {
-        super.addNotify(arg0);
-    }  
     
+    @Override
+    public void addNotify(Drawing drawing) {
+        super.addNotify(drawing);
+        
+        refreshFromData();
+    }
+    
+    private void refreshFromData()
+    {
+        willChange();
+        setTextLabel(getGuard());
+        changed();
+    }
+
+
     public CodeType getType() {
         return CodeType.Goto;
     }
@@ -54,6 +63,12 @@ public class DirectedLineConnectionFigure extends LabeledLineConnectionFigure im
     }
 
     private void setTextLabel(TextFigure text)
+    {
+        removeChild(0);
+        addTextLabel(text);
+    }
+
+    private void setTextLabel(String text)
     {
         removeChild(0);
         addTextLabel(text);
