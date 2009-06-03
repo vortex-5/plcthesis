@@ -27,7 +27,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="TableScrollablePane" alignment="0" pref="552" max="32767" attributes="0"/>
+          <Component id="TableScrollablePane" alignment="0" pref="624" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnReset" min="-2" max="-2" attributes="0"/>
@@ -77,6 +77,7 @@
     <Component class="javax.swing.JButton" name="btnStepOnce">
       <Properties>
         <Property name="text" type="java.lang.String" value="Step Once"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStepOnceActionPerformed"/>
@@ -93,6 +94,7 @@
     <Component class="javax.swing.JButton" name="btnStepNext">
       <Properties>
         <Property name="text" type="java.lang.String" value="Step Next"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStepNextActionPerformed"/>

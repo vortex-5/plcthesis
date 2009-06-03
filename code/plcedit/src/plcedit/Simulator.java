@@ -16,9 +16,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +40,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     private final Color colourNormal = Color.white;
     private final Color colourHilight = Color.yellow;
     private boolean isClosed = true;
+    private int currentIndex = -1;
 
     private List<JToolBar> editorTools;
 
@@ -111,6 +110,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         TableScrollablePane.setViewportView(VariableTable);
 
         btnStepOnce.setText("Step Once");
+        btnStepOnce.setEnabled(false);
         btnStepOnce.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStepOnceActionPerformed(evt);
@@ -125,6 +125,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         });
 
         btnStepNext.setText("Step Next");
+        btnStepNext.setEnabled(false);
         btnStepNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStepNextActionPerformed(evt);
@@ -135,7 +136,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(TableScrollablePane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+            .add(TableScrollablePane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(btnReset)
@@ -184,12 +185,30 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnStepOnceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepOnceActionPerformed
-        //TODO: implement this button
+        currentIndex = simStep(currentBlock.accociatedcode, currentIndex);
+
+
+        updateVariableView();
+        
+        if (currentIndex == -1) //no instructions remaining
+        {
+            clearHilightAll();
+            currentBlock = takeNextEdge();
+            currentIndex = -1;
+            hilightBlock(currentBlock);
+        }
+        else //instructions still remain
+        {
+            
+        }
+        
+        
     }//GEN-LAST:event_btnStepOnceActionPerformed
 
     private void btnStepNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepNextActionPerformed
         clearHilightAll();
         currentBlock = takeNextEdge();
+        currentIndex = -1;
         hilightBlock(currentBlock);
     }//GEN-LAST:event_btnStepNextActionPerformed
 
@@ -253,6 +272,9 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
 
     private void reset()
     {
+        btnStepNext.setEnabled(true);
+        btnStepOnce.setEnabled(true);
+        
         simVarList.clear();
 
         CheckVariables varlist = new CheckVariables(editor.getActiveView().getDrawing().getChildren());
@@ -421,6 +443,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
             }
 
         }
+
         return nextBlock;
     }
 
@@ -460,7 +483,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
      * @param lastIndex Which instruction was last processed (can be -1 if not yet executed)
      * @return the index of the instruction processed, or -1 if nothing is processed and you should move to next block
      */
-    public int step(CodeBlock block, int lastIndex)
+    private int simStep(CodeBlock block, int lastIndex)
     {
         List<StoreObj> storelist;
         int executedIndex = -1;
@@ -528,6 +551,17 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         }
 
         return executedIndex;
-        
+    }
+
+    /**
+     * Executed when a stop condition is reached all step buttons are disabled and user is informed that
+     * they have reached the end of the program.
+     */
+    public void simStop()
+    {
+        btnStepNext.setEnabled(false);
+        btnStepOnce.setEnabled(false);
+
+        JOptionPane.showMessageDialog(this, "The program has terminated.");
     }
 }
