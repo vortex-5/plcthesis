@@ -185,24 +185,30 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnStepOnceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepOnceActionPerformed
-        currentIndex = simStep(currentBlock.accociatedcode, currentIndex);
+        try
+        {
+
+            currentIndex = simStep(currentBlock.accociatedcode, currentIndex);
 
 
-        updateVariableView();
-        
-        if (currentIndex == -1) //no instructions remaining
-        {
-            clearHilightAll();
-            currentBlock = takeNextEdge();
-            currentIndex = -1;
-            hilightBlock(currentBlock);
+            updateVariableView();
+
+            if (currentIndex == -1) //no instructions remaining
+            {
+                clearHilightAll();
+                currentBlock = takeNextEdge();
+                currentIndex = -1;
+                hilightBlock(currentBlock);
+            }
+            else //instructions still remain
+            {
+
+            }
         }
-        else //instructions still remain
+        catch(Exception ex)
         {
-            
+            reset();
         }
-        
-        
     }//GEN-LAST:event_btnStepOnceActionPerformed
 
     private void btnStepNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepNextActionPerformed
@@ -483,7 +489,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
      * @param lastIndex Which instruction was last processed (can be -1 if not yet executed)
      * @return the index of the instruction processed, or -1 if nothing is processed and you should move to next block
      */
-    private int simStep(CodeBlock block, int lastIndex)
+    private int simStep (CodeBlock block, int lastIndex) throws Exception
     {
         List<StoreObj> storelist;
         int executedIndex = -1;
@@ -498,13 +504,30 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                 return -1; //signal finished execution
             }
 
+            if (storelist.get(executedIndex).value.equals("<value>"))
+            {
+                return -1;
+            }
+
             //try and parse the string
             EvaluationContext context = getContext();
+
+
 
             try
             {
                 Expression expr = ExpressionParser.parseExpression(storelist.get(executedIndex).value);
                 Object rawResult = expr.evaluate(context);
+                if (rawResult == null)
+                {
+                    throw new Exception("Uninitialized Variable Encountered, Please Initialize the variable before first use in an expression\n\n" +
+                            "Example: \n" +
+                            "int var = uninit\n" +
+                            "Fixed: \n" +
+                            "int uninit = 0 \n" +
+                            "int var = uninit\n\n" +
+                            "Simulator will now be reset.");
+                }
                 for(Variable simvar : simVarList)
                 {
                     //try and find our entry for this variable
@@ -541,11 +564,16 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
             }
             catch (ParseException ex)
             {
-                System.out.println(ex.toString());
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
             catch (EvaluationException ex)
             {
-                System.out.println(ex.toString());
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+            catch (Exception ex)
+            {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+                throw ex;
             }
 
         }

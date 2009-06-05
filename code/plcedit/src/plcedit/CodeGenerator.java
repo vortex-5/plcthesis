@@ -66,6 +66,8 @@ public class CodeGenerator implements ActionListener {
                             +   "used the same variable identifier but have defined it\n "
                             +   "with more than one data type in one of your store\n"
                             +   "blocks types.\n\n";
+
+            JOptionPane.showMessageDialog(codeview, "COMPILE FAILURE: You have a variable with the same name assigned to two different types. The variable declarations were not enumerated.");
         }
         else
         {

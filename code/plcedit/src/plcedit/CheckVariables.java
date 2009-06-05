@@ -22,6 +22,15 @@ public class CheckVariables {
     {
         List<StoreObj> allstores = new ArrayList<StoreObj>();
 
+        // Grab all the stores
+        for (Figure fig : figs)
+        {
+            if (fig instanceof StoreBlockFigure)
+            {
+                allstores.addAll(((StoreBlock)((StoreBlockFigure)fig).accociatedcode).getStores());
+            }
+        }
+
         for (int i=0;i<figs.size();i++) { //sort all declarations make sure we have no duplicates
             Typed t = (Typed)figs.get(i);
 
