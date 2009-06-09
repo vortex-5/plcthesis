@@ -20,7 +20,7 @@ import javax.swing.JPopupMenu;
  * @author huangkf
  */
 public class CodeVarType implements CreatesContextMenu{
-    public enum VarType {Bool, Char, Int, Long, Float, Double, Undefined};
+    public enum VarType {Bool, Char, Byte, Int, Long, Float, Double, Undefined};
     private Hashtable types;
     private VarType key;
 

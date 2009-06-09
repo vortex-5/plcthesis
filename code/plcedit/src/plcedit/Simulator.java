@@ -31,6 +31,7 @@ import net.christopherschultz.evaluator.parser.ParseException;
 import net.christopherschultz.evaluator.util.DefaultEvaluationContext;
 import net.christopherschultz.evaluator.EvaluationException;
 import net.christopherschultz.evaluator.function.BinaryOperator;
+import sun.tools.tree.UnsignedShiftRightExpression;
 
 /**
  *
@@ -185,9 +186,6 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnStepOnceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepOnceActionPerformed
-        try
-        {
-
             currentIndex = simStep(currentBlock.accociatedcode, currentIndex);
 
 
@@ -197,44 +195,48 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
             {
                 clearHilightAll();
                 currentBlock = takeNextEdge();
-                currentIndex = -1;
-                hilightBlock(currentBlock);
+
+                if (currentBlock == null)
+                {
+                    endOfProgram();
+                }
+                else
+                {
+                    currentIndex = -1;
+                    hilightBlock(currentBlock);
+                }
             }
             else //instructions still remain
             {
 
             }
-        }
-        catch(Exception ex)
-        {
-            reset();
-        }
+        
     }//GEN-LAST:event_btnStepOnceActionPerformed
 
 
     private void btnStepNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepNextActionPerformed
-        try
+        do
         {
-            do
+            currentIndex = simStep(currentBlock.accociatedcode, currentIndex);
+
+
+            updateVariableView();
+
+            if (currentIndex == -1) //no instructions remaining
             {
-                currentIndex = simStep(currentBlock.accociatedcode, currentIndex);
-
-
-                updateVariableView();
-
-                if (currentIndex == -1) //no instructions remaining
+                clearHilightAll();
+                currentBlock = takeNextEdge();
+                if (currentBlock == null)
                 {
-                    clearHilightAll();
-                    currentBlock = takeNextEdge();
+                    endOfProgram();
+                }
+                else
+                {
                     currentIndex = -1;
                     hilightBlock(currentBlock);
                 }
-            }while (currentIndex != -1); 
-        }
-        catch(Exception ex)
-        {
-            reset();
-        }
+            }
+        }while (currentIndex != -1);
     }//GEN-LAST:event_btnStepNextActionPerformed
 
     private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
@@ -264,6 +266,13 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
     // End of variables declaration//GEN-END:variables
 
 
+
+    private void endOfProgram()
+    {
+        btnStepNext.setEnabled(false);
+        btnStepOnce.setEnabled(false);
+        JOptionPane.showMessageDialog(this, "Your program has finished execution.");
+    }
 
     private CodeBlockFigure findStartBlock()
     {
@@ -304,6 +313,11 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
 
         CheckVariables varlist = new CheckVariables(editor.getActiveView().getDrawing().getChildren());
 
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTA","0x0"), new Integer(0)));
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTB","0x0"), new Integer(0)));
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTC","0x0"), new Integer(0)));
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTD","0x0"), new Integer(0)));
+
         for(StoreObj var : varlist.VariableList)
         {
             switch(var.type.getType())
@@ -312,7 +326,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                     simVarList.add(new Variable(var,false));
                     break;
                 case Char:
-                    simVarList.add(new Variable(var,'0'));
+                    simVarList.add(new Variable(var, (char)0));
                     break;
                 case Double:
                     simVarList.add(new Variable(var,0.0));
@@ -331,7 +345,6 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                     break;
             }
 
-            updateVariableView();
         }
 
         CodeBlockFigure startfigure = findStartBlock();
@@ -345,6 +358,9 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
             clearHilightAll();
             hilightBlock(startfigure);
         }
+
+
+        updateVariableView();
     }
 
     /**
@@ -424,7 +440,6 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         context.set("-", new BinaryOperator.Subtract());
         context.set("true", new Boolean(true));
         context.set("false", new Boolean(false));
-        
 
         for (Variable var : simVarList)
         {
@@ -508,10 +523,13 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
      * @param lastIndex Which instruction was last processed (can be -1 if not yet executed)
      * @return the index of the instruction processed, or -1 if nothing is processed and you should move to next block
      */
-    private int simStep (CodeBlock block, int lastIndex) throws Exception
+    private int simStep (CodeBlock block, int lastIndex)
     {
-        List<StoreObj> storelist;
+        List<StoreObj> storelist = null;
         int executedIndex = -1;
+        String strExpression = "";
+        String strIdentifier = "";
+        EvaluationContext context = null; //evaluation context used to store variables
 
         if (block instanceof StoreBlock)
         {
@@ -529,13 +547,25 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
             }
 
             //try and parse the string
-            EvaluationContext context = getContext();
+            context = getContext();
+
+            //store expression for next part
+            strExpression = storelist.get(executedIndex).value;
+            strIdentifier = storelist.get(executedIndex).identifier;
+        }
+        else if (block instanceof OutputBlock)
+        {
+            context = getContext();
+            strExpression = ((OutputBlock)block).getValue();
+            strIdentifier = ((OutputBlock)block).getDisplayedPort();
+        }
 
 
-
+        if (!strExpression.equals("") && context != null)
+        {
             try
             {
-                Expression expr = ExpressionParser.parseExpression(storelist.get(executedIndex).value);
+                Expression expr = ExpressionParser.parseExpression(strExpression);
                 Object rawResult = expr.evaluate(context);
                 if (rawResult == null)
                 {
@@ -549,8 +579,8 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                 }
                 for(Variable simvar : simVarList)
                 {
-                    //try and find our entry for this variable
-                    if (simvar.identity.identifier.equals(storelist.get(executedIndex).identifier))
+                    //try and find our entry for this variable (storelist initializer)
+                    if (simvar.identity.identifier.equals(strIdentifier))
                     {
                         //update it's value to reflect the changes
                         //we must be careful to recast it to the right type
@@ -561,6 +591,9 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                                 break;
                             case Char:
                                 simvar.value = (Character)rawResult;
+                                break;
+                            case Byte:
+                                simvar.value = (Integer)(((Integer)rawResult) & (0xFF));
                                 break;
                             case Double:
                                 simvar.value = (Double)rawResult;
@@ -579,7 +612,8 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                         }
                         break; //we don't need to loop anymore since vars are a set
                     }
-                }
+                 }
+
             }
             catch (ParseException ex)
             {
@@ -591,8 +625,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
             }
             catch (Exception ex)
             {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
-                throw ex;
+                JOptionPane.showMessageDialog(this, ex.toString());
             }
 
         }

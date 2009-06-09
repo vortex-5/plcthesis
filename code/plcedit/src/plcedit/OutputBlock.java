@@ -34,7 +34,6 @@ public class OutputBlock extends CodeBlock implements CreatesContextMenu {
     public PORTS getPort() {
         return port;
     }
-
     public String getDisplayedPort() {
         return getDisplayedPort(this.port);
     }
