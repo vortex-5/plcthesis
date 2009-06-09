@@ -211,11 +211,30 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         }
     }//GEN-LAST:event_btnStepOnceActionPerformed
 
+
     private void btnStepNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStepNextActionPerformed
-        clearHilightAll();
-        currentBlock = takeNextEdge();
-        currentIndex = -1;
-        hilightBlock(currentBlock);
+        try
+        {
+            do
+            {
+                currentIndex = simStep(currentBlock.accociatedcode, currentIndex);
+
+
+                updateVariableView();
+
+                if (currentIndex == -1) //no instructions remaining
+                {
+                    clearHilightAll();
+                    currentBlock = takeNextEdge();
+                    currentIndex = -1;
+                    hilightBlock(currentBlock);
+                }
+            }while (currentIndex != -1); 
+        }
+        catch(Exception ex)
+        {
+            reset();
+        }
     }//GEN-LAST:event_btnStepNextActionPerformed
 
     private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
