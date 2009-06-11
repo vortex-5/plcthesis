@@ -57,7 +57,7 @@ goto EOF;
 \end{lstlisting}
 \end{definition}
 
-As you can observe from definition \ref{def:genCodeStruct} each code block generation first starts with a \emphasize{BLUID} (Block Unique Identifier). The purpose of the \empahsize{BLUID}'s is to give a reference point for the start of the block having a \emphasize{BLUID} label for each block enables any block to connect an edge to it should it choose. The block header which comes right after is an identifier to the type of block being generated. 
+As you can observe from definition \ref{def:genCodeStruct} each code block generation first starts with a \emphasize{BLUID} (Block Unique Identifier). The purpose of the \emphasize{BLUID}'s is to give a reference point for the start of the block having a \emphasize{BLUID} label for each block enables any block to connect an edge to it should it choose. The block header which comes right after is an identifier to the type of block being generated. 
 
 In the "(Program Code)" section of the definition \ref{def:genCodeStruct} sits the generated \emphasize{IL} code. This code is the same for each target platform. Each \emphasize{IL} target will have apropreate drivers that will support all the primitives that that \emphasize{IL} will require. These primatives can be found in section \ref{sec:IL}. The code here will resemble C code with specific calls to lower level functions that are supported by the PLC target's drivers.
 
