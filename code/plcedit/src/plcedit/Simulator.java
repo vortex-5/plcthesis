@@ -31,7 +31,6 @@ import net.christopherschultz.evaluator.parser.ParseException;
 import net.christopherschultz.evaluator.util.DefaultEvaluationContext;
 import net.christopherschultz.evaluator.EvaluationException;
 import net.christopherschultz.evaluator.function.BinaryOperator;
-import sun.tools.tree.UnsignedShiftRightExpression;
 
 /**
  *

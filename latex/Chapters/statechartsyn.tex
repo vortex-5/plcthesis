@@ -1,7 +1,9 @@
 %State Chart Syntax
 \section{Syntax of \plcchart}
 
-Abstract syntax of our state chart language:
+Abstract syntax of \plcchart language:
+\begin{definition}
+\plcchart
 
 \begin{itemize}
 	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Variable $\mid$ Constant
@@ -19,6 +21,7 @@ Abstract syntax of our state chart language:
 	
 	\item Transition := StateBlock Condition StateBlock
 \end{itemize}
+\end{definition}
 
 \begin{figure}[htp]
     \centering

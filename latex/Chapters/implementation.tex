@@ -24,13 +24,45 @@ and have the functionality as follows
  %ref figure
 \item \textbf{The StoreBlock Tool}: Store blocks are fundemental input blocks. You can use these blocks to perform calculations or update internal variables. To begin drawing a store block you first select this tool. Then you click on the canvas where you would like it to appear. Store blocks are auto-resizing objects thus the size is determined by the content. To edit each field in a store block you double click the parameter you wish to edit. If you wish to delete a line you can simple erase the identifier. If you wish to add a new line change the last identifier to something other than the default placeholder value. A new placeholder will be created as soon as you perform this action in order to allow you to add more lines.
 \item \textbf{The Delay Tool}: Delay blocks are used to insert a specified delay into your program the length of the delay is specified in milliseconds. When an edge is taken to the delay block the code execution is delayed and none of the departing edges are taken until the delay time specified has elapsed. It is often useful to have your program wait for a specified period, although the same can be achieved by using a store block and a counter update it is far easier and more precise to use the dedicated delay block.
+\item \textbf{The Output Tool}: Output blocks are used to send outputs from the program to pins on the PLC itself. Depending on the chip type there can be one or many different output ports. Each port is a 8-bit representation of the pins, an expression is also allowed on the right hand side so masking would be permitted.
+%% TODO: Implement this
+\item \textbf{The Input Tool}: Similar to the format of the output block the input block allows you to read data from one or many ports (depending on chip) into an internally used variable.
+
+\item \textbf{Compile Action}: Executing the compile action will start the compilation process into PLC \emphasize{IL} (Intermediate Language) code this code is directly loadable onto the PLC targets to be run. The generated code can then be copied into your PLC's compilation enviroment for run.
+
+\item \textbf{Simulator Tool}: The simulator action brings up a tracing and debugging window. This window allows you to step through each of the code blocks to simulate what might happen as your program runs.
 \end{itemize}
+
 
 
 
 \subsection{Data Flow}
 ..
 \subsection{Structure}
-..
+The structure of each compiled section was carefully constructed to preserve the structure of the drawn graph as closely as possible. The basic structure of each compiled block can be seen as follows:
+
+\begin{definition}
+\label{def:genCodeStruct}
+Structure of \plcchart \  generated code
+
+\begin{lstlisting}
+BLUID5:
+//////////////////////////////////
+//// Block Header               //
+//////////////////////////////////
+(Program Code)
+
+if ( guard condition ) goto BLUID2;
+goto EOF;
+\end{lstlisting}
+\end{definition}
+
+As you can observe from definition \ref{def:genCodeStruct} each code block generation first starts with a \emphasize{BLUID} (Block Unique Identifier). The purpose of the \empahsize{BLUID}'s is to give a reference point for the start of the block having a \emphasize{BLUID} label for each block enables any block to connect an edge to it should it choose. The block header which comes right after is an identifier to the type of block being generated. 
+
+In the "(Program Code)" section of the definition \ref{def:genCodeStruct} sits the generated \emphasize{IL} code. This code is the same for each target platform. Each \emphasize{IL} target will have apropreate drivers that will support all the primitives that that \emphasize{IL} will require. These primatives can be found in section \ref{sec:IL}. The code here will resemble C code with specific calls to lower level functions that are supported by the PLC target's drivers.
+
+The final block of if statements impliment the edges leaving the block. Each edge is guarded by an if statement, and will have the goto portion point the the correct \emphasize{BLUID} as specified by the diagram. In addition if no edges can be taken the program will default to a terminate statement allowing the PLC chip to terminate by going to the end of file.
+
 \subsection{Compilation}
-.. (maybe replaced by language section)
+Each of the blocks will compile their own snippets of code the translation is as follows:
+
