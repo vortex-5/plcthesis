@@ -10,9 +10,14 @@ there is a simple toolbar in which objects can be selected from the pallete and 
 instead of the original design of a seperate property palette. Again this design descision was chosen as it is simpler and more immediately understandable by the user.
 
 %figure goes here
+\subsubsection{Using The Gui: Parts of the Gui}
 
-\paragraph{Using The Gui: Parts of the Gui}
-\subparagraph{The tools pallate}
+\subparagraph{The Main Canvas}
+
+The main canvas represents the main working area for the user. As one would expect the canvas can be scrolled by using the horizontal and vertical scroll bars. In addition the drawing can also be zoomed in and out by using the zoom keys located at the bottom of the canvas. Object manipulation is accomplished by selecting the appropreate tool from the tools palette then performing the movement with the mouse onto the main drawing canvas.
+
+\subparagraph{The tools palette}
+
 The tools pallate is were the user selects their tool to use on the canvas. Only one tool can be used at a time. All tools except for compile and simulation are selected on click. Compile and Simulaiton are immediately executed on click.
 %TODO: Add simulation tool
 The tools listed on the tool pallate are as shown in figure %create figure tool pallate
@@ -32,8 +37,6 @@ and have the functionality as follows
 
 \item \textbf{Simulator Tool}: The simulator action brings up a tracing and debugging window. This window allows you to step through each of the code blocks to simulate what might happen as your program runs.
 \end{itemize}
-
-
 
 
 \subsection{Data Flow}
@@ -61,7 +64,10 @@ As you can observe from definition \ref{def:genCodeStruct} each code block gener
 
 In the "(Program Code)" section of the definition \ref{def:genCodeStruct} sits the generated \emphasize{IL} code. This code is the same for each target platform. Each \emphasize{IL} target will have apropreate drivers that will support all the primitives that that \emphasize{IL} will require. These primatives can be found in section \ref{sec:IL}. The code here will resemble C code with specific calls to lower level functions that are supported by the PLC target's drivers.
 
-The final block of if statements impliment the edges leaving the block. Each edge is guarded by an if statement, and will have the goto portion point the the correct \emphasize{BLUID} as specified by the diagram. In addition if no edges can be taken the program will default to a terminate statement allowing the PLC chip to terminate by going to the end of file.
+The final block of if statements impliment the edges leaving the block. Each edge is guarded by an if statement, and will have the goto portion point the the correct \emphasize{BLUID} as specified by the diagram.
+
+If at any point no edges are valid the the program will terminate by going to the label "EOF" which will be located at the end of the file.
+%alternative return statement.
 
 \subsection{Compilation}
 Each of the blocks will compile their own snippets of code the translation is as follows:
