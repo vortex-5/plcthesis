@@ -312,10 +312,10 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
 
         CheckVariables varlist = new CheckVariables(editor.getActiveView().getDrawing().getChildren());
 
-        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTA","0x0"), new Integer(0)));
-        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTB","0x0"), new Integer(0)));
-        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTC","0x0"), new Integer(0)));
-        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTD","0x0"), new Integer(0)));
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTA","0"), new Integer(0)));
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTB","0"), new Integer(0)));
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTC","0"), new Integer(0)));
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTD","0"), new Integer(0)));
 
         for(StoreObj var : varlist.VariableList)
         {
@@ -427,7 +427,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         context.set("+", new BinaryOperator.Add());
         context.set("&&", new BinaryOperator.And());
         context.set("/", new BinaryOperator.Divide());
-        context.set("==", new BinaryOperator.Equal());
+        context.set("=", new BinaryOperator.Equal());
         context.set(">", new BinaryOperator.Greater());
         context.set(">=", new BinaryOperator.GreaterEqual());
         context.set("<", new BinaryOperator.Less());
@@ -443,6 +443,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         for (Variable var : simVarList)
         {
             context.set(var.identity.identifier, var.value); //add memory list of variables
+            System.out.println("Adding context: " + var.identity.identifier.toString() + " --> [" + var.value + "]" );
         }
 
         return context;
@@ -465,20 +466,30 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         {
             try
             {
-                Expression expr = ExpressionParser.parseExpression(edge.getGuard());
+                //TODO: HACK for some reason == doesn't work so we'll search and replace that with ="
+                String prebuffer = edge.getGuard();
+                prebuffer = prebuffer.replace("==", "=");
+                //end hack
+
+                Expression expr = ExpressionParser.parseExpression(prebuffer);
                 if ((Boolean)expr.evaluate(getContext()))
                 {
                     nextBlock = (CodeBlockFigure)edge.getEndFigure();
                     break;
                 }
+                else
+                {
+                    System.out.println("Eval false: " + prebuffer);
+                }
+
             }
             catch (ParseException ex)
             {
-
+                System.out.println(ex);
             }
             catch (EvaluationException ex)
             {
-
+                System.out.println(ex);
             }
 
         }

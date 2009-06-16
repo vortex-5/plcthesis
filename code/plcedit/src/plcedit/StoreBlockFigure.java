@@ -82,7 +82,7 @@ public class StoreBlockFigure extends CodeBlockFigure{
             storeid.setAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_ID, store);
             line.add(storeid);
 
-            TextFigure eq = new TextFigure(" = ");
+            TextFigure eq = new TextFigure(" := ");
             eq.setEditable(false);
 
             line.add(eq);
