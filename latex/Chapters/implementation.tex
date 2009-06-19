@@ -38,6 +38,9 @@ and have the functionality as follows
 \item \textbf{Simulator Tool}: The simulator action brings up a tracing and debugging window. This window allows you to step through each of the code blocks to simulate what might happen as your program runs.
 \end{itemize}
 
+\subparagraph{Compile Preview Window}
+After the compile button is invoked the compile preview window is presented. The preview window serves as a quick overview of the program code that can be loaded onto the device. The user then has the option of saving the text off to a compilable file for loading onto the device.
+
 
 \subsection{Data Flow}
 ..
@@ -71,4 +74,9 @@ If at any point no edges are valid the the program will terminate by going to th
 
 \subsection{Compilation}
 Each of the blocks will compile their own snippets of code the translation is as follows:
+
+\begin{definition}
+\label{def:startblock}
+(The start block generate no program code it's only represented as a block so we may traverse along it's edges)
+\end{definition}
 
