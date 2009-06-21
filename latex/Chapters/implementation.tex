@@ -14,7 +14,7 @@ instead of the original design of a seperate property palette. Again this design
 
 \subparagraph{The Main Canvas}
 
-\begin{figure}
+\begin{figure}[htp]
     \centering
     \includegraphics[width=\imgmedium]{./images/plcedit_canvas.png}
     \caption{The Drawing Canvas}
@@ -27,7 +27,8 @@ The main canvas represents the main working area for the user as shown in figure
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[height=\imgsmall]{./images/plcedit_tools.png}
+    \includegraphics[width=50px]{./images/plcedit_tools.png}
+    \includegraphics[width=50px]{./images/plcedit_actions.png}
     \caption{The Tools Pallette}
     \label{fig:plcedit_tools}
 \end{figure}
@@ -53,7 +54,39 @@ and have the functionality as follows
 \end{itemize}
 
 \subparagraph{Compile Preview Window}
-After the compile button is invoked the compile preview window is presented. The preview window serves as a quick overview of the program code that can be loaded onto the device. The user then has the option of saving the text off to a compilable file for loading onto the device.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=\imgmedium]{./images/plcedit_compile.png}
+    \caption{Compile Preview Window}
+    \label{fig:plcedit_compile}
+\end{figure}
+
+After the compile button is invoked the compile preview window is presented as shown in figure \ref{fig:plcedit_compile}. The preview window serves as a quick overview of the program code that can be loaded onto the device. The user then has the option of saving the text off to a compilable file for loading onto the device.
+
+\subparagraph{Simulator Window}
+
+In order to aid in debugging a simulator mode has been added to the visual editor. When the simulator window is brought up it helps the programmer visually identify what their current memory layout looks like as well as which block they are currently executing. In figure \ref{fig:plcedit_simulator_start} the following view is presented right after the simulator button has been pressed. Not the start block is automatically highlighted and the ports are initialized to their starting values.
+
+\emphasize{Step Once} allows the user to to step through the current block one step at a time. \emphasize{Step Next} finished all operations in the current block and jumps directly to the next block. Figure \ref{fig:plcedit_simulator_running} demonstrates what the program might look like after a it is allowed to run a few steps.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=\imgmedium]{./images/plcedit_simulator_start.png}
+    \caption{Simulator Window Starting Configuration}
+    \label{fig:plcedit_simulator_start}
+\end{figure}
+
+
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=\imgmedium]{./images/plcedit_simulator_running.png}
+    \caption{Simulator Window Program Running}
+    \label{fig:plcedit_simulator_running}
+\end{figure}
+
+
+
 
 
 \subsection{Data Flow}
