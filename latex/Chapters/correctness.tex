@@ -1,7 +1,25 @@
 %Correctness
 \section{Correctness}
 \subsection{The Graph Structure}
+The graph structure chosen is simple directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem} respectively. To examine correctness we begin by looking at a basic atom and how it will be translated into the final code.
 
+The simplest case is a diagram in which only the start node exists.
+%add picture here.
+In this simple example the following generated intermediate code \emphasize{IL} is created.
+
+\begin{lstlisting}
+// VARIABLE DECLARATIONS //
+BLUID0:
+//////////////////////////////////////
+//        PROGRAM START             //
+//////////////////////////////////////
+goto EOF;
+
+EOF:
+\end{lstlisting}
+
+
+%the lower sections might be superceeded by the above.
 \subsection{The IL}
 \subsection{The Generated Code Sections}
 \subsection{The Simulator}

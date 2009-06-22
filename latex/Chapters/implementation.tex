@@ -65,7 +65,7 @@ After the compile button is invoked the compile preview window is presented as s
 
 \subparagraph{Simulator Window}
 
-In order to aid in debugging a simulator mode has been added to the visual editor. When the simulator window is brought up it helps the programmer visually identify what their current memory layout looks like as well as which block they are currently executing. In figure \ref{fig:plcedit_simulator_start} the following view is presented right after the simulator button has been pressed. Not the start block is automatically highlighted and the ports are initialized to their starting values.
+In order to aid in debugging a simulator mode has been added to the visual editor. When the simulator window is brought up it helps the programmer visually identify what their current memory layout looks like as well as which block they are currently executing. In figure \ref{fig:plcedit_simulator_start} the following view is presented right after the simulator button has been pressed. Note at any point in time the contents of all variables and all ports are shown. Not the start block is automatically highlighted and the ports are initialized to their starting values.
 
 \emphasize{Step Once} allows the user to to step through the current block one step at a time. \emphasize{Step Next} finished all operations in the current block and jumps directly to the next block. Figure \ref{fig:plcedit_simulator_running} demonstrates what the program might look like after a it is allowed to run a few steps.
 
@@ -90,7 +90,9 @@ In order to aid in debugging a simulator mode has been added to the visual edito
 
 
 \subsection{Data Flow}
-..
+%data flow diagram
+Construction of the final compiled code starts at the gui level. The GUI composed of tools and drawing elements forms the basis of a directed graph with data. The directed graph forms the basis of our code structure. In each node contains a small ability to have sequential code. The edges allow different sequences of nodes to be executed with logic.
+
 \subsection{Structure}
 The structure of each compiled section was carefully constructed to preserve the structure of the drawn graph as closely as possible. The basic structure of each compiled block can be seen as follows:
 
