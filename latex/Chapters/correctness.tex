@@ -18,9 +18,13 @@ goto EOF;
 EOF:
 \end{lstlisting}
 
-In this simple atom of code we can see that there are no variables declared. We have a label inserted at the beginning of the start block so we can re-enter the start block if required. Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program.
+In this simplest example we have a label inserted at the beginning of the start block so we can re-enter the start block namely BLUID0. Following the label a comment header to denote the block type, and no variables declared.  Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program.
 
+%draw diagram of metioned
+Moving up in complexity we have a start block followed by our next simpliest element the delay block, joined by one transition leaving the start block. We can see from figure %need figure ref here
+the structure of this new graph. We will use this example to examine transitions are compiled into final code, but first we shall look at the delay block itself.
 
+The delay block itself has a structure identical to the start block. The only difference in this case is the delay block doesn't have a null code section. The delay block generates one line of code, namely delay(integer). The actual delay routine is implimented on the driver level per device since certain devices lack internal timers. We can assume that each chip make will figure out the correct conversion from their chip clocks to the ms measurement required to implement a delay.
 
 
 %the lower sections might be superceeded by the above.
