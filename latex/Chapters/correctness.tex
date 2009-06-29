@@ -4,6 +4,8 @@
 The graph structure chosen is simple directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem} respectively. To examine correctness we begin by looking at a basic atom and how it will be translated into the final code.
 
 The simplest case is a diagram in which only the start node exists.
+
+[DIAGRAM GOES HERE]
 %add picture here.
 In this simple example the following generated intermediate code \emphasize{IL} is created.
 
@@ -20,6 +22,7 @@ EOF:
 
 In this simplest example we have a label inserted at the beginning of the start block so we can re-enter the start block namely BLUID0. Following the label a comment header to denote the block type, and no variables declared.  Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program.
 
+[DIAGRAM GOES HERE]
 %draw diagram of metioned
 Moving up in complexity we have a start block followed by our next simpliest element the delay block, joined by one transition leaving the start block. We can see from figure %need figure ref here
 the structure of this new graph. We will use this example to examine transitions are compiled into final code, but first we shall look at the delay block itself.
