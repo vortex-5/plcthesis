@@ -50,9 +50,28 @@ public class CheckVariables {
                 {
                     for(StoreObj declaration : ((StoreBlockFigure)figs.get(i)).getModel().getStores())
                     {
-                        if (!VariableList.contains(declaration))
+                        /*
+                        if (!VariableList.contains(declaration)) //WARNING USING CONTAINS ONLY CHECKS FOR REFERENCES
                         {
                             VariableList.add(declaration);
+                        }
+                        */
+
+                        if (declaration.type.getType() != CodeVarType.VarType.Undefined)
+                        {
+                            boolean existsInStack = false;
+                            for (StoreObj item : VariableList)
+                            {
+                                if (declaration.identifier.equals(item.identifier))
+                                {
+                                    existsInStack = true;
+                                }
+                            }
+
+                            if (!existsInStack)
+                            {
+                                VariableList.add(declaration);
+                            }
                         }
                     }
                 }

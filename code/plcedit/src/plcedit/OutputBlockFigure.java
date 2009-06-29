@@ -62,7 +62,7 @@ public class OutputBlockFigure extends CodeBlockFigure {
 
         attrib.setLayouter(new HorizontalLayouter());
 
-        TextFigureWithClickEvent port = new TextFigureWithClickEvent(getModel().getDisplayedPort(),updatelistener);
+        TextFigure port = new TextFigure(getModel().getDisplayedPort());
         port.setAttribute(SpecialAttributeKeys.MODIFY_LINK_CREATESCONTEXTMENU, getModel());
         port.setEditable(false);
         attrib.add(port);
@@ -157,7 +157,7 @@ public class OutputBlockFigure extends CodeBlockFigure {
 
         writeUID(out);
 
-        out.addAttribute("data_port", getModel().getDisplayedPort());
+        //out.addAttribute("data_port", getModel().getDisplayedPort());
         out.addAttribute("data_val", getModel().getValue());
 
         //writeAttributes(out); //export all attributes
@@ -170,7 +170,7 @@ public class OutputBlockFigure extends CodeBlockFigure {
         String data = in.getAttribute("data_port", "UNDEFINED");
         String val = in.getAttribute("data_val", "UNDEFINED");
         if (!data.equals("UNDEFINED") && !val.equals("UNDEFINED")) {
-            SavedBlock = new OutputBlock(readUID(in), OutputBlock.portFromString(data));
+            SavedBlock = new OutputBlock(readUID(in));
             SavedBlock.setValue(val);
         }
         

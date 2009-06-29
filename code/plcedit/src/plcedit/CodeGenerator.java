@@ -34,7 +34,7 @@ public class CodeGenerator implements ActionListener {
         //Search for start block
         int startblocksfound = 0;
         
-        String compiledbuffer = "";
+        String compiledbuffer = "void program(void)\n{\n\n";
 
         //SANITY CHECKS
 
@@ -73,7 +73,7 @@ public class CodeGenerator implements ActionListener {
         {
             for (StoreObj declaration : varlist.VariableList) //output list of non duplicated declarations
             {
-                compiledbuffer += declaration.type.toCompileString() + " " + declaration.identifier + ";";
+                compiledbuffer += declaration.type.toCompileString() + " " + declaration.identifier + ";\n";
             }
         }
 
@@ -131,7 +131,7 @@ public class CodeGenerator implements ActionListener {
             compiledbuffer += getJumps(block,edges);
         }
         
-        compiledbuffer += "EOF:\n"; //add the EOF directive so that any unmapped edges get dumped to end.
+        compiledbuffer += "EOF:\nreturn;\n}\n\n"; //add the EOF directive so that any unmapped edges get dumped to end.
 
         ShowViewer(compiledbuffer);
     }
