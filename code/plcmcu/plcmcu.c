@@ -7,12 +7,12 @@
  //initializes the chips and sets configuration bits to what they should be
 void init_chip(void)
 {	
-	TRISA = 0x00; //set all portA to output
-	TRISB = 0xFF; //set all portB to input
+	TRISA = 0xFF; //set all portA to input
+	TRISB = 0x00; //set all portB to output
 }
 
 // Delays the program time in ms
-void delay_ms(int time)
+void delayms(int time)
 {
 	DEFDELAY(time);
 }

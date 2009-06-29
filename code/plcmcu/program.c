@@ -1,11 +1,52 @@
-void program(void) //user generated program example normally this is the output from the plcedit program
+void program(void)
 {
-	while(1)
-	{
-		PORTA = 0x00;
-		delay_ms(1000);
-		PORTA = 0xFF;
-		delay_ms(1000);
-	}
+
+// VARIABLE DECLARATIONS //
+int blinker;
+BLUID0:
+//////////////////////////////////////
+//        PROGRAM START             //
+//////////////////////////////////////
+goto BLUID1;
+goto EOF;
+
+BLUID1:
+//////////////////////////////////////
+//        STORE                     //
+//////////////////////////////////////
+blinker = 0;
+
+goto BLUID3;
+goto EOF;
+
+BLUID3:
+//////////////////////////////////////
+//        STORE                     //
+//////////////////////////////////////
+blinker = blinker+1;
+
+if (blinker > 255) goto BLUID1;
+if (blinker <= 255) goto BLUID5;
+goto EOF;
+
+BLUID4:
+//////////////////////////////////////
+//        OUTPUT                    //
+//////////////////////////////////////
+PORTOUT = 0x0;
+goto BLUID3;
+goto EOF;
+
+BLUID5:
+//////////////////////////////////////
+//        DELAY                     //
+//////////////////////////////////////
+delayms(1000);
+goto BLUID4;
+goto EOF;
+
+EOF:
+return;
 }
+
 

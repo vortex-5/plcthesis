@@ -6,6 +6,11 @@
  */
 
 /* HARDWARE specification */
+
+/* PORT specification */
+#define PORTOUT PORTB
+#define PORTIN PORTA
+
 /* CLOCK specification */
 #define OCCILATOR 10000000 //our occilator in seconds
 #define TCYTIME 1 //now many cycles / instruction 4 for non PLL 1 for PLL 
@@ -39,9 +44,13 @@
 #pragma config WDT = OFF //disable watchdog timer
 #pragma config LVP = OFF //disable low power programming
 
+
 /* Public methods */
-void delay_ms(int);
+void delayms(int);
+
 
 /* Private methods below DO NOT USE */
 void init_chip(void); //private method to initialize chip to the 
 void finalize(void); //private method desigened to release the chip
+void program(void); //prototype for the userland program
+
