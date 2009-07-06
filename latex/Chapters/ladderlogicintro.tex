@@ -98,6 +98,8 @@ We can see that both $in_1$ and $in_2$ are on $rung_1$. This is interpreted as f
         \hline
         Action & Result \\
         \hline
+        $Initial$ & $in_1 := false, in_2 := false, out_1 := false$\\
+        \hline
         $@T(in_1 = true \wedge in_2 = true)$ & $out_1 := true$ \\
         \hline
         $@T(in_1 = false \vee in_2 = false)$ & $out_1 := false$ \\
@@ -137,9 +139,11 @@ figure \ref{fig:intro_fig3a}.
         \hline
         Action & Result \\
         \hline
-        $@T(in_1 = true \vee in_2 = true)$ & $out_1 := true$ \\
+        $Initial$ & $in_1 := false, in_2 := false, out_1 := false$\\
         \hline
-        $@T(in_1 = false \wedge in_2 = false)$ & $out_1 := false$\\
+        $@T_n(in_1 = true \vee in_2 = true)$ & $out_1 := true$ \\
+        \hline
+        $@T_n(in_1 = false \wedge in_2 = false)$ & $out_1 := false$\\
         \hline
     \end{tabular}
     \caption{Semantics for Fig \ref{fig:intro_fig3} and Fig \ref{fig:intro_fig3a}}
@@ -155,6 +159,8 @@ As before in table \ref{table:table_for_fig2} in table \ref{table:table_for_fig3
        \begin{tabular}{|l|l|l|}
         \hline
         Action & Result \\
+        \hline
+        $Initial$ &$in_1 := false, in_2 := false, out_1 := false$\\
         \hline
         $@T(in_1 = true)$ & $out_1 := true$ \\
         \hline
