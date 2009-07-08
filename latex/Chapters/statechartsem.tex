@@ -10,23 +10,24 @@ The semantics of \plcchart can be expressed mathematically as follows:
 	\plcchart
 	
 \begin{itemize}
-	\item \textbf{$Q$:} Set of states.
+	\item \textbf{$Q$:} Set of modes.
 	\item \textbf{$V$:} Set of values.
+	\item \textbf{$V_0 \subseteq V$:} Set of initial values.
 	\item \textbf{$G$:} Set of guard conditions.
 	\item \textbf{$A$:} Set of assignments. $Q \rightarrow V \times V$
 	\item \textbf{$\tau$:} Set of transitions. $Q \times G \rightarrow Q$
-	\item \textbf{$q_0$:} $q_0 \in Q$ An initial starting state.
+	\item \textbf{$q_0$:} $q_0 \in Q$ An initial starting mode.
 \end{itemize}
 \end{definition}
 
-Assignments in \plccharts happen in sequence rather than all at once this method was chosen to allow sequential forumlae to be computed in our system easily. Assignments can be in the form of a constant or an equation. If a series of assignment were found in a single state as follows:
+We do not refer to Q as a state since conventially a state is simply a collection of variables, instead we call Q a mode. In our system a mode represent different possible operations which may or may not be dependent of the the values. The mode must be considered seperate from the actual values of the system. Assignments in \plccharts happen in sequence rather than all at once this method was chosen to allow sequential forumlae to be computed in our system easily. Assignments can be in the form of a constant or an equation. If a series of assignment were found in a single mode as follows:
 
 \begin{align}
 v_1 := v_0 \label{eqn:assign0} \\ 
 v_0 := v_1 \label{eqn:assign1}
 \end{align}
 
-We would see that the result $v_1 = v_0$ it is important to note this since generally in \emphasize{State Charts}\cite{StateChartVis}  it is understood that assignments happen cocurrently in such a case equations \ref{eqn:assign0} and \ref{eqn:assign1} would produce a swap where $v'_1 = 'v_0$ and $v'_0 = 'v_1$ (where $'v$ denotes the value of $v$ before the assignments are executed and $v'$ the value of $v$ after the assignment is completed). In normal state charts we read assignments such as in equations \ref{eqn:assign0} and \ref{eqn:assign1} as these assignments will take place upon entry of the state. For our semantics however, we read them in a sequential fashion for example: Upon entry of the state, first equation \ref{eqn:assign0} is assigned, then \ref{eqn:assign1} right afterwards.
+We would see that the result $v_1 = v_0$ it is important to note this since generally in \emphasize{State Charts}\cite{StateChartVis}  it is understood that assignments happen cocurrently in such a case equations \ref{eqn:assign0} and \ref{eqn:assign1} would produce a swap where $v'_1 = 'v_0$ and $v'_0 = 'v_1$ (where $'v$ denotes the value of $v$ before the assignments are executed and $v'$ the value of $v$ after the assignment is completed). In normal state charts we read assignments such as in equations \ref{eqn:assign0} and \ref{eqn:assign1} as these assignments will take place upon entry of the state. For our semantics however, we read them in a sequential fashion for example: Upon entry of the mode, first equation \ref{eqn:assign0} is assigned, then \ref{eqn:assign1} right afterwards.
 
 \begin{figure}[htp]
     \centering
@@ -35,7 +36,7 @@ We would see that the result $v_1 = v_0$ it is important to note this since gene
     \label{fig:state_uml2_fir}
 \end{figure}
 
-The advantage of sequential assignments over cocurrent assignments can be seen when trying to compute the 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are very useful for the initial step without it many more states would be required to do each simple assignement. Thus although this design choice slightly deviates from \emphasize{UML2 State Charts}\cite{UML2} it was decided the benefits to usability was too great to strictly adhere to the \emphasize{UML2 State Chart}\cite{UML2} semantics.
+The advantage of sequential assignments over cocurrent assignments can be seen when trying to compute the 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are very useful for the initial step without it many more modes would be required to do each simple assignement. Thus although this design choice slightly deviates from \emphasize{UML2 State Charts}\cite{UML2} it was decided the benefits to usability was too great to strictly adhere to the \emphasize{UML2 State Chart}\cite{UML2} semantics.
 
 \begin{figure}[htp]
     \centering
