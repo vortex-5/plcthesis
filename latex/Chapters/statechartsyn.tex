@@ -11,14 +11,18 @@ Abstract syntax of \plcchart language:
 	\item Value := Expression
 	\item Type := Char $\mid$ Int $\mid$ Long $\mid$ Bool $\mid$ Float
 	\item Identifier := [a-zA-Z$\_$]+[a-zA-Z0-9$\_$]*  
-	
-	\item StoreBlock := Type Identifier = Value $\mid$ Type Identifier = Value; StoreBlock
 
 	\item Condition := Var Eq Var $\mid$ Var Eq Condition $\mid$ Condition Eq Condition
 	
 	\item Eq := $\; = \; \mid \; \neq \; \mid \; < \; \mid \; \leq \; \mid \; > \; \mid \; \geq$	
 
 	\item Block := StoreBlock	
+		
+	\item StoreBlock := Type Identifier = Expression $\mid$ Type Identifier = Expresion; StoreBlock
+	\item DelayBlock := Delay = Expression
+	\item OutputBlock := Identifier = Expression
+	\item Block := StoreBlock $\mid$ OutputBlock $\mid$ DelayBlock
+	
 	
 	\item Transition := StateBlock Condition StateBlock
 \end{itemize}
