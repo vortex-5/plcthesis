@@ -7,12 +7,12 @@ Abstract syntax of \plcchart language:
 \plcchart
 
 \begin{itemize}
-	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Variable $\mid$ Constant
+	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Var $\mid$ Constant
 	\item Value := Expression
 	\item Type := Char $\mid$ Int $\mid$ Long $\mid$ Bool $\mid$ Float
-	\item Identifier := [a-zA-Z$\_$]+[a-zA-Z0-9$\_$]*  
+	\item Var := $\{v_0,v_1,v_2,...,v_n\} \in V$
 
-	\item Condition := Var Eq Var $\mid$ Var Eq Condition $\mid$ Condition Eq Condition
+	\item Condition := Expression Eq Expression $\mid$ Var
 	
 	\item Eq := $\; = \; \mid \; \neq \; \mid \; < \; \mid \; \leq \; \mid \; > \; \mid \; \geq$	
 
@@ -24,7 +24,7 @@ Abstract syntax of \plcchart language:
 	\item Block := StoreBlock $\mid$ OutputBlock $\mid$ DelayBlock
 	
 	
-	\item Transition := StateBlock Condition StateBlock
+	\item Transition := Block Condition Block
 \end{itemize}
 \end{definition}
 
