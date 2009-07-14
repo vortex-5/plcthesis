@@ -31,7 +31,7 @@ The delay block itself has a structure identical to the start block. The only di
 
 In this basic example transitions are actually used at this point. The reader will observe that we have directly mapped each edge to a goto statement that is guarded by the guard condition on the edge itself. As defined in section \ref{sec:statechartsyn} the transitions are always mutually exclusive and to not do so would be considered a syntax error. The reason is there is no way to enforce sequence in which each edge is evaluated that would make sense to the programmer constructing the diagram in a visual way. It is up to the programmer (diagram constructor) to ensure that we never run into a condition where two edges actually have an area of overlap.
 
-Each block has an unique identitifer associated with it, this identifier is what is used by the goto blocks in order to recreate the graph structure in the code.
+Each block has an unique identitifer associated with it, this identifier is what is used by the goto blocks in order to recreate the graph structure in the code. The unique identifier is generated at design time and is checked at compile time to ensure that it is in fact unique.
 
 
 %the lower sections might be superceeded by the above.
