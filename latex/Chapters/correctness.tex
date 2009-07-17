@@ -1,7 +1,9 @@
 %Correctness
 \section{Correctness}
 \subsection{The Graph Structure}
-The graph structure chosen is simple directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem} respectively. To examine correctness we begin by looking at a basic atom and how it will be translated into the final code.
+The graph structure chosen is simple directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem} respectively. Our program peforms transofmrations on the diagram to form code constructs. These transformations are showin in figure 
+%Diagram here%
+In this section we will show that each of the transformations are correct by constructing basic atoms proving those are correct and build them up in complexity until all constructs are covered in the diagram. To start this examination of correctness we begin by looking at a basic atom and how it will be translated into the final code. 
 
 The simplest case is a diagram in which only the start node exists.
 
@@ -19,6 +21,8 @@ goto EOF;
 
 EOF:
 \end{lstlisting}
+
+%add a diagram here in which we highlight which items from the homomorphism diagram we are talking about%
 
 In this simplest example we have a label inserted at the beginning of the start block so we can re-enter the start block namely BLUID0. Following the label a comment header to denote the block type, and no variables declared.  Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program.
 
