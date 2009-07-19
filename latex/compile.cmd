@@ -6,3 +6,4 @@ pdflatex main
 pdflatex main
 pdflatex main
 pdflatex main
+main.pdf
