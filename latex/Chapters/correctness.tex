@@ -26,7 +26,7 @@ In this section we will begin by showing that each of the transformations are co
 \end{figure}
 In this simple example the following generated intermediate code \emphasize{IL} is created.
 
-\noindent\begin{minipage}{\textwidth}
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 // VARIABLE DECLARATIONS //
 BLUID0:
@@ -52,7 +52,7 @@ In this simplest example we have a label inserted at the beginning of the start 
 Moving up in complexity we have a start block followed by our next simpliest element the delay block, joined by one transition leaving the start block. We can see from figure \ref{fig:correctness_ex_delay}
 the structure of this new graph. We will use this example to examine transitions are compiled into final code, but first we shall look at the delay block itself.
 
-\noindent\begin{minipage}{\textwidth}
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 // VARIABLE DECLARATIONS //
 ...
@@ -71,7 +71,7 @@ return;
 
 The delay block itself has a structure identical to the start block. The only difference in this case is the delay block doesn't have a null code section. The delay block generates one line of code, namely delay(integer). The actual delay routine is implimented on the driver level per device since certain devices lack internal timers. It will be up to each implementor to ensure that the delay will correctly delay each the integer specified (in milliseconds). 
 
-\noindent\begin{minipage}{\textwidth}
+\begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 // VARIABLE DECLARATIONS //
 BLUID0:
