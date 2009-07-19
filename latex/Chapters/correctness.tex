@@ -20,13 +20,14 @@ In this section we will begin by showing that each of the transformations are co
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=\imgmedsmall]{./images/correctness_ex_start.png}
+	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_start.png}
 	\caption{Singular Start Block}
 	\label{fig:correctness_ex_start}
 \end{figure}
 In this simple example the following generated intermediate code \emphasize{IL} is created.
 
-\begin{lstlisting}
+\noindent\begin{minipage}{\textwidth}
+\begin{lstlisting}[frame=single]
 // VARIABLE DECLARATIONS //
 BLUID0:
 //////////////////////////////////////
@@ -37,12 +38,13 @@ goto EOF;
 EOF:
 return;
 \end{lstlisting}
+\end{minipage}
 
 In this simplest example we have a label inserted at the beginning of the start block so we can re-enter the start block namely BLUID0. Following the label a comment header to denote the block type, and no variables declared.  Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=\imgmedsmall]{./images/correctness_ex_delay.png}
+	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_delay.png}
 	\caption{Delay Block Block}
 	\label{fig:correctness_ex_delay}
 \end{figure}
@@ -50,7 +52,8 @@ In this simplest example we have a label inserted at the beginning of the start 
 Moving up in complexity we have a start block followed by our next simpliest element the delay block, joined by one transition leaving the start block. We can see from figure \ref{fig:correctness_ex_delay}
 the structure of this new graph. We will use this example to examine transitions are compiled into final code, but first we shall look at the delay block itself.
 
-\begin{lstlisting}
+\noindent\begin{minipage}{\textwidth}
+\begin{lstlisting}[frame=single]
 // VARIABLE DECLARATIONS //
 ...
 
@@ -64,10 +67,12 @@ goto EOF;
 EOF:
 return;
 \end{lstlisting}
+\end{minipage}
 
 The delay block itself has a structure identical to the start block. The only difference in this case is the delay block doesn't have a null code section. The delay block generates one line of code, namely delay(integer). The actual delay routine is implimented on the driver level per device since certain devices lack internal timers. It will be up to each implementor to ensure that the delay will correctly delay each the integer specified (in milliseconds). 
 
-\begin{lstlisting}
+\noindent\begin{minipage}{\textwidth}
+\begin{lstlisting}[frame=single]
 // VARIABLE DECLARATIONS //
 BLUID0:
 //////////////////////////////////////
@@ -86,6 +91,7 @@ goto EOF;
 EOF:
 return;
 \end{lstlisting}
+\end{minipage}
 
 In this basic example transitions are actually used at this point. The reader will observe that we have directly mapped each edge to a goto statement that is guarded by the guard condition on the edge itself. As defined in section \ref{sec:statechartsyn} the transitions are always mutually exclusive and to not do so would be considered a syntax error. The reason is there is no way to enforce sequence in which each edge is evaluated that would make sense to the programmer constructing the diagram in a visual way. It is up to the programmer (diagram constructor) to ensure that we never run into a condition where two edges actually have an area of overlap.
 

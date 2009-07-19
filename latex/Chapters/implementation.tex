@@ -96,11 +96,12 @@ Construction of the final compiled code starts at the gui level. The GUI compose
 \subsection{Structure}
 The structure of each compiled section was carefully constructed to preserve the structure of the drawn graph as closely as possible. The basic structure of each compiled block can be seen as follows:
 
+\noindent\begin{minipage}{\textwidth}
 \begin{definition}
 \label{def:genCodeStruct}
 Structure of \plcchart \  generated code
 
-\begin{lstlisting}
+\begin{lstlisting}[frame=single]
 BLUID5:
 //////////////////////////////////
 //// Block Header               //
@@ -111,6 +112,7 @@ if ( guard condition ) goto BLUID2;
 goto EOF;
 \end{lstlisting}
 \end{definition}
+\end{minipage}
 
 As you can observe from definition \ref{def:genCodeStruct} each code block generation first starts with a \emphasize{BLUID} (Block Unique Identifier). The purpose of the \emphasize{BLUID}'s is to give a reference point for the start of the block having a \emphasize{BLUID} label for each block enables any block to connect an edge to it should it choose. The block header which comes right after is an identifier to the type of block being generated. 
 
