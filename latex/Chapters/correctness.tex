@@ -7,7 +7,7 @@
     \caption{Code Transformations}
     \label{fig:correctness_graph1}
 \end{figure}
-The graph structure chosen is simple directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem} respectively. Our program peforms transformations on the diagram to form code constructs. In order to show correctness we will demonstrate that our transformations follow figure \ref{fig:correctness_graph1}. Figure \ref{fig:correctness_graph1} essentially says that a simulated evaluation of each expression ($\delta$) to a value will be equivalent to the actual executed program of the same value. In addition we also need to prove the program structure
+The graph structure chosen is simple directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem} respectively. Our program preforms transformations on the diagram to form code constructs. In order to show correctness we will demonstrate that our transformations follow figure \ref{fig:correctness_graph1}. Figure \ref{fig:correctness_graph1} essentially says that a simulated evaluation of each expression ($\delta$) to a value will be equivalent to the actual executed program of the same value. In addition we also need to prove the program structure
 \begin{figure}[htb]
     \centering
     \includegraphics[trim= 10mm 30mm 10mm 10mm, clip, width=\imgmedium]{./images/correctness_graph2.pdf}
@@ -16,7 +16,7 @@ The graph structure chosen is simple directed graph in which the syntax and sema
 \end{figure}
 generated from an graph structure is correct. To do so we extend figure \ref{fig:correctness_graph1} iteratively to obtain figure \ref{fig:correctness_graph2} to evaluate the transitions.
 
-In this section we will begin by showing that each of the transformations are correct by constructing basic atoms. We will start by looking at atoms that have the simpliest expressions first. The simplest of these is a diagram in which only the start node exists as shown in \ref{fig:correctness_ex_start}.
+In this section we will begin by showing that each of the transformations are correct by constructing basic atoms. We will start by looking at atoms that have the simplest expressions first. The simplest of these is a diagram in which only the start node exists as shown in \ref{fig:correctness_ex_start}.
 
 \begin{figure}[htb]
 	\centering
@@ -49,7 +49,7 @@ In this simplest example we have a label inserted at the beginning of the start 
 	\label{fig:correctness_ex_delay}
 \end{figure}
 
-Moving up in complexity we have a start block followed by our next simpliest element the delay block, joined by one transition leaving the start block. We can see from figure \ref{fig:correctness_ex_delay}
+Moving up in complexity we have a start block followed by our next simplest element the delay block, joined by one transition leaving the start block. We can see from figure \ref{fig:correctness_ex_delay}
 the structure of this new graph. We will use this example to examine transitions are compiled into final code, but first we shall look at the delay block itself.
 
 \begin{minipage}{\textwidth}
@@ -69,7 +69,7 @@ return;
 \end{lstlisting}
 \end{minipage}
 
-The delay block itself has a structure identical to the start block. The only difference in this case is the delay block doesn't have a null code section. The delay block generates one line of code, namely delay(integer). The actual delay routine is implimented on the driver level per device since certain devices lack internal timers. It will be up to each implementor to ensure that the delay will correctly delay each the integer specified (in milliseconds). 
+The delay block itself has a structure identical to the start block. The only difference in this case is the delay block doesn't have a null code section. The delay block generates one line of code, namely delay(integer). The actual delay routine is implemented on the driver level per device since certain devices lack internal timers. It will be up to each implementer to ensure that the delay will correctly delay each the integer specified (in milliseconds). 
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
@@ -95,7 +95,7 @@ return;
 
 In the example shown in figure \ref{fig:correctness_ex_delay} a transition can be seen. The reader will observe that we have directly mapped each edge to a goto statement that is guarded by the guard condition on the edge itself. As defined in section \ref{sec:statechartsyn} the transitions are always mutually exclusive and to not do so would be considered a syntax error. The reason is there is no way to enforce sequence in which each edge is evaluated that would make sense to the programmer constructing the diagram in a visual way. It is up to the programmer (diagram constructor) to ensure that we never run into a condition where two edges actually have an area of overlap. This is not a problem for our simple case as shown in figure \ref{fig:correctness_ex_delay} as we only have one edge leaving the delay block.
 
-Each block has an unique identitifer associated with it, this identifier is what is used by the goto blocks in order to recreate the graph structure in the code. The unique identifier is generated at design time and is checked at compile time to ensure that it is in fact unique.
+Each block has an unique identifier associated with it, this identifier is what is used by the goto blocks in order to recreate the graph structure in the code. The unique identifier is generated at design time and is checked at compile time to ensure that it is in fact unique.
 
 Next we look at the output block. The new item introduced by the output block are variables. The output block during its run will need to set a value to a variable. It does this in order to update the output on the port. 
 
@@ -122,7 +122,7 @@ BLUID3:
 //////////////////////////////////////
 //        OUTPUT                    //
 //////////////////////////////////////
-PORTOUT = 0x0;
+PORTOUT = 0xF2;
 goto EOF;
 
 EOF:
@@ -130,7 +130,63 @@ return;
 \end{lstlisting}
 \end{minipage}
 
-The reader will note that we did not change any of the transitions from figure \ref{fig:correctness_ex_delay}. Dispite this the BLUID's are still different. It shouldn't be too difficult for the reader at this point to prove to themselves that the "goto" routing structure still behaves the same way dispite having different labels.
+The reader will note that we did not change any of the transitions from figure \ref{fig:correctness_ex_delay}. Despite this the BLUID's are still different. It is easy to see that the "goto" routing structure still behaves the same way despite having different labels. We note that the output block's "set" operation as shown in figure \ref{fig:correctness_ex_output} becomes translated to "PORTOUT = 0xF2;" in the final intermediate language code. The right hand side of the equation can be any valid expression and is not just limited to an costant as shown here. Since the right hand side is transfered verbatim into the final code what the diagram creator draws essentially becomes exactly what is written in the final code.
+
+In order to examine transitions in more detail we need to look at logic on transitions. So far because all transitions have been guarded with he condition "true" or always taken we have not had the opportunity to see any guard conditions in the code. Instead in the our current code we only observe a always taken goto statement at the end. We will construct a basic diagram with our next component the "Store Block" to demonstrate how guard conditions are enumerated as well as demonstrate another basic primitive block that allows the diagram creator to set internal variables and perform calculations.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_store.png}
+	\caption{Store Block Example}
+	\label{fig:correctness_ex_store}
+\end{figure}
+
+The resulting code from figure \ref{fig:correctness_ex_store} is shown below:
+
+\begin{minipage}{\textwidth}
+\begin{lstlisting}[frame=single]
+void program(void)
+{
+
+// VARIABLE DECLARATIONS //
+int a;
+int b;
+BLUID0:
+//////////////////////////////////////
+//        PROGRAM START             //
+//////////////////////////////////////
+goto BLUID1;
+goto EOF;
+
+BLUID1:
+//////////////////////////////////////
+//        STORE                     //
+//////////////////////////////////////
+a = 0;
+
+goto BLUID2;
+goto EOF;
+
+BLUID2:
+//////////////////////////////////////
+//        STORE                     //
+//////////////////////////////////////
+a = a + 1;
+b = a;
+
+if (a >= 100) goto BLUID1;
+if (a < 100) goto BLUID2;
+goto EOF;
+
+EOF:
+return;
+}
+\end{lstlisting}
+\end{minipage}
+
+
+
+
 
 %the lower sections might be superceeded by the above.
 \subsection{The IL}
