@@ -45,7 +45,7 @@ In this simplest example we have a label inserted at the beginning of the start 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_delay.png}
-	\caption{Delay Block Block}
+	\caption{Delay Block}
 	\label{fig:correctness_ex_delay}
 \end{figure}
 
@@ -97,6 +97,40 @@ In the example shown in figure \ref{fig:correctness_ex_delay} a transition can b
 
 Each block has an unique identitifer associated with it, this identifier is what is used by the goto blocks in order to recreate the graph structure in the code. The unique identifier is generated at design time and is checked at compile time to ensure that it is in fact unique.
 
+Next we look at the output block. The new item introduced by the output block are variables. The output block during its run will need to set a value to a variable. It does this in order to update the output on the port. 
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_output.png}
+	\caption{Output Block}
+	\label{fig:correctness_ex_output}
+\end{figure}
+
+The resulting compiled output from figure \ref{fig:correctness_ex_output} is shown below.
+
+\begin{minipage}{\textwidth}
+\begin{lstlisting}[frame=single]
+// VARIABLE DECLARATIONS //
+BLUID2:
+//////////////////////////////////////
+//        PROGRAM START             //
+//////////////////////////////////////
+goto BLUID3;
+goto EOF;
+
+BLUID3:
+//////////////////////////////////////
+//        OUTPUT                    //
+//////////////////////////////////////
+PORTOUT = 0x0;
+goto EOF;
+
+EOF:
+return;
+\end{lstlisting}
+\end{minipage}
+
+The reader will note that we did not change any of the transitions from figure \ref{fig:correctness_ex_delay}. Dispite this the BLUID's are still different. It shouldn't be too difficult for the reader at this point to prove to themselves that the "goto" routing structure still behaves the same way dispite having different labels.
 
 %the lower sections might be superceeded by the above.
 \subsection{The IL}
