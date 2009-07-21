@@ -184,7 +184,7 @@ return;
 \end{lstlisting}
 \end{minipage}
 
-
+First we look at the first store block with "BLUID1". We can easily see that from our diagram of transformations in figure /ref{fig:correctness_graph1} that our expression "$a := 0$" through the compile transformation was converted to "$a = 0$". Taking the transformation in figure /ref{fig:correctness_graph1} of "$\delta$" we note that the meaning of "$a := 0$" is that the value of $a$ is now $0$. Similarily executing "$a = 0$" in C we find that after execution the value of $a$ is also $0$. Since the mapping from our semantic "value" to our executed "value" is the same we can conclude that the mapping is correct as by our definition.
 
 
 
