@@ -1,41 +1,46 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package plcedit;
 
 /**
  *
  * @author huangkf
  */
-public class OutputBlock extends CodeBlock {
-    
-    private String value;
+public class InputBlock extends CodeBlock{
 
-    public OutputBlock() {
+    private String variable;
+
+    public InputBlock() {
         this(UIDGenerator.getNext());
     }
 
-    public OutputBlock(int uid) {
+    public InputBlock(int uid) {
         this.uid = uid;
         this.ctype = CodeType.Output;
 
 
         //TODO: determine if we want a default port at all
-        this.value = "0x0";
+        this.variable = "0x0";
     }
 
     public String getDisplayedPort() {
-        return "PORTOUT";
+        return "PORTIN";
     }
 
 
     public String getCompiledPort() {
-        return "PORTOUT";
+        return "PORTIN";
     }
 
     public void setValue (String value) {
-        this.value = value;
+        this.variable = value;
     }
 
     public String getValue () {
-        return this.value;
+        return this.variable;
     }
 
     @Override
@@ -47,7 +52,7 @@ public class OutputBlock extends CodeBlock {
     public String getCode() {
         return getUIDStringLabel() + newline +
                 "//////////////////////////////////////" + newline +
-                "//        OUTPUT                    //" + newline +
+                "//        Input                    //" + newline +
                 "//////////////////////////////////////" + newline +
                 getCompiledPort() + " = " + getValue() + ";";
     }
