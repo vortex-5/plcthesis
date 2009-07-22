@@ -167,9 +167,10 @@ public class OutputBlockFigure extends CodeBlockFigure {
     public void read(DOMInput in) throws IOException {
         readSavedBounds(in);
 
-        String data = in.getAttribute("data_port", "UNDEFINED");
+        //String data = in.getAttribute("data_port", "UNDEFINED"); //not required we only have one output port
         String val = in.getAttribute("data_val", "UNDEFINED");
-        if (!data.equals("UNDEFINED") && !val.equals("UNDEFINED")) {
+
+        if (!val.equals("UNDEFINED")) {
             SavedBlock = new OutputBlock(readUID(in));
             SavedBlock.setValue(val);
         }
