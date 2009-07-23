@@ -573,7 +573,12 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
         {
             context = getContext();
             strIdentifier = ((InputBlock)block).getVariable();
-        }   strExpression = (String)JOptionPane.showInputDialog(this, "Simulate Input Of", "Simulated Input", JOptionPane.OK_OPTION);
+            strExpression = (String)JOptionPane.showInputDialog(this, "Simulation Value For Input:", "0");
+            while (strExpression == null)
+            {
+                strExpression = (String)JOptionPane.showInputDialog(this, "Cannot Be Blank!\n Simulation Value For Input:", "0");
+            }
+        }
 
 
         if (!strExpression.equals("") && context != null)
