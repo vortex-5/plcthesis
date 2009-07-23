@@ -44,7 +44,7 @@ public class OutputBlock extends CodeBlock {
     }
 
     @Override
-    public String getCode() {
+    public String getCode() throws Exception{
         return getUIDStringLabel() + newline +
                 "//////////////////////////////////////" + newline +
                 "//        OUTPUT                    //" + newline +

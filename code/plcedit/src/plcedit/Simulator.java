@@ -569,6 +569,11 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
             strExpression = ((OutputBlock)block).getValue();
             strIdentifier = ((OutputBlock)block).getDisplayedPort();
         }
+        else if (block instanceof InputBlock)
+        {
+            context = getContext();
+            strIdentifier = ((InputBlock)block).getVariable();
+        }   strExpression = (String)JOptionPane.showInputDialog(this, "Simulate Input Of", "Simulated Input", JOptionPane.OK_OPTION);
 
 
         if (!strExpression.equals("") && context != null)

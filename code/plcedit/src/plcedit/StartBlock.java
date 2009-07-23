@@ -28,7 +28,7 @@ public class StartBlock extends CodeBlock{
     }
 
     @Override
-    public String getCode() {
+    public String getCode() throws Exception{
         return getUIDStringLabel() + newline +
                "//////////////////////////////////////" + newline +
                "//        PROGRAM START             //" + newline +

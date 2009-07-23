@@ -9,4 +9,4 @@ package plcedit;
  *
  * @author huangkf
  */
- public enum CodeType{Start,End,Store,Delay,Goto,Output}; //different types of code types we can have
+ public enum CodeType{Start,End,Store,Delay,Input,Goto,Output}; //different types of code types we can have

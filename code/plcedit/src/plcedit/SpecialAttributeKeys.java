@@ -27,6 +27,9 @@ public class SpecialAttributeKeys {
     /*Used in Output */
     public static final AttributeKey<CodeVarType> MODIFY_LINK_OUTPUT_BLOCK = new AttributeKey("MODIFY_LINK_OUTPUT_BLOCK");
 
+    /*Used in Input */
+    public static final AttributeKey<CodeVarType> MODIFY_LINK_INPUT_BLOCK = new AttributeKey("MODIFY_LINK_INPUT_BLOCK");
+
     /*Used in Delay */
     public static final AttributeKey<CodeVarType> MODIFY_LINK_DELAY = new AttributeKey("MODIFY_LINK_DELAY");
 }

@@ -49,7 +49,7 @@ public abstract class CodeBlock implements Typed {
      * 
      * @return A string corresponding to the code
      */
-    abstract public String getCode();
+    abstract public String getCode() throws Exception;
     
     public String getUIDStringLabel()
     {

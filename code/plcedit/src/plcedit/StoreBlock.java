@@ -32,7 +32,7 @@ public class StoreBlock extends CodeBlock{
 
 
     @Override
-    public String getCode() {
+    public String getCode() throws Exception{
         String strout = getUIDStringLabel() + newline +
                "//////////////////////////////////////" + newline +
                "//        STORE                     //" + newline +

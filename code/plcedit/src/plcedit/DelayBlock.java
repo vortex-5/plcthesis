@@ -47,7 +47,7 @@ public class DelayBlock extends CodeBlock {
     }
 
     @Override
-    public String getCode() {
+    public String getCode() throws Exception{
                 return getUIDStringLabel() + newline +
                "//////////////////////////////////////" + newline +
                "//        DELAY                     //" + newline +

@@ -19,11 +19,11 @@ public class InputBlock extends CodeBlock{
 
     public InputBlock(int uid) {
         this.uid = uid;
-        this.ctype = CodeType.Output;
+        this.ctype = CodeType.Input;
 
 
         //TODO: determine if we want a default port at all
-        this.variable = "0x0";
+        this.variable = "<unspecified>";
     }
 
     public String getDisplayedPort() {
@@ -35,26 +35,31 @@ public class InputBlock extends CodeBlock{
         return "PORTIN";
     }
 
-    public void setValue (String value) {
-        this.variable = value;
+    public void setVariable (String var) {
+        this.variable = var;
     }
 
-    public String getValue () {
+    public String getVariable () {
         return this.variable;
     }
 
     @Override
     public String getTypeString() {
-        return "OUTPUT";
+        return "INPUT";
     }
 
     @Override
-    public String getCode() {
+    public String getCode() throws Exception{
+        if (getVariable().equals("<unspecified>"))
+        {
+            throw new Exception ("Compile Error: Input assigned to an <unspecified> variable\n");
+        }
+
         return getUIDStringLabel() + newline +
                 "//////////////////////////////////////" + newline +
                 "//        Input                    //" + newline +
                 "//////////////////////////////////////" + newline +
-                getCompiledPort() + " = " + getValue() + ";";
+                getVariable() + " = " + getCompiledPort() + ";";
     }
 
 

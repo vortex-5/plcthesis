@@ -36,6 +36,8 @@ public class CodeGenerator implements ActionListener {
         
         String compiledbuffer = "void program(void)\n{\n\n";
 
+        String errors = "";
+
         //SANITY CHECKS
 
         List<StoreObj> allstores = new ArrayList<StoreObj>();
@@ -89,7 +91,14 @@ public class CodeGenerator implements ActionListener {
             if (t.getType() == CodeType.Start) {
                 startblocksfound++;
                 startfig = (CodeBlockFigure)allfigs.get(i);
-                compiledbuffer += startfig.getModel().getCode() + "\n";
+                try
+                {
+                    compiledbuffer += startfig.getModel().getCode() + "\n";
+                }
+                catch (Exception ex)
+                {
+                    errors += ex.getMessage();
+                }
 
                 allfigs.remove(i);
                 i--;
@@ -126,14 +135,29 @@ public class CodeGenerator implements ActionListener {
         //must ensure that goto's are checked per block source.
         for (Figure blockfig : allfigs) {
             CodeBlockFigure block = (CodeBlockFigure)blockfig; //recast makes things easier to work with
-            compiledbuffer +=  block.accociatedcode.getCode() + "\n";
+
+            try
+            {
+                compiledbuffer +=  block.accociatedcode.getCode() + "\n";
+            }
+            catch (Exception ex)
+            {
+                errors += ex.getMessage();
+            }
             
             compiledbuffer += getJumps(block,edges);
         }
         
         compiledbuffer += "EOF:\nreturn;\n}\n\n"; //add the EOF directive so that any unmapped edges get dumped to end.
 
-        ShowViewer(compiledbuffer);
+        if (errors.equals(""))
+        {
+            ShowViewer(compiledbuffer);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(codeview, errors, "Compile Error", JOptionPane.ERROR_MESSAGE, null);
+        }
     }
 
     private void ShowViewer(String compiledbuffer)
