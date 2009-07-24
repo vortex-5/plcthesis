@@ -323,7 +323,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                     simVarList.add(new Variable(var,false));
                     break;
                 case Char:
-                    simVarList.add(new Variable(var, (char)0));
+                    simVarList.add(new Variable(var, (byte)0));
                     break;
                 case Double:
                     simVarList.add(new Variable(var,0.0));

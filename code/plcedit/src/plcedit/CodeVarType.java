@@ -7,7 +7,10 @@ package plcedit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
@@ -20,7 +23,7 @@ import javax.swing.JPopupMenu;
  * @author huangkf
  */
 public class CodeVarType implements CreatesContextMenu{
-    public enum VarType {Bool, Char, Byte, Int, Long, Float, Double, Undefined};
+    public enum VarType {Bool, Byte, Int, Long, Float, Double, Undefined};
     private Hashtable types;
     private VarType key;
 
@@ -45,7 +48,7 @@ public class CodeVarType implements CreatesContextMenu{
 
         // All code types are referenced here
         addType(new CodeString(VarType.Bool, "bool","bool"));
-        addType(new CodeString(VarType.Char, "char","char"));
+        addType(new CodeString(VarType.Byte, "byte","byte"));
         addType(new CodeString(VarType.Int, "int", "int"));
         addType(new CodeString(VarType.Long, "long", "long"));
         addType(new CodeString(VarType.Float, "float", "float"));
@@ -128,15 +131,22 @@ public class CodeVarType implements CreatesContextMenu{
          * Generate menu items using data from hash table
          */
 
-        for (Object item : types.values())
+        ArrayList<CodeString> sortedList = new ArrayList<CodeString>();
+        for (Object item: types.values())
         {
-            if(((CodeString)item).key == VarType.Undefined)
+            sortedList.add((CodeString)item);
+        }
+        Collections.sort(sortedList,new keyComparator());
+
+        for (CodeString item:  sortedList)
+        {
+            if(item.key == VarType.Undefined)
             {
                 continue;
             }
             else
             {
-                contextMenu.add(new JMenuItem(new MenuAction(this, (CodeString)item, listener)));
+                contextMenu.add(new JMenuItem(new MenuAction(this, item, listener)));
             }
         }
 
@@ -190,6 +200,16 @@ public class CodeVarType implements CreatesContextMenu{
             {
                 System.out.println("ERROR NO LISTENER");
             }
+        }
+    }
+
+    private class keyComparator implements Comparator<CodeString>
+    {
+        public keyComparator() {
+        }
+
+        public int compare(CodeString o1, CodeString o2) {
+            return o1.key.compareTo(o2.key);
         }
     }
 }
