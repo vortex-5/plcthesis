@@ -48,7 +48,7 @@ public class DelayBlockFigure extends CodeBlockFigure{
         createAttributeDisplay(); //create our display area
 
         attrib.setLayouter(new HorizontalLayouter());
-        TextFigure textdelay = new TextFigure(((DelayBlock)accociatedcode).getStringDelayTime());
+        TextFigure textdelay = new TextFigure(((DelayBlock)accociatedcode).getDelayTime());
         textdelay.setAttribute(SpecialAttributeKeys.MODIFY_LINK_DELAY, (DelayBlock)accociatedcode);
         textdelay.addFigureListener(txtchange);
         attrib.add(spacer);
@@ -81,7 +81,7 @@ public class DelayBlockFigure extends CodeBlockFigure{
 
         public void figureChanged(FigureEvent e) {          
             DelayBlock edit = (DelayBlock)e.getFigure().getAttribute(SpecialAttributeKeys.MODIFY_LINK_DELAY);
-            edit.setDelayTime(((TextFigure)e.getFigure()).getText());
+            edit.setDelayTime(((TextFigure)e.getFigure()).getText().trim());
 
             caller.update();
         }
@@ -105,7 +105,7 @@ public class DelayBlockFigure extends CodeBlockFigure{
 
         writeUID(out);
       
-        out.addAttribute("data_delay", getModel().getStringDelayTime());
+        out.addAttribute("data_delay", getModel().getDelayTime());
 
         //writeAttributes(out); //export all attributes
     }
@@ -118,7 +118,7 @@ public class DelayBlockFigure extends CodeBlockFigure{
 
         SavedBlock = new DelayBlock();
         SavedBlock.setUID(readUID(in));
-        SavedBlock.setDelayTime(Integer.parseInt(delay));
+        SavedBlock.setDelayTime(delay);
 
         readAttributes(in);
     }

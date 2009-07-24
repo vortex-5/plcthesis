@@ -10,7 +10,7 @@ package plcedit;
  * @author huangkf
  */
 public class DelayBlock extends CodeBlock {
-    private long delaytime = 0;
+    private String delaytime = "0";
 
     public DelayBlock(int uid) {
         this.uid = uid;
@@ -21,24 +21,15 @@ public class DelayBlock extends CodeBlock {
         this(UIDGenerator.getNext());
     }
     
-    public void setDelayTime(long newtime)
-    {
-        delaytime = newtime;
-    }
-
     public void setDelayTime(String newtime)
     {
-        delaytime = Long.parseLong(newtime);
+        if (newtime == "") newtime = "0";
+        delaytime = newtime;
     }
     
-    public long getDelayTime()
+    public String getDelayTime()
     {
         return delaytime;
-    }
-    
-    public String getStringDelayTime()
-    {
-        return String.valueOf(delaytime);
     }
 
     @Override
@@ -52,6 +43,6 @@ public class DelayBlock extends CodeBlock {
                "//////////////////////////////////////" + newline +
                "//        DELAY                     //" + newline +
                "//////////////////////////////////////" + newline +
-               "delayms(" + String.valueOf(delaytime) + ");";
+               "delayms(" + delaytime + ");";
     }
 }

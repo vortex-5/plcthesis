@@ -312,10 +312,8 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
 
         CheckVariables varlist = new CheckVariables(editor.getActiveView().getDrawing().getChildren());
 
-        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTA","0"), new Integer(0)));
-        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTB","0"), new Integer(0)));
-        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTC","0"), new Integer(0)));
-        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTD","0"), new Integer(0)));
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTIN","0"), new Integer(0)));
+        simVarList.add(new Variable(new StoreObj(new CodeVarType(CodeVarType.VarType.Byte),"PORTOUT","0"), new Integer(0)));
 
         for(StoreObj var : varlist.VariableList)
         {
