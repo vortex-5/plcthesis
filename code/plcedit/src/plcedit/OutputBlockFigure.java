@@ -62,6 +62,8 @@ public class OutputBlockFigure extends CodeBlockFigure {
 
         attrib.setLayouter(new HorizontalLayouter());
 
+        attrib.add(spacer);
+
         TextFigure port = new TextFigure(getModel().getDisplayedPort());
         port.setAttribute(SpecialAttributeKeys.MODIFY_LINK_CREATESCONTEXTMENU, getModel());
         port.setEditable(false);
@@ -75,6 +77,7 @@ public class OutputBlockFigure extends CodeBlockFigure {
         value.addFigureListener(txtchange);
         attrib.add(value);
 
+        attrib.add(spacer);
 
         update_base();
 

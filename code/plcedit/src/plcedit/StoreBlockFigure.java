@@ -64,6 +64,8 @@ public class StoreBlockFigure extends CodeBlockFigure{
         {
             line = new GraphicalCompositeFigure();
             line.setLayouter(new HorizontalLayouter());
+            line.add(spacer);
+
 
             TextFigure storetype = new TextFigureWithClickEvent(store.type.toDisplayString(), updatelistener);
             storetype.setEditable(false);
@@ -91,6 +93,8 @@ public class StoreBlockFigure extends CodeBlockFigure{
             storeval.addFigureListener(txtchange);
             storeval.setAttribute(SpecialAttributeKeys.MODIFY_LINK_STORE_VAL, store);
             line.add(storeval);
+
+            line.add(spacer);
             attrib.add(line);
         }
 

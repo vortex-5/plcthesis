@@ -62,6 +62,8 @@ public class InputBlockFigure extends CodeBlockFigure {
 
         attrib.setLayouter(new HorizontalLayouter());
 
+        attrib.add(spacer);
+
         TextFigure var = new TextFigure(getModel().getVariable());
         var.setAttribute(SpecialAttributeKeys.MODIFY_LINK_INPUT_BLOCK, getModel());
         var.addFigureListener(txtchange);
@@ -74,6 +76,8 @@ public class InputBlockFigure extends CodeBlockFigure {
         port.setAttribute(SpecialAttributeKeys.MODIFY_LINK_CREATESCONTEXTMENU, getModel());
         port.setEditable(false);
         attrib.add(port);
+
+        attrib.add(spacer);
 
 
         update_base();

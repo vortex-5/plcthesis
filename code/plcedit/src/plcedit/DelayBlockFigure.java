@@ -51,7 +51,9 @@ public class DelayBlockFigure extends CodeBlockFigure{
         TextFigure textdelay = new TextFigure(((DelayBlock)accociatedcode).getStringDelayTime());
         textdelay.setAttribute(SpecialAttributeKeys.MODIFY_LINK_DELAY, (DelayBlock)accociatedcode);
         textdelay.addFigureListener(txtchange);
+        attrib.add(spacer);
         attrib.add(textdelay);
+        attrib.add(spacer);
 
         update_base();
         changed();

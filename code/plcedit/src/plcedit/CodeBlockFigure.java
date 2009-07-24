@@ -24,6 +24,8 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
     protected TextFigure name;
     protected GraphicalCompositeFigure attrib = new GraphicalCompositeFigure();
 
+    protected TextFigure spacer;
+
     protected Bounds SavedBounds = null; //bug bounds not loaded per object
     /**
      * Creates a code block of various types provided with a correct prototype
@@ -33,6 +35,8 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
     public CodeBlockFigure()
     {
         this(new RectangleFigure());
+        spacer = new TextFigure("  ");
+        spacer.setEditable(false);
     }
     
     public CodeBlockFigure(Figure newBackgroundFigure)
@@ -65,7 +69,14 @@ public abstract class CodeBlockFigure extends GraphicalCompositeFigure implement
         name = new TextFigure(accociatedcode.getTypeString());
         name.setEditable(false);
 
-        add(name);
+        GraphicalCompositeFigure line = new GraphicalCompositeFigure();
+        line.setLayouter(new HorizontalLayouter());
+
+        line.add(spacer);
+        line.add(name);
+        line.add(spacer);
+
+        add(line);
         add(new SeparatorLineFigure());   
         add(attrib);
         
