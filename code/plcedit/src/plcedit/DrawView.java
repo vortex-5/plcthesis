@@ -183,6 +183,10 @@ public class DrawView extends AbstractView {
      */
     public void write(File f) throws IOException {
         Drawing drawing = view.getDrawing();
+
+        //Prep operations
+        UIDGenerator.resetFigures(drawing.getChildren());
+
         OutputFormat outputFormat = drawing.getOutputFormats().get(0);
         outputFormat.write(f, drawing);
     }

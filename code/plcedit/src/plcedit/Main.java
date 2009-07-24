@@ -41,8 +41,7 @@ public class Main {
         DrawApplicationModel model = new DrawApplicationModel();
         model.setName("PLC Editor Draw");
         model.setVersion(Main.class.getPackage().getImplementationVersion());
-        model.setCopyright("Copyright 2006-2008 (c) by the authors of JHotDraw\n" +
-                "This software is licensed under LGPL or Creative Commons 3.0 BY");
+        model.setCopyright("By FanFan Huang 2008-2009");
         model.setViewClassName("plcedit.DrawView");
       
         app.setModel(model);

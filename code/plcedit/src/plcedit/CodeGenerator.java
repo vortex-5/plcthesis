@@ -30,7 +30,9 @@ public class CodeGenerator implements ActionListener {
     public void actionPerformed(ActionEvent arg0) {
         
         List<Figure> allfigs = new ArrayList<Figure>(editor.getActiveView().getDrawing().getChildren());
-        
+
+        UIDGenerator.resetFigures(allfigs); //cleanup gaps in the figure UID's
+
         //Search for start block
         int startblocksfound = 0;
         

@@ -5,6 +5,9 @@
 
 package plcedit;
 
+import java.util.List;
+import org.jhotdraw.draw.Figure;
+
 /**
  *
  * @author Vortex-5
@@ -16,6 +19,22 @@ public class UIDGenerator {
     public static void reset()
     {
         current = -1;
+    }
+
+    public static void resetFigures(List<Figure> figures)
+    {
+        reset(); //reset base counter
+
+        //reset all BUID's based on the list
+
+        for (Figure fig : figures)
+        {
+            if (fig instanceof CodeBlockFigure)
+            {
+                ((CodeBlockFigure)fig).getModel().setUID(getNext());
+            }
+        }
+
     }
 
     /**
