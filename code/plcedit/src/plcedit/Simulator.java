@@ -322,7 +322,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                 case Bool:
                     simVarList.add(new Variable(var,false));
                     break;
-                case Char:
+                case Byte:
                     simVarList.add(new Variable(var, (byte)0));
                     break;
                 case Double:
@@ -606,9 +606,6 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                         {
                             case Bool:
                                 simvar.value = (Boolean)rawResult;
-                                break;
-                            case Char:
-                                simvar.value = (Character)rawResult;
                                 break;
                             case Byte:
                                 simvar.value = (Integer)(((Integer)rawResult) & (0xFF));
