@@ -64,6 +64,16 @@ public class InputBlockFigure extends CodeBlockFigure {
 
         attrib.add(spacer);
 
+        TextFigure storetype = new TextFigureWithClickEvent(((InputBlock)accociatedcode).getStoreObj().type.toDisplayString(), updatelistener);
+        storetype.setEditable(false);
+
+        //add link information so we can edit it
+        storetype.setAttribute(SpecialAttributeKeys.MODIFY_LINK_CREATESCONTEXTMENU, ((InputBlock)accociatedcode).getStoreObj().type);
+        attrib.add(storetype);
+
+        TextFigure space = new TextFigure(" ");
+        attrib.add(space);
+
         TextFigure var = new TextFigure(getModel().getVariable());
         var.setAttribute(SpecialAttributeKeys.MODIFY_LINK_INPUT_BLOCK, getModel());
         var.addFigureListener(txtchange);

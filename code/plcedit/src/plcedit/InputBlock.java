@@ -5,13 +5,16 @@
 
 package plcedit;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author huangkf
  */
 public class InputBlock extends CodeBlock{
 
-    private String variable;
+    private StoreObj variable;
 
     public InputBlock() {
         this(UIDGenerator.getNext());
@@ -23,25 +26,33 @@ public class InputBlock extends CodeBlock{
 
 
         //TODO: determine if we want a default port at all
-        this.variable = "<unspecified>";
+        this.variable = new StoreObj();
+        this.variable.type.SetType(CodeVarType.VarType.Undefined);
+        this.variable.identifier = "<unspecified>";
+        this.variable.value = "PORTIN";
     }
 
     public String getDisplayedPort() {
-        return "PORTIN";
+        return this.variable.value;
     }
 
 
     public String getCompiledPort() {
-        return "PORTIN";
+        return this.variable.value;
     }
 
     public void setVariable (String var) {
-        this.variable = var;
+        this.variable.identifier = var;
     }
 
     public String getVariable () {
+        return this.variable.identifier;
+    }
+
+    public StoreObj getStoreObj () {
         return this.variable;
     }
+
 
     @Override
     public String getTypeString() {
@@ -60,6 +71,14 @@ public class InputBlock extends CodeBlock{
                 "//        Input                    //" + newline +
                 "//////////////////////////////////////" + newline +
                 getVariable() + " = " + getCompiledPort() + ";";
+    }
+
+    public List<String> getDeclaration() {
+        List<String> listout = new ArrayList<String>();
+
+        listout.add(variable.type.toCompileString() + " " + variable.identifier + ";\n");
+
+        return listout;
     }
 
 

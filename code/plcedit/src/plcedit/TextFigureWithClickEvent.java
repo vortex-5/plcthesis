@@ -43,13 +43,30 @@ public class TextFigureWithClickEvent extends TextFigure{
         if (DEBUG) {System.out.println("Got click event attempting to float a open a menu item");}
 
         Figure source = this.findFigureInside(p);
+        if (DEBUG) {System.out.println("Got source");}
 
-        //safety of object is ensured by making sure the type attribute is linked to an object
-        CreatesContextMenu target = (CreatesContextMenu)source.getAttribute(SpecialAttributeKeys.MODIFY_LINK_CREATESCONTEXTMENU);
+        CreatesContextMenu target = null;
+
+        try {
+            //safety of object is ensured by making sure the type attribute is linked to an object
+            target = (CreatesContextMenu)source.getAttribute(SpecialAttributeKeys.MODIFY_LINK_CREATESCONTEXTMENU);
+        }
+        catch (Exception ex)
+        {
+            throw new RuntimeException("TextFigureWithClickEvent was given an object that cannot create a context menu!");
+        }
+
+
+
         if (target != null)
         {
+            if (DEBUG) {System.out.println("Attempting to show");}
             //attempt to retrieve our object it would be unsafe but luckilywe
             (target.getContextMenu(_listener)).show(view.getComponent(), (int)p.x, (int)p.y);
+        }
+        else
+        {
+            if (DEBUG) {System.out.println("Missing our object reference null");}
         }
 
         return super.handleMouseClick(p, evt, view);

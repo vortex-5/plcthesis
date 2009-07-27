@@ -29,13 +29,18 @@ public class CheckVariables {
             {
                 allstores.addAll(((StoreBlock)((StoreBlockFigure)fig).accociatedcode).getStores());
             }
+            if (fig instanceof InputBlockFigure)
+            {
+                allstores.add(((InputBlock)(((InputBlockFigure)fig).accociatedcode)).getStoreObj());
+            }
         }
 
-        for (int i=0;i<figs.size();i++) { //sort all declarations make sure we have no duplicates
+        for (int i=0;i<figs.size();i++)
+        { //sort all declarations make sure we have no duplicates
             Typed t = (Typed)figs.get(i);
 
-            if (t.getType() == CodeType.Store) {
-
+            if (t.getType() == CodeType.Store)
+            {
                 //Sanity check get precheck type conflict
                 for(StoreObj store : ((StoreBlockFigure)figs.get(i)).getModel().getStores())
                 {
@@ -45,7 +50,7 @@ public class CheckVariables {
                         break;
                     }
                 }
-
+                
                 if (!isInConflict)
                 {
                     for(StoreObj declaration : ((StoreBlockFigure)figs.get(i)).getModel().getStores())
@@ -76,6 +81,33 @@ public class CheckVariables {
                     }
                 }
             }
+            else if(t.getType() == CodeType.Input)
+            {
+                StoreObj store = ((InputBlock)((InputBlockFigure)figs.get(i)).accociatedcode).getStoreObj();
+
+                if (store.isInTypeConflict(allstores))
+                {
+                    isInConflict = true;
+                }
+
+                if (!isInConflict)
+                {
+                    boolean existsInStack = false;
+                    for (StoreObj item : VariableList)
+                    {
+                        if (store.identifier.equals(item.identifier))
+                        {
+                            existsInStack = true;
+                        }
+                    }
+
+                    if (!existsInStack)
+                    {
+                        VariableList.add(store);
+                    }
+                }
+            }
+
         }
     }
 }
