@@ -132,6 +132,11 @@ return;
 
 The reader will note that we did not change any of the transitions from figure \ref{fig:correctness_ex_delay}. Despite this the BLUID's are still different. It is easy to see that the "goto" routing structure still behaves the same way despite having different labels. We note that the output block's "set" operation as shown in figure \ref{fig:correctness_ex_output} becomes translated to "PORTOUT = 0xF2;" in the final intermediate language code. The right hand side of the equation can be any valid expression and is not just limited to an costant as shown here. Since the right hand side is transfered verbatim into the final code what the diagram creator draws essentially becomes exactly what is written in the final code.
 
+The logical next diagram at this point to look at is the input block. Similar to the output block the input block allows you to sample the state of the input ports and store the result into a variable. The first item to the left of the diagram is the variable type. Following the variable type is the variable name. If a new variable name is specified a new entry is created in the variable initialization section. 
+
+%Input diagram
+%input compile
+
 In order to examine transitions in more detail we need to look at logic on transitions. So far because all transitions have been guarded with he condition "true" or always taken we have not had the opportunity to see any guard conditions in the code. Instead in the our current code we only observe a always taken goto statement at the end. We will construct a basic diagram with our next component the "Store Block" to demonstrate how guard conditions are enumerated as well as demonstrate another basic primitive block that allows the diagram creator to set internal variables and perform calculations.
 
 \begin{figure}[htb]
