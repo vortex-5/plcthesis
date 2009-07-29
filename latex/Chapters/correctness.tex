@@ -175,9 +175,7 @@ return;
 \end{lstlisting}
 \end{minipage}
 
-Examining the compiled code we will notice that the variable initialization section is no longer empty. Our compiler will first initialize the variable used to store the input from ``PORTIN'' to a known value. This removes any issues of unknown values from our system and as defined in section \ref{sec:statechartsem} variables all have by definition an initial set of values they take on.
-
-
+Examining the compiled code we will notice that the variable initialization section is no longer empty. Our compiler will first initialize the variable used to store the input from ``PORTIN'' to a known value. This removes any issues of unknown values from our system and as defined in section \ref{sec:statechartsem} variables all have by definition an initial set of values they take on. In the code section of our ``Input'' block we can see that our ``var := PORTIN'' becomes ``var = PORTIN;'' in the final compiled code. The left hand side var is limited to simple variables and expressions are not allowed. Once again like the previous example the data from the input diagram is transfered verbatim into the final code there by ensuring correctness.
 
 In order to examine transitions in more detail we need to look at logic on transitions. So far because all transitions have been guarded with he condition ``true'' or always taken we have not had the opportunity to see any guard conditions in the code. Instead in the our current code we only observe a always taken goto statement at the end. We will construct a basic diagram with our next component the ``Store Block'' to demonstrate how guard conditions are enumerated as well as demonstrate another basic primitive block that allows the diagram creator to set internal variables and perform calculations.
 
