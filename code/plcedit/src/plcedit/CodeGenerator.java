@@ -60,7 +60,7 @@ public class CodeGenerator implements ActionListener {
 
 
 
-        compiledbuffer += "// VARIABLE DECLARATIONS //\n";
+        compiledbuffer += "// BEGIN VARIABLE INITIALIZATIONS //\n";
 
         CheckVariables varlist = new CheckVariables(allfigs);
 
@@ -77,9 +77,11 @@ public class CodeGenerator implements ActionListener {
         {
             for (StoreObj declaration : varlist.VariableList) //output list of non duplicated declarations
             {
-                compiledbuffer += declaration.type.toCompileString() + " " + declaration.identifier + ";\n";
+                compiledbuffer += declaration.type.toCompileString() + " " + declaration.identifier + declaration.getInitalValue() + ";\n";
             }
         }
+
+        compiledbuffer += "// END VARIABLE INITIALIZATIONS //\n\n";
 
 
 
