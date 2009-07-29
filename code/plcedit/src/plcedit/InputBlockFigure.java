@@ -171,6 +171,8 @@ public class InputBlockFigure extends CodeBlockFigure {
         writeUID(out);
 
         //out.addAttribute("data_port", getModel().getDisplayedPort());
+
+        out.addAttribute("data_type", getModel().getStoreObj().type.getSaveString());
         out.addAttribute("data_var", getModel().getVariable());
 
         //writeAttributes(out); //export all attributes
@@ -181,10 +183,12 @@ public class InputBlockFigure extends CodeBlockFigure {
         readSavedBounds(in);
 
         //String data = in.getAttribute("data_port", "UNDEFINED"); //not required we only have one output port
+        String type = in.getAttribute("data_type", "UNDEFINED");
         String var = in.getAttribute("data_var", "UNDEFINED");
 
-        if (!var.equals("UNDEFINED")) {
+        if (!var.equals("UNDEFINED") && !type.equals("UNDEFINED")) {
             SavedBlock = new InputBlock(readUID(in));
+            SavedBlock.getStoreObj().type.setFromSaveString(type);
             SavedBlock.setVariable(var);
         }
 
