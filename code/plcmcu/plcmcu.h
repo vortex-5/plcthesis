@@ -37,7 +37,7 @@
 //using default port names
 
 
-/* Chip configuration section */
+/* Chip configuration */
 #pragma config OSC = HSPLL //set occilator to HS-PLL
 #pragma config OSCS = OFF //disable occilator switch
 #pragma config PWRT = OFF //enable power on timer
