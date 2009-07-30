@@ -28,7 +28,9 @@ In this simple example the following generated intermediate code \emphasize{IL} 
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
-// VARIABLE DECLARATIONS //
+// BEGIN VARIABLE INITIALIZATIONS //
+// END VARIABLE INITIALIZATIONS //
+
 BLUID0:
 //////////////////////////////////////
 //        PROGRAM START             //
@@ -40,7 +42,7 @@ return;
 \end{lstlisting}
 \end{minipage}
 
-In this simplest example we have a label inserted at the beginning of the start block so we can re-enter the start block namely BLUID0. Following the label a comment header to denote the block type, and no variables declared.  Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program. In our system this is analogous to "staying in a state indefinitely" as the behaviour after return is executed is to just halt the chip.
+In this simplest example we have a label inserted at the beginning of the start block so we can re-enter the start block namely BLUID0. Following the label a comment header to denote the block type, and no variables declared.  Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program. In our system this is analogous to ``staying in a state indefinitely'' as the behaviour after return is executed is to just halt the chip.
 
 \begin{figure}[htb]
 	\centering
@@ -54,7 +56,7 @@ the structure of this new graph. We will use this example to examine transitions
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
-// VARIABLE DECLARATIONS //
+// VARIABLE INITIALIZATIONS //
 ...
 
 BLUID1:
@@ -73,7 +75,9 @@ The delay block itself has a structure identical to the start block. The only di
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
-// VARIABLE DECLARATIONS //
+// BEGIN VARIABLE INITIALIZATIONS //
+// END VARIABLE INITIALIZATIONS //
+
 BLUID0:
 //////////////////////////////////////
 //        PROGRAM START             //
@@ -110,15 +114,17 @@ The resulting compiled output from figure \ref{fig:correctness_ex_output} is sho
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
-// VARIABLE DECLARATIONS //
-BLUID2:
+// BEGIN VARIABLE INITIALIZATIONS //
+// END VARIABLE INITIALIZATIONS //
+
+BLUID0:
 //////////////////////////////////////
 //        PROGRAM START             //
 //////////////////////////////////////
-goto BLUID3;
+goto BLUID1;
 goto EOF;
 
-BLUID3:
+BLUID1:
 //////////////////////////////////////
 //        OUTPUT                    //
 //////////////////////////////////////
@@ -130,14 +136,48 @@ return;
 \end{lstlisting}
 \end{minipage}
 
-The reader will note that we did not change any of the transitions from figure \ref{fig:correctness_ex_delay}. Despite this the BLUID's are still different. It is easy to see that the "goto" routing structure still behaves the same way despite having different labels. We note that the output block's "set" operation as shown in figure \ref{fig:correctness_ex_output} becomes translated to "PORTOUT = 0xF2;" in the final intermediate language code. The right hand side of the equation can be any valid expression and is not just limited to an costant as shown here. Since the right hand side is transfered verbatim into the final code what the diagram creator draws essentially becomes exactly what is written in the final code.
+The reader will note that we did not change any of the transitions from figure \ref{fig:correctness_ex_delay}. Despite this the BLUID's are still different. It is easy to see that the ``goto'' routing structure still behaves the same way despite having different labels. We note that the output block's ``set'' operation as shown in figure \ref{fig:correctness_ex_output} becomes translated to ``PORTOUT = 0xF2;'' in the final intermediate language code. The right hand side of the equation can be any valid expression and is not just limited to an costant as shown here. Since the right hand side is transfered verbatim into the final code what the diagram creator draws essentially becomes exactly what is written in the final code.
 
 The logical next diagram at this point to look at is the input block. Similar to the output block the input block allows you to sample the state of the input ports and store the result into a variable. The first item to the left of the diagram is the variable type. Following the variable type is the variable name. If a new variable name is specified a new entry is created in the variable initialization section. 
 
-%Input diagram
-%input compile
 
-In order to examine transitions in more detail we need to look at logic on transitions. So far because all transitions have been guarded with he condition "true" or always taken we have not had the opportunity to see any guard conditions in the code. Instead in the our current code we only observe a always taken goto statement at the end. We will construct a basic diagram with our next component the "Store Block" to demonstrate how guard conditions are enumerated as well as demonstrate another basic primitive block that allows the diagram creator to set internal variables and perform calculations.
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_input.png}
+	\caption{Input Block}
+	\label{fig:correctness_ex_input}
+\end{figure}
+
+Once again we present the compiled output for \ref{fig:correctness_ex_input} below.
+
+\begin{minipage}{\textwidth}
+\begin{lstlisting}[frame=single]
+// BEGIN VARIABLE INITIALIZATIONS //
+int var = 0;
+// END VARIABLE INITIALIZATIONS //
+
+BLUID0:
+//////////////////////////////////////
+//        PROGRAM START             //
+//////////////////////////////////////
+goto BLUID1;
+goto EOF;
+
+BLUID1:
+//////////////////////////////////////
+//        Input                    //
+//////////////////////////////////////
+var = PORTIN;
+goto EOF;
+
+EOF:
+return;
+\end{lstlisting}
+\end{minipage}
+
+Examining the compiled code we will notice that the variable initialization section is no longer empty. Our compiler will first initialize the variable used to store the input from ``PORTIN'' to a known value. This removes any issues of unknown values from our system and as defined in section \ref{sec:statechartsem} variables all have by definition an initial set of values they take on. In the code section of our ``Input'' block we can see that our ``var := PORTIN'' becomes ``var = PORTIN;'' in the final compiled code. The left hand side var is limited to simple variables and expressions are not allowed. Once again like the previous example the data from the input diagram is transfered verbatim into the final code there by ensuring correctness.
+
+In order to examine transitions in more detail we need to look at logic on transitions. So far because all transitions have been guarded with he condition ``true'' or always taken we have not had the opportunity to see any guard conditions in the code. Instead in the our current code we only observe a always taken goto statement at the end. We will construct a basic diagram with our next component the ``Store Block'' to demonstrate how guard conditions are enumerated as well as demonstrate another basic primitive block that allows the diagram creator to set internal variables and perform calculations.
 
 \begin{figure}[htb]
 	\centering
@@ -150,9 +190,11 @@ The resulting code from figure \ref{fig:correctness_ex_store} is shown below:
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
-// VARIABLE DECLARATIONS //
-int a;
-int b;
+// BEGIN VARIABLE INITIALIZATIONS //
+int a = 0;
+int b = 0;
+// END VARIABLE INITIALIZATIONS //
+
 BLUID0:
 //////////////////////////////////////
 //        PROGRAM START             //
@@ -185,11 +227,11 @@ return;
 \end{lstlisting}
 \end{minipage}
 
-First we look at the first store block with "BLUID1" as its label. We can easily see that from our diagram of transformations in figure \ref{fig:correctness_graph1} that our expression "$a := 0$" through the compile transformation was converted to "$a = 0$". Taking the transformation in figure \ref{fig:correctness_graph1} of "$\delta$" we note that the meaning of "$a := 0$" is that the value of $\delta(a) = 0$. Similarily executing "$a = 0$" in C we find that after execution the value of $exec(a) = 0$. Since the mapping from our semantic "value" to our executed "value" is the same we can conclude that the mapping is correct as by our definition. Next we the second store block with "BLUID2" as its label. From the diagram in figure \ref{fig:correctness_ex_store} the second store block has two notable differences. The first is that it has more than one set operation, and the second is that it uses variables in its expression and not just constants. As stated before the right hand side allows for any expression to be placed. From our definitions in section \ref{sec:statechartsem} of \plcchart it is understood that each expression forumlae is understood to occur in sequence. In this example "$a := a + 1$" will occur before "$b := a$". To demonstrate correctness we once again refer to figure \ref{fig:correctness_graph1} and start with our first expression. We note that after compilation $a := a + 1$ is compiled to $a = a + 1$, and $b := a$ becomes $b = a$. We can see that $\delta(a) = a + 1, \delta(b) = a + 1$, similarly $exec(a) = a + 1, exec(b) = a + 1$. Since mapping from $\delta(a) \rightarrow exec(a)$ and $\delta(b) \rightarrow exec(b)$ we can conclude that the transformation preserves the meaning of the values and thus is correct to the semantics outlined in sectin \ref{sec:statechartsem}.
+First we look at the first store block with ``BLUID1'' as its label. We can easily see that from our diagram of transformations in figure \ref{fig:correctness_graph1} that our expression ``$a := 0$'' through the compile transformation was converted to ``$a = 0$''. Taking the transformation in figure \ref{fig:correctness_graph1} of ``$\delta$'' we note that the meaning of ``$a := 0$'' is that the value of $\delta(a) = 0$. Similarily executing ``$a = 0$'' in C we find that after execution the value of $exec(a) = 0$. Since the mapping from our semantic ``value'' to our executed ``value'' is the same we can conclude that the mapping is correct as by our definition. Next we the second store block with ``BLUID2'' as its label. From the diagram in figure \ref{fig:correctness_ex_store} the second store block has two notable differences. The first is that it has more than one set operation, and the second is that it uses variables in its expression and not just constants. As stated before the right hand side allows for any expression to be placed. From our definitions in section \ref{sec:statechartsem} of \plcchart it is understood that each expression forumlae is understood to occur in sequence. In this example ``$a := a + 1$'' will occur before ``$b := a$''. To demonstrate correctness we once again refer to figure \ref{fig:correctness_graph1} and start with our first expression. We note that after compilation $a := a + 1$ is compiled to $a = a + 1$, and $b := a$ becomes $b = a$. We can see that $\delta(a) = a + 1, \delta(b) = a + 1$, similarly $exec(a) = a + 1, exec(b) = a + 1$. Since mapping from $\delta(a) \rightarrow exec(a)$ and $\delta(b) \rightarrow exec(b)$ we can conclude that the transformation preserves the meaning of the values and thus is correct to the semantics outlined in sectin \ref{sec:statechartsem}.
 
-To show the correctness of guarded transitions we now look at figure \ref{fig:correctness_graph2}. Note that figure \ref{fig:correctness_graph2} shares most of it's structure with figure \ref{fig:correctness_graph1} but is annotated to include transitions and modes. A mode as established in section \ref{sec:statechartsem} is similar to a state or a block in our diagram. Our diagrams always begin from the "start" node, similarily our begins its execution from "BLUID0" in the above code which is the compiled code. No values are updated in our start block so we can take the transition leaving the start node this puts us into the first store block (which we will refer to as $Store_1$ for disambiguity). On the execution side we see that at the end of the start code block we have the line \texttt{goto BLUID1;} we can note that BLUID1 points to the code block for our store in the diagram. We can conclude that $Transition(Start, true) \rightarrow Store_1$ similarily $Execution(Start, true) \rightarrow Store_1$. Thus we can conclude that transitions leaving "start" are correct. A similar argument can be made for $Store_1$ since no transitions are guarded.
+To show the correctness of guarded transitions we now look at figure \ref{fig:correctness_graph2}. Note that figure \ref{fig:correctness_graph2} shares most of it's structure with figure \ref{fig:correctness_graph1} but is annotated to include transitions and modes. A mode as established in section \ref{sec:statechartsem} is similar to a state or a block in our diagram. Our diagrams always begin from the ``start'' node, similarily our begins its execution from ``BLUID0'' in the above code which is the compiled code. No values are updated in our start block so we can take the transition leaving the start node this puts us into the first store block (which we will refer to as $Store_1$ for disambiguity). On the execution side we see that at the end of the start code block we have the line \texttt{goto BLUID1;} we can note that BLUID1 points to the code block for our store in the diagram. We can conclude that $Transition(Start, true) \rightarrow Store_1$ similarily $Execution(Start, true) \rightarrow Store_1$. Thus we can conclude that transitions leaving ``start'' are correct. A similar argument can be made for $Store_1$ since no transitions are guarded.
 
-For the guarded transitions in our second store block which we will refer to as $Store_2$ with "BLUID2" we must look at each guarded condition. We have previously proven for figure \ref{fig:correctness_ex_store} that figure \ref{fig:correctness_graph1} holds so we will skip that proof here. Extracting all edges leaving $Store_2$ we obtain $Transition(Store_2, a >= 100) \rightarrow Store_1$ and $Transition(Store_2, a < 100) \rightarrow Store_2$. Now all that remains is to show that the execution code has the same transitions. We can see from the compiled code that at the end of our $Store_2$ code block we have a series of "if" statements. We can see that \texttt{if (a >= 100) goto BLUID1;} is equivalent to $Transition(Store_2, a >= 100) \rightarrow Store_1$ and \texttt{if (a < 100) goto BLUID2;} is equivalent to $Transition(Store_2, a < 100) \rightarrow Store_2$. In this way we have demonstrated that guarded conditions are correct as well.
+For the guarded transitions in our second store block which we will refer to as $Store_2$ with ``BLUID2'' we must look at each guarded condition. We have previously proven for figure \ref{fig:correctness_ex_store} that figure \ref{fig:correctness_graph1} holds so we will skip that proof here. Extracting all edges leaving $Store_2$ we obtain $Transition(Store_2, a >= 100) \rightarrow Store_1$ and $Transition(Store_2, a < 100) \rightarrow Store_2$. Now all that remains is to show that the execution code has the same transitions. We can see from the compiled code that at the end of our $Store_2$ code block we have a series of ``if'' statements. We can see that \texttt{if (a >= 100) goto BLUID1;} is equivalent to $Transition(Store_2, a >= 100) \rightarrow Store_1$ and \texttt{if (a < 100) goto BLUID2;} is equivalent to $Transition(Store_2, a < 100) \rightarrow Store_2$. In this way we have demonstrated that guarded conditions are correct as well.
 
 
 By demonstrating that our system is correct both in compilation and execution with respect to figures \ref{fig:correctness_graph1} and \ref{fig:correctness_graph2}. We can conclude that our system is functionally correct by its construction and design.

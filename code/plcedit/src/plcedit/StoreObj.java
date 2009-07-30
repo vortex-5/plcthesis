@@ -57,13 +57,29 @@ public class StoreObj
         return ret;
     }
 
+
     /**
-     * Checks to see if the input data can be converted to the correct data type
-     * and if any parsing errors could be created by the compliled coded.
+     * returns the inital value a variable should be initialized to
      * @return
      */
-    public boolean isDataValid() throws Exception
+    public String getInitalValue()
     {
-        throw new Exception("Not Implimented yet!");
+        switch (this.type.getType())
+        {
+            case Bool:
+                return " = 0";
+            case Byte:
+                return " = 0x0";
+            case Double:
+                return " = 0.0";
+            case Float:
+                return " = 0";
+            case Int:
+                return " = 0";
+            case Long:
+                return " = 0";
+            default:
+                return "";
+        }
     }
 }
