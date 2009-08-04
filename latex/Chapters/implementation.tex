@@ -126,10 +126,37 @@ If at any point no edges are valid the the program will terminate by going to th
 
 %TODO: Finish the compilation section
 \subsection{Compilation}
-Each of the blocks will compile their own snippets of code the translation is as follows:
+Each of the blocks will compile their own snippets of code. It may be helpful when reading this section to refer to definition \ref{def:genCodeStruct} for the generic block structure definition.
 
-\begin{definition}
-\label{def:startblock}
-(The start block generate no program code it's only represented as a block so we may traverse along it's edges)
-\end{definition}
+\subsubsection{Start Block}
+\begin{lstlisting}
+\label{def:cmpstartblock}
+00 \textbf{BLUID#}:
+01 //////////////////////////////////////
+02 //        PROGRAM START             //
+03 //////////////////////////////////////
+04 
+05 \textbf{if (\emph{condition}) goto \emph(LABEL)
+06 goto EOF;
+\end{lstlisting}
+
+The primary function of a start block is to provide a block that can have edges directed at it, and to give a starting point for the program. Line 00 is the ``block unique identifier'' as stated in definition \ref{def:genCodeStruct} this is used by other blocks when edges are directed at this block. Lines 01-03 is a block description without this it becomes terribly difficult to determine what kind of block is executing if the code needs to be examine by human eyes. 
+
+On line 06 note the standard ``goto EOF'' is generated to ensure if no edges exist the program will stay in the block and not execute any other block by go to the end of the program.
+
+\subsubsection{Delay Block}
+\begin{lstlisting}
+\label{def:cmpdelayblock}
+00 \textbf{BLUID#}:
+01 //////////////////////////////////////
+02 //        PROGRAM DELAY             //
+03 //////////////////////////////////////
+04
+05 delay_ms(\textbf{integer});
+06 
+07 \textbf{if (\emph{condition}) goto \emph(LABEL)
+08 06 goto EOF;
+\end{lstlisting}
+
+Since the structural components are identical to the code sample provided in the ``Start Block'' we will skip lines 00-04. Unlike the ``Start Block'' the ``Delay Block'' does peform an operation during execution. On line 05 the ``Delay Block'' calls delay_ms(\textbf{integer}) where \textbf{integer} refers to the integer specified in the diagram. The routine for delay is done on the hardware side as the manufacturer will choose the occilator which determines how many clock cycles is 1ms.
 
