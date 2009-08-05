@@ -155,8 +155,44 @@ On line 06 note the standard ``goto EOF'' is generated to ensure if no edges exi
 05 delay_ms(\textbf{integer});
 06 
 07 \textbf{if (\emph{condition}) goto \emph(LABEL)
-08 06 goto EOF;
+...
+08 goto EOF;
 \end{lstlisting}
 
 Since the structural components are identical to the code sample provided in the ``Start Block'' we will skip lines 00-04. Unlike the ``Start Block'' the ``Delay Block'' does peform an operation during execution. On line 05 the ``Delay Block'' calls delay_ms(\textbf{integer}) where \textbf{integer} refers to the integer specified in the diagram. The routine for delay is done on the hardware side as the manufacturer will choose the occilator which determines how many clock cycles is 1ms.
+
+\subsubsection{Input Block}
+\begin{lstlisting}
+\label{def:cmpinputblock}
+00 \textbf{BLUID#}:
+01 //////////////////////////////////////
+02 //        PROGRAM INPUT             //
+03 //////////////////////////////////////
+04
+05 variable = PORTIN;
+06 
+07 \textbf{if (\emph{condition}) goto \emph(LABEL)
+     ...
+08 goto EOF;
+\end{lstlisting}
+
+The input routine performs an operation of setting a variable to the value being read off the input port. This value is located on line 05 ``variable = PORTIN;''. Lines 00-04 are the same as definition \ref{def:genCodeStruct} and line 07-08 are identical to the Delay block. In this case variable can be any variable in our program that can accept a 8 bit integer value.
+
+
+\subsubsection{Output Block}
+\begin{lstlisting}
+\label{def:cmpoutputblock}
+00 \textbf{BLUID#}:
+01 //////////////////////////////////////
+02 //        PROGRAM OUTPUT            //
+03 //////////////////////////////////////
+04
+05 PORTOUT = variable;
+06 
+07 \textbf{if (\emph{condition}) goto \emph(LABEL)
+     ...
+08 goto EOF;
+\end{lstlisting}
+
+The ``Output Block'' is nearly identical to the ``Input Block'' the only difference is on line 05 instead of reading a value from the input port a value is written to the output port. This is accomplished by the line ``PORTOUT = variable;''.
 
