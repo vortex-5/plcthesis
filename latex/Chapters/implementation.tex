@@ -149,7 +149,7 @@ On line 06 note the standard ``goto EOF'' is generated to ensure if no edges exi
 \label{def:cmpdelayblock}
 00 \textbf{BLUID#}:
 01 //////////////////////////////////////
-02 //        PROGRAM DELAY             //
+02 //        DELAY                     //
 03 //////////////////////////////////////
 04
 05 delay_ms(\textbf{integer});
@@ -166,7 +166,7 @@ Since the structural components are identical to the code sample provided in the
 \label{def:cmpinputblock}
 00 \textbf{BLUID#}:
 01 //////////////////////////////////////
-02 //        PROGRAM INPUT             //
+02 //        INPUT                     //
 03 //////////////////////////////////////
 04
 05 variable = PORTIN;
@@ -184,7 +184,7 @@ The input routine performs an operation of setting a variable to the value being
 \label{def:cmpoutputblock}
 00 \textbf{BLUID#}:
 01 //////////////////////////////////////
-02 //        PROGRAM OUTPUT            //
+02 //        OUTPUT                    //
 03 //////////////////////////////////////
 04
 05 PORTOUT = variable;
@@ -196,3 +196,21 @@ The input routine performs an operation of setting a variable to the value being
 
 The ``Output Block'' is nearly identical to the ``Input Block'' the only difference is on line 05 instead of reading a value from the input port a value is written to the output port. This is accomplished by the line ``PORTOUT = variable;''.
 
+\subsubsection{Store Block}
+\begin{lstlisting}
+\label{def:cmpstoreblock}
+00 \textbf{BLUID#}:
+01 //////////////////////////////////////
+02 //        STORE                     //
+03 //////////////////////////////////////
+04
+05 variable0 = expression0;
+06 variable1 = expression1;
+07 variable2 = expression2;
+...
+08 \textbf{if (\emph{condition}) goto \emph(LABEL)
+     ...
+09 goto EOF;
+\end{lstlisting}
+
+Again we start the store block similar tot he other blocks with identical structure until line 04. Line 05-07 are the code conversions for the store block. The store block converts each line in the diagram of the form ``type variable_name := expression'' into ``variable_name = expression'' as seen on line 05. In addition if there is more than one line they are then placed one line at a time in the subsequent lines. The expression can be any valid mathematical ``C'' style expression, and functions are not supported.
