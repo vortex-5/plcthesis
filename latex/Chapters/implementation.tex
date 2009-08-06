@@ -159,7 +159,7 @@ On line 06 note the standard ``goto EOF'' is generated to ensure if no edges exi
 08 goto EOF;
 \end{lstlisting}
 
-Since the structural components are identical to the code sample provided in the ``Start Block'' we will skip lines 00-04. Unlike the ``Start Block'' the ``Delay Block'' does peform an operation during execution. On line 05 the ``Delay Block'' calls delay_ms(\textbf{integer}) where \textbf{integer} refers to the integer specified in the diagram. The routine for delay is done on the hardware side as the manufacturer will choose the occilator which determines how many clock cycles is 1ms.
+Since the structural components are identical to the code sample provided in the ``Start Block'' we will skip lines 00-04. Unlike the ``Start Block'' the ``Delay Block'' does peform an operation during execution. On line 05 the ``Delay Block'' calls delay\_ms(\textbf{integer}) where \textbf{integer} refers to the integer specified in the diagram. The routine for delay is done on the hardware side as the manufacturer will choose the occilator which determines how many clock cycles is 1ms.
 
 \subsubsection{Input Block}
 \begin{lstlisting}
@@ -213,4 +213,4 @@ The ``Output Block'' is nearly identical to the ``Input Block'' the only differe
 09 goto EOF;
 \end{lstlisting}
 
-Again we start the store block similar tot he other blocks with identical structure until line 04. Line 05-07 are the code conversions for the store block. The store block converts each line in the diagram of the form ``type variable_name := expression'' into ``variable_name = expression'' as seen on line 05. In addition if there is more than one line they are then placed one line at a time in the subsequent lines. The expression can be any valid mathematical ``C'' style expression, and functions are not supported.
+Again we start the store block similar tot he other blocks with identical structure until line 04. Line 05-07 are the code conversions for the store block. The store block converts each line in the diagram of the form ``type variable\_name := expression'' into ``variable\_name = expression'' as seen on line 05. In addition if there is more than one line they are then placed one line at a time in the subsequent lines. The expression can be any valid mathematical ``C'' style expression, and functions are not supported.
