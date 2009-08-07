@@ -20,6 +20,8 @@ TODO: Describe each section in detail.
 \textbf{Description:} Sets configuration bits for the chip that cannot be done at runtime.
 
 \textbf{Code:}
+\\
+\\
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 ...
@@ -31,7 +33,8 @@ TODO: Describe each section in detail.
 ...
 \end{lstlisting}
 \end{minipage}
-
+\\
+\\
 \textbf{File:} plcmcu.c
 
 \textbf{Routine:} init\_chip(void)
@@ -39,6 +42,8 @@ TODO: Describe each section in detail.
 \textbf{Description:} Initializes any chip specific configuration bits that must be done at runtime.
 
 \textbf{Code:}
+\\
+\\
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 ...
@@ -50,11 +55,13 @@ void init_chip(void)
 ...
 \end{lstlisting}
 \end{minipage}
-
+\\
+\\
 \subsection{Hardware Specific Definitions}
 
 Hardware specific definitions are reserved for defining specific characterists of the hardware to match up with the software. For example it may be necessary to define the input and output ports to a specific port on the chip itself.
-
+\\
+\\
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 ...
@@ -64,13 +71,15 @@ Hardware specific definitions are reserved for defining specific characterists o
 ...
 \end{lstlisting}
 \end{minipage}
-
-
+\\
+\\
 \subsection{Hardware Specific Implementations}
 
 convenience calls from our software that access more complex operations may be required to be implimented directly into hardware. Our current software only requires that the routine for delaying the execution by a number of milliseconds is implimented. It is done as follows:
 
 \textbf{File:}plcmcu.h
+\\
+\\
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 /* CLOCK specification */
@@ -103,8 +112,11 @@ convenience calls from our software that access more complex operations may be r
 ...
 \end{lstlisting}
 \end{minipage}
-
+\\
+\\
 \textbf{File:} plcmcu.c
+\\
+\\
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 ...
@@ -115,5 +127,6 @@ void delayms(int time)
 ...
 \end{lstlisting}
 \end{minipage}
-
+\\
+\\
 It is highly recommended to avoid macros where possible however the nature of the PIC18F452 required macros in order to prevent inaccurate delays caused by actually computations.

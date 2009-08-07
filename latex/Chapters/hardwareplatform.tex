@@ -14,3 +14,5 @@ In addition the PIC18F452 has the following features that are essential for PLC 
 \end{itemize}
 
 These minimum specification have become the baseline for our hardware requirements. In order to utilize a different chip with our programming software the hardware support team will be required to implement a driver layer as described in seciton \ref{sec:hardwareframework}.
+
+For real time operation hardware requirements on clock speed will become more critical execution of ``goto'' should occur as close as possible to constant time or O(1). Without the ability to execute ``goto'' in constant time delays between transitions become increasingly harder to predict and account for.

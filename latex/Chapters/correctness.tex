@@ -20,6 +20,8 @@ generated from an graph structure is correct. To do so we extend figure \ref{fig
 
 In this section we will begin by showing that each of the transformations are correct by constructing basic atoms. We will start by looking at atoms that have the simplest expressions first. The simplest of these is a diagram in which only the start node exists as shown in \ref{fig:correctness_ex_start}.
 
+\subsection{Correctness over Structure}
+\subsubsection{Start}
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_start.png}
@@ -45,6 +47,9 @@ return;
 \end{minipage}
 
 In this simplest example we have a label inserted at the beginning of the start block so we can re-enter the start block namely BLUID0. Following the label a comment header to denote the block type, and no variables declared.  Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program. In our system this is analogous to ``staying in a state indefinitely'' as the behaviour after return is executed is to just halt the chip.
+
+
+\subsubsection{Delay Element}
 
 \begin{figure}[htb]
 	\centering
@@ -103,7 +108,9 @@ In the example shown in figure \ref{fig:correctness_ex_delay} a transition can b
 
 Each block has an unique identifier associated with it, this identifier is what is used by the goto blocks in order to recreate the graph structure in the code. The unique identifier is generated at design time and is checked at compile time to ensure that it is in fact unique.
 
-Next we look at the output block. The new item introduced by the output block are variables. The output block during its run will need to set a value to a variable. It does this in order to update the output on the port. 
+\subsubsection{Output Element}
+
+The output block is similar to the previous delay block however the new item introduced by the output block are variables. The output block during its run will need to set a value to a variable. It does this in order to update the output on the port. 
 
 \begin{figure}[htb]
 	\centering
@@ -140,7 +147,9 @@ return;
 
 The reader will note that we did not change any of the transitions from figure \ref{fig:correctness_ex_delay}. Despite this the BLUID's are still different. It is easy to see that the ``goto'' routing structure still behaves the same way despite having different labels. We note that the output block's ``set'' operation as shown in figure \ref{fig:correctness_ex_output} becomes translated to ``PORTOUT = 0xF2;'' in the final intermediate language code. The right hand side of the equation can be any valid expression and is not just limited to an costant as shown here. Since the right hand side is transfered verbatim into the final code what the diagram creator draws essentially becomes exactly what is written in the final code.
 
-The logical next diagram at this point to look at is the input block. Similar to the output block the input block allows you to sample the state of the input ports and store the result into a variable. The first item to the left of the diagram is the variable type. Following the variable type is the variable name. If a new variable name is specified a new entry is created in the variable initialization section. 
+\subsubsection{Input Element}
+
+Similar to the output block the input block allows you to sample the state of the input ports and store the result into a variable. The first item to the left of the diagram is the variable type. Following the variable type is the variable name. If a new variable name is specified a new entry is created in the variable initialization section. 
 
 
 \begin{figure}[htb]
@@ -178,6 +187,8 @@ return;
 \end{minipage}
 
 Examining the compiled code we will notice that the variable initialization section is no longer empty. Our compiler will first initialize the variable used to store the input from ``PORTIN'' to a known value. This removes any issues of unknown values from our system and as defined in section \ref{sec:statechartsem} variables all have by definition an initial set of values they take on. In the code section of our ``Input'' block we can see that our ``var := PORTIN'' becomes ``var = PORTIN;'' in the final compiled code. The left hand side var is limited to simple variables and expressions are not allowed. Once again like the previous example the data from the input diagram is transfered verbatim into the final code there by ensuring correctness.
+
+\subsubsection{Store Element}
 
 In order to examine transitions in more detail we need to look at logic on transitions. So far because all transitions have been guarded with he condition ``true'' or always taken we have not had the opportunity to see any guard conditions in the code. Instead in the our current code we only observe a always taken goto statement at the end. We will construct a basic diagram with our next component the ``Store Block'' to demonstrate how guard conditions are enumerated as well as demonstrate another basic primitive block that allows the diagram creator to set internal variables and perform calculations.
 
@@ -235,10 +246,23 @@ To show the correctness of guarded transitions we now look at figure \ref{fig:co
 
 For the guarded transitions in our second store block which we will refer to as $Store_2$ with ``BLUID2'' we must look at each guarded condition. We have previously shown for figure \ref{fig:correctness_ex_store} that figure \ref{fig:correctness_graph1} holds so we will skip showing it again here. Extracting all edges leaving $Store_2$ we obtain $Transition(Store_2, a >= 100) \rightarrow Store_1$ and $Transition(Store_2, a < 100) \rightarrow Store_2$. Now all that remains is to show that the execution code has the same transitions. We can see from the compiled code that at the end of our $Store_2$ code block we have a series of ``if'' statements. We can see that \texttt{if (a >= 100) goto BLUID1;} is equivalent to $Transition(Store_2, a >= 100) \rightarrow Store_1$ and \texttt{if (a < 100) goto BLUID2;} is equivalent to $Transition(Store_2, a < 100) \rightarrow Store_2$. In this way we have demonstrated that guarded conditions are correct as well.
 
+By demonstrating that our system is correct both in compilation and the structure execution with respect to figures \ref{fig:correctness_graph1} and \ref{fig:correctness_graph2}. We can conclude that our system is functionally correct by its construction and structure. To fully justify the correctness of the system we still need to show execution traces of each of the examples shown in this section. In the next section we will demonstrate execution traces of each diagram.
 
-By demonstrating that our system is correct both in compilation and execution with respect to figures \ref{fig:correctness_graph1} and \ref{fig:correctness_graph2}. We can conclude that our system is functionally correct by its construction and design.
 
-%the lower sections might be superceeded by the above.
-%\subsection{The IL}
-%\subsection{The Generated Code Sections}
-%\subsection{The Simulator}
+\subsection{Correctness over Execution}
+\subsubsection{Table Representation}
+
+In order to show the correctness of the execution it is necessary to identify the differences between graphical traces and execution. Both contain a ``mode'' however in execution the mode can be directly accociated to a set of line numbers. Line numbers don't exist in the diagram view. Both however do have variables and modes, and correct execution is a trace where all modes and variables are identical.
+
+\begin{table}[h]
+	\caption{Table of the Start Diagram shown in figure \ref{fig:correctness_ex_start}}
+	\centering
+		\begin{tabular}{| l | l | l | l |}
+			\hline
+			\textbf{Mode} & \textbf{Variables} & \textbf{Transitions} & \textbf{Next Mode} \\
+			\hline
+			start & (none) & (none) & (none meaning stop) \\
+			\hline
+		\end{tabular}
+	\label{table:BasicDiagOnly}
+\end{table}
