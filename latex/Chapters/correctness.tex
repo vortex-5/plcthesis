@@ -32,17 +32,17 @@ In this simple example the following generated intermediate code \emphasize{IL} 
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
-// BEGIN VARIABLE INITIALIZATIONS //
-// END VARIABLE INITIALIZATIONS //
-
-BLUID0:
-//////////////////////////////////////
-//        PROGRAM START             //
-//////////////////////////////////////
-goto EOF;
-
-EOF:
-return;
+00 // BEGIN VARIABLE INITIALIZATIONS //
+01 // END VARIABLE INITIALIZATIONS //
+02
+03 BLUID0:
+04 //////////////////////////////////////
+05 //        PROGRAM START             //
+06 //////////////////////////////////////
+07 goto EOF;
+08 
+09 EOF:
+10 return;
 \end{lstlisting}
 \end{minipage}
 
@@ -254,8 +254,8 @@ By demonstrating that our system is correct both in compilation and the structur
 
 In order to show the correctness of the execution it is necessary to identify the differences between graphical traces and execution. Both contain a ``mode'' however in execution the mode can be directly accociated to a set of line numbers. Line numbers don't exist in the diagram view. Both however do have variables and modes, and correct execution is a trace where all modes and variables are identical.
 
-\begin{table}[h]
-	\caption{Table of the Start Diagram shown in figure \ref{fig:correctness_ex_start}}
+\begin{table}[htcb]
+	\caption{Start Diagram shown in figure \ref{fig:correctness_ex_start}}
 	\centering
 		\begin{tabular}{| l | l | l | l |}
 			\hline
@@ -266,3 +266,25 @@ In order to show the correctness of the execution it is necessary to identify th
 		\end{tabular}
 	\label{table:BasicDiagOnly}
 \end{table}
+
+To show an execution trace we replace mode with line number and we get the following table.
+
+\begin{table}[htcb]
+	\caption{Start code execution for compiled code form diagram \ref{fig:correctness_ex_start}}
+	\centering
+		\begin{tabular}{| l | l | l | l |}
+			\hline
+			\textbf{Line} & \textbf{Variables} & \text{Code} & \textbf{Next Executed Line} \\
+			\hline
+			00 & (none) & (comment) & 07 \\
+			\hline
+			07 & (none) & \texttt{goto EOF} & 09 \\
+			\hline
+			09 & (none) & (line label) & 10 \\
+			\hline
+			10 & (none) & return & (stop) \\
+			\hline
+		\end{tabular}
+	\label{table:BasicExecOnly}
+\end{table}
+			
