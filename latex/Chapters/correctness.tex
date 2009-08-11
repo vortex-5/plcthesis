@@ -263,6 +263,8 @@ In order to show the correctness of the execution it is necessary to identify th
 			\hline
 			start & (none) & (none) & (none meaning stop) \\
 			\hline
+			(none) & (none) & (none) & (none) \\
+			\hline
 		\end{tabular}
 	\label{table:BasicDiagOnly}
 \end{table}
@@ -270,7 +272,7 @@ In order to show the correctness of the execution it is necessary to identify th
 To show an execution trace we replace mode with line number and we get the following table.
 
 \begin{table}[htcb]
-	\caption{Start code execution for compiled code form diagram \ref{fig:correctness_ex_start}}
+	\caption{Start code execution for compiled code from diagram \ref{fig:correctness_ex_start}}
 	\centering
 		\begin{tabular}{| l | l | l | l |}
 			\hline
@@ -287,4 +289,42 @@ To show an execution trace we replace mode with line number and we get the follo
 		\end{tabular}
 	\label{table:BasicExecOnly}
 \end{table}
-			
+
+It is not to difficult to see that from lines 00 to 07 we are in the ``start'' mode so we can append a mode marker to the end of the table. We can also identify that line 09 ``EOF'' represents the end of the file and thus has no mode accociated with it or goes to a null mode.
+
+\begin{table}[htcb]
+	\caption{Start code execution for compiled code from diagram extended\ref{fig:correctness_ex_start}}
+	\centering
+		\begin{tabular}{| l | l | l | l | l |}
+			\hline
+			\textbf{Line} & \textbf{Variables} & \textbf{Code} & \textbf{Next Executed Line} & \textbf{Mode}\\
+			\hline
+			00 & (none) & (comment) & 07 & \textbf{start} \\
+			\hline
+			07 & (none) & \texttt{goto EOF} & 09 &  \textbf{start}\\
+			\hline
+			09 & (none) & (line label) & 10 & \textbf{none} \\
+			\hline
+			10 & (none) & return & (stop) & \textbf{none} \\
+			\hline
+		\end{tabular}
+	\label{table:BasicExecMode}
+\end{table}
+
+We can already see that the two traces produce the same outcome however for ease of comparison we can merge the two tables side by side so we can directly compare each executed line to it's accocated graph.
+
+\begin{table}[htcb]
+	\caption{Start code execution combined table. \ref{fig:correctness_ex_start}}
+	\centering
+	\scriptsize
+		\begin{tabular}{| p{0.06\textwidth} | p{0.1\textwidth} | p{0.15\textwidth} | p{0.06\textwidth} | p{0.05\textwidth} | p{0.1\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
+			\hline
+			\textbf{Mode} 	&	\textbf{Var (Diag)} 	&	\textbf{Transitions}	&	\textbf{Next}				&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
+			\hline
+			start 				&	(none)						&	(none)						&	(none meaning stop)	&	00					& (none)						& (comment)		&	07 \\
+			\hline
+									&									&									&										&	07					& (none)						& goto EOF			& 10 \\
+			\hline
+		\end{tabular}
+	\label{table:BasicExecMode}
+\end{table}
