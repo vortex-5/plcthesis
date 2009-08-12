@@ -319,11 +319,13 @@ We can already see that the two traces produce the same outcome however for ease
 	\scriptsize
 		\begin{tabular}{| p{0.06\textwidth} | p{0.1\textwidth} | p{0.15\textwidth} | p{0.06\textwidth} | p{0.05\textwidth} | p{0.1\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
 			\hline
-			\textbf{Mode} 	&	\textbf{Var (Diag)} 	&	\textbf{Transitions}	&	\textbf{Next}				&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
+			\textbf{Mode} 		&	\textbf{Var (Diag)} 		& 	\textbf{Transitions} 		& 	\textbf{Next}		&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
 			\hline
-			start 				&	(none)						&	(none)						&	(none meaning stop)	&	00					& (none)						& (comment)		&	07 \\
+			start 				&	(none)						&	(none)						&	(none meaning stop)	&	00					&	(none)					& 	(comment)		&	07 \\
 			\hline
-									&									&									&										&	07					& (none)						& goto EOF			& 10 \\
+								&								&								&						&	07					& 	(none)					& 	goto EOF		& 	10 \\
+			\hline
+								&								&								&						&	10					&	(none)					&	return			&	(stop) \\
 			\hline
 		\end{tabular}
 	\label{table:BasicExecMode}
