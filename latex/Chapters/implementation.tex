@@ -129,77 +129,77 @@ If at any point no edges are valid the the program will terminate by going to th
 Each of the blocks will compile their own snippets of code. It may be helpful when reading this section to refer to definition \ref{def:genCodeStruct} for the generic block structure definition.
 
 \subsubsection{Start Block}
-\begin{lstlisting}
+\begin{alltt}
 \label{def:cmpstartblock}
-00 \textbf{BLUID#}:
+00 \emphasize{BLUID#}:
 01 //////////////////////////////////////
 02 //        PROGRAM START             //
 03 //////////////////////////////////////
 04 
-05 \textbf{if (\emph{condition}) goto \emph(LABEL)
+05 if (\emphasize{condition}) goto \emphasize{(LABEL)}
 06 goto EOF;
-\end{lstlisting}
+\end{alltt}
 
 The primary function of a start block is to provide a block that can have edges directed at it, and to give a starting point for the program. Line 00 is the ``block unique identifier'' as stated in definition \ref{def:genCodeStruct} this is used by other blocks when edges are directed at this block. Lines 01-03 is a block description without this it becomes terribly difficult to determine what kind of block is executing if the code needs to be examine by human eyes. 
 
 On line 06 note the standard ``goto EOF'' is generated to ensure if no edges exist the program will stay in the block and not execute any other block by go to the end of the program.
 
 \subsubsection{Delay Block}
-\begin{lstlisting}
+\begin{alltt}
 \label{def:cmpdelayblock}
-00 \textbf{BLUID#}:
+00 \emphasize{BLUID#}:
 01 //////////////////////////////////////
 02 //        DELAY                     //
 03 //////////////////////////////////////
 04
-05 delay_ms(\textbf{integer});
+05 delay_ms(\emphasize{integer});
 06 
-07 \textbf{if (\emph{condition}) goto \emph(LABEL)
+07 if (\emphasize{condition}) goto \emphasize{(LABEL)}
 ...
 08 goto EOF;
-\end{lstlisting}
+\end{alltt}
 
 Since the structural components are identical to the code sample provided in the ``Start Block'' we will skip lines 00-04. Unlike the ``Start Block'' the ``Delay Block'' does peform an operation during execution. On line 05 the ``Delay Block'' calls delay\_ms(\textbf{integer}) where \textbf{integer} refers to the integer specified in the diagram. The routine for delay is done on the hardware side as the manufacturer will choose the occilator which determines how many clock cycles is 1ms.
 
 \subsubsection{Input Block}
-\begin{lstlisting}
+\begin{alltt}
 \label{def:cmpinputblock}
-00 \textbf{BLUID#}:
+00 \emphasize{BLUID#}:
 01 //////////////////////////////////////
 02 //        INPUT                     //
 03 //////////////////////////////////////
 04
 05 variable = PORTIN;
 06 
-07 \textbf{if (\emph{condition}) goto \emph(LABEL)
+07 if (\emphasize{condition}) goto \emphasize{(LABEL)}
      ...
 08 goto EOF;
-\end{lstlisting}
+\end{alltt}
 
 The input routine performs an operation of setting a variable to the value being read off the input port. This value is located on line 05 ``variable = PORTIN;''. Lines 00-04 are the same as definition \ref{def:genCodeStruct} and line 07-08 are identical to the Delay block. In this case variable can be any variable in our program that can accept a 8 bit integer value.
 
 
 \subsubsection{Output Block}
-\begin{lstlisting}
+\begin{alltt}
 \label{def:cmpoutputblock}
-00 \textbf{BLUID#}:
+00 \emphasize{BLUID#}:
 01 //////////////////////////////////////
 02 //        OUTPUT                    //
 03 //////////////////////////////////////
 04
 05 PORTOUT = variable;
 06 
-07 \textbf{if (\emph{condition}) goto \emph(LABEL)
+07 if (\emphasize{condition}) goto \emphasize{(LABEL)}
      ...
 08 goto EOF;
-\end{lstlisting}
+\end{alltt}
 
 The ``Output Block'' is nearly identical to the ``Input Block'' the only difference is on line 05 instead of reading a value from the input port a value is written to the output port. This is accomplished by the line ``PORTOUT = variable;''.
 
 \subsubsection{Store Block}
-\begin{lstlisting}
+\begin{alltt}
 \label{def:cmpstoreblock}
-00 \textbf{BLUID#}:
+00 \emphasize{BLUID#}:
 01 //////////////////////////////////////
 02 //        STORE                     //
 03 //////////////////////////////////////
@@ -207,10 +207,10 @@ The ``Output Block'' is nearly identical to the ``Input Block'' the only differe
 05 variable0 = expression0;
 06 variable1 = expression1;
 07 variable2 = expression2;
-...
-08 \textbf{if (\emph{condition}) goto \emph(LABEL)
+     ...
+08 if (\emphasize{condition}) goto \emphasize{(LABEL)}
      ...
 09 goto EOF;
-\end{lstlisting}
+\end{alltt}
 
 Again we start the store block similar tot he other blocks with identical structure until line 04. Line 05-07 are the code conversions for the store block. The store block converts each line in the diagram of the form ``type variable\_name := expression'' into ``variable\_name = expression'' as seen on line 05. In addition if there is more than one line they are then placed one line at a time in the subsequent lines. The expression can be any valid mathematical ``C'' style expression, and functions are not supported.
