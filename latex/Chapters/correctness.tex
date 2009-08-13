@@ -459,3 +459,36 @@ Likewise PORTOUT is zero until changed in our diagram. In understanding this the
 It is not difficult to see that our two code traces produce this sequence and by our definition we can conclude that our
 output execution is correct with respect to the diagram.
 
+
+\subsubsection{Input Diagram Execution}
+
+\begin{table}[htcb]
+	\caption{Input code execution combined table. For figure \ref{fig:input_ex_output}}
+	\centering
+	\tablefontsize
+		\begin{tabular}{| p{0.05\textwidth} | p{0.1\textwidth} | p{0.14\textwidth} | p{0.05\textwidth} | p{0.05\textwidth} | p{0.12\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
+			\hline
+			\textbf{Mode} 		&	\textbf{Var (Diag)} 		& 	\textbf{Transitions} 		& 	\textbf{Next}		&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
+			\hline			
+								&								&								&						&	00					& 	var = UNDEFINED			&	(comment)		&	01	\\
+			\hline
+								&								&								&						&	01					&	var = 0					&	int var = 0		&	04	\\
+			\hline
+			start 				&	var = 0						&if (true) $\rightarrow$ input	&	input				&	04					&	var = (no change)		& 	(comment)		&	08	\\
+			\hline
+								&								&								&						&	08					&	var = (no change)		&	goto BLUID1		&	11	\\
+			\hline
+			input				&	var = PORTIN				&	(none)						&	(stop)				&	11					&	var = (no change)		&	(line label)	&	15	\\
+			\hline
+								&								&								&						&	15					&	var = PORTIN			&	var = PORTIN	&	16	\\
+			\hline
+								&								&								&						&	16					&	var = (no change)		&	goto EOF		&	18	\\
+			\hline
+								&								&								&						&	18					&	var = (no change)		&	(line label)	&	19	\\
+			\hline
+								&								&								&						&	19					&	var = (no change)		&	return			&	(stop)	\\
+			\hline
+		\end{tabular}
+	\label{table:InputExecCombined}
+\end{table}
+
