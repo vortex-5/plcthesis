@@ -463,7 +463,7 @@ output execution is correct with respect to the diagram.
 \subsubsection{Input Diagram Execution}
 
 \begin{table}[htcb]
-	\caption{Input code execution combined table. For figure \ref{fig:input_ex_output}}
+	\caption{Input code execution combined table. For figure \ref{fig:correctness_ex_input}}
 	\centering
 	\tablefontsize
 		\begin{tabular}{| p{0.05\textwidth} | p{0.1\textwidth} | p{0.14\textwidth} | p{0.05\textwidth} | p{0.05\textwidth} | p{0.12\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
@@ -492,3 +492,37 @@ output execution is correct with respect to the diagram.
 	\label{table:InputExecCombined}
 \end{table}
 
+
+\subsubsection{Store Diagram Execution}
+
+Note: NC means ``no change''.
+
+\begin{table}[htcb]
+	\caption{Store code execution combined table. For figure \ref{fig:correctness_ex_store}}
+	\centering
+	\tablefontsize
+		\begin{tabular}{| p{0.05\textwidth} | p{0.1\textwidth} | p{0.14\textwidth} | p{0.05\textwidth} | p{0.05\textwidth} | p{0.12\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
+			\hline
+			\textbf{Mode} 		&	\textbf{Var (Diag)} 		& 	\textbf{Transitions} 		& 	\textbf{Next}		&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
+			\hline			
+								&								&								&						&	00					& 	a = UNDEFINED \newline	b = UNDEFINED	&	(comment)		&	01	\\
+			\hline
+								&								&								&						&	01					&	a = 0 \newline b = UNDEFINED	&	int a = 0				&	02	\\
+			\hline
+								&								&								&						&	02					&	a = 0 \newline b = 0		&	int b = 0					& 	09	\\
+			\hline
+			start				&	a = 0 \newline b = 0		&	if (true) $\rightarrow store_1$	& $store_1$			&	09					&	a = $NC$ \newline b = $NC$	&	goto BLUID1					&	12	\\
+			\hline
+			$store_1$			&	a = 0 \newline b = $NC$		&	if (true) $\rightarrow store_2$ & $store_2$			&	12					&	a = $NC$ \newline b = $NC$	&	(line label)				&	16	\\
+			\hline
+								&								&								&						&	16					&	a = 0 \newline b = $NC$		&	a = 0						&	18	\\
+			\hline
+								&								&								&						&	18					&	a = $NC$ \newline b = $NC$	&	goto BLUID2					&	21	\\
+			\hline	
+			$store_2$			&	a = 1	\newline b = 1		&	if (a >= 3) $\rightarrow store_1$ \newline
+																	if (a < 3) $\rightarrow store_2$ &	$store_2$		&	21					&	a = $NC$ \newline b = $NC$	&	(line label)				&	25	\\
+			\hline
+			
+		\end{tabular}
+	\label{table:InputExecCombined}
+\end{table}
