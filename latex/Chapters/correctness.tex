@@ -362,7 +362,7 @@ merge the two tables side by side so we can directly compare each executed line 
 \begin{table}[htcb]
 	\caption{Start code execution combined table. For figure \ref{fig:correctness_ex_start}}
 	\centering
-	\scriptsize
+	\tablefontsize
 		\begin{tabular}{| p{0.06\textwidth} | p{0.1\textwidth} | p{0.15\textwidth} | p{0.06\textwidth} | p{0.05\textwidth} | p{0.1\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
 			\hline
 			\textbf{Mode} 		&	\textbf{Var (Diag)} 		& 	\textbf{Transitions} 		& 	\textbf{Next}		&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
@@ -395,7 +395,7 @@ our system so both sets of variables are trivially correct.
 \begin{table}[htcb]
 	\caption{Delay code execution combined table. For figure \ref{fig:correctness_ex_delay}}
 	\centering
-	\scriptsize
+	\tablefontsize
 		\begin{tabular}{| p{0.06\textwidth} | p{0.1\textwidth} | p{0.15\textwidth} | p{0.06\textwidth} | p{0.05\textwidth} | p{0.1\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
 			\hline
 			\textbf{Mode} 		&	\textbf{Var (Diag)} 		& 	\textbf{Transitions} 		& 	\textbf{Next}		&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
@@ -429,15 +429,33 @@ diagram.
 \begin{table}[htcb]
 	\caption{Output code execution combined table. For figure \ref{fig:correctness_ex_output}}
 	\centering
-	\scriptsize
-		\begin{tabular}{| p{0.06\textwidth} | p{0.1\textwidth} | p{0.15\textwidth} | p{0.06\textwidth} | p{0.05\textwidth} | p{0.1\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
+	\tablefontsize
+		\begin{tabular}{| p{0.05\textwidth} | p{0.1\textwidth} | p{0.14\textwidth} | p{0.05\textwidth} | p{0.05\textwidth} | p{0.12\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
 			\hline
 			\textbf{Mode} 		&	\textbf{Var (Diag)} 		& 	\textbf{Transitions} 		& 	\textbf{Next}		&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
 			\hline
-			start 				&	(none)						&	if (true) output			&	output				&	00					&	(none)					& 	(comment)		&	07 \\
+			start 				&	PORTOUT = 0					&	if (true) output			&	output				&	00					&	PORTOUT = 0				& 	(comment)		&	07 \\
 			\hline
-
+								&								&								&						&	07					&   PORTOUT = (no change)	&	goto BLUID		&	10 \\
+			\hline
+			output				&	PORTOUT = 0xF2				&	(none)						&	(stop)				&	10					&	PORTOUT = (no change)	&	(line label)	&	14 \\
+			\hline
+								&								&								&						&	14					&	PORTOUT = 0xF2			&	PORTOUT = 0xF2	&	15 \\
+			\hline
+								&								&								&						&	15					&	PORTOUT = (no change)	&	goto EOF		&	17 \\
+			\hline
+								&								&								&						&	17					&	PORTOUT = (no change)	&	(line label)	&	18 \\
+			\hline
+								&								&								&						&	18					&	PORTOUT = (no change)	&	return			&	(stop) \\
+			\hline
 		\end{tabular}
 	\label{table:DelayExecCombined}
 \end{table}
+
+First we make a note that PORTOUT is an special variable that is used to send an output to the ports on the device.
+According to the hardware specification section PORTOUT is initialized to 0 when the device first starts up.
+Likewise PORTOUT is zero until changed in our diagram. In understanding this the rest of the code trace is as follows:
+\{(start, PORTOUT = 0), (output, PORTOUT = 0xF2)\} where we observe that our tuple comprises of (mode, variables). 
+It is not difficult to see that our two code traces produce this sequence and by our definition we can conclude that our
+output execution is correct with respect to the diagram.
 
