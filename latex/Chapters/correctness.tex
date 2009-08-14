@@ -231,8 +231,8 @@ The resulting code from figure \ref{fig:correctness_ex_store} is shown below:
 25 a = a + 1;
 26 b = a;
 27
-28 if (a >= 100) goto BLUID1;
-29 if (a < 100) goto BLUID2;
+28 if (a >= 3) goto BLUID1;
+29 if (a < 3) goto BLUID2;
 30 goto EOF;
 31
 32 EOF:
@@ -522,7 +522,12 @@ Note: NC means ``no change''.
 			$store_2$			&	a = 1	\newline b = 1		&	if (a >= 3) $\rightarrow store_1$ \newline
 																	if (a < 3) $\rightarrow store_2$ &	$store_2$		&	21					&	a = $NC$ \newline b = $NC$	&	(line label)				&	25	\\
 			\hline
-			
+								&								&								&						&	25					&	a=1 \newline b=$NC$		&		a = a + 1		&	26 \\
+			\hline
+								&								&								&						&	26					&	a=$NC$ \newline b=1		&		b = a		&	28 \\
+			\hline
+								&								&								&						&	28					& a=$NC$ \newline b=$NC$ & if (a >= 3) goto BLUID1 & 29\\
+												
 		\end{tabular}
 	\label{table:InputExecCombined}
 \end{table}
