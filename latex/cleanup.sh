@@ -1,2 +1,2 @@
 #!/bin/sh
-rm main.pdf main.aux main.bbl main.lof main.toc
+rm *.pdf *.log *.aux *.dvi *.lof *.lot *.bit *.idx *.glo *.bbl *.ilg *.toc *.ind
