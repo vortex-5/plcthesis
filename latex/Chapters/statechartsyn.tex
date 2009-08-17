@@ -7,24 +7,27 @@ Abstract syntax of \plcchart language:
 \plcchart
 
 \begin{itemize}
-	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Var $\mid$ Constant
-	\item Value := Expression
-	\item Type := Char $\mid$ Int $\mid$ Long $\mid$ Bool $\mid$ Float
-	\item Var := $\{v_0,v_1,v_2,...,v_n\} \in V$
+	\item Eq := $\;$ \boldmath$=$\unboldmath $\; \mid \;$ \boldmath$\neq$\unboldmath $\; \mid \;$ \boldmath$<$\unboldmath $\; \mid \;$ \boldmath$\leq$\unboldmath $\; \mid \;$ \boldmath$>$\unboldmath $\; \mid \;$ \boldmath$\geq$\unboldmath	
+	\item Op := $\;$ \boldmath$+$\unboldmath $\; \mid \;$ \boldmath$-$\unboldmath $\; \mid \;$ \boldmath$*$\unboldmath $\; \mid \;$ \boldmath$/$\unboldmath $\; \mid \;$ \boldmath$\%$\unboldmath $\; \mid \;$ \boldmath$\&\&$\unboldmath $\; \mid \;$ \textbf{\texttt{||}} $\; \mid \;$ \boldmath$\mathbin{\char`\^}$\unboldmath
+
+	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Var $\mid$ \textbf{Constant}
+	
+	\item Type := \textbf{Char} $\mid$ \textbf{Int} $\mid$ \textbf{Long} $\mid$ \textbf{Bool} $\mid$ \textbf{Float}
+	\item Var := $\mathbf{v_0 \mid v_1 \mid v_2 \mid ... \mid v_n}$
 
 	\item Condition := Expression Eq Expression $\mid$ Var
-	
-	\item Eq := $\; = \; \mid \; \neq \; \mid \; < \; \mid \; \leq \; \mid \; > \; \mid \; \geq$	
 
-	\item Block := StoreBlock	
 		
-	\item StoreBlock := Type Identifier = Expression $\mid$ Type Identifier = Expresion; StoreBlock
-	\item DelayBlock := Delay = Expression
-	\item OutputBlock := Identifier = Expression
-	\item Block := StoreBlock $\mid$ OutputBlock $\mid$ DelayBlock
-	
+	\item StoreBlock := Type \textbf{Identifier} = Expression $\mid$ Type \textbf{Identifier} = Expresion; StoreBlock
+	\item DelayBlock := Expression
+	\item OutputBlock := \textbf{Identifier}
+	\item InputBlock := Type \textbf{Identifier}
+	\item Block := StoreBlock $\mid$ OutputBlock $\mid$ DelayBlock $\mid$ InputBlock
+
 	
 	\item Transition := Block Condition Block
+	
+	\item Program := StartBlock Condition Block $\mid$ Transition
 \end{itemize}
 \end{definition}
 
