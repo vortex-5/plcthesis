@@ -11,16 +11,16 @@ The semantics of \plcchart can be expressed mathematically as follows:
 	
 \begin{itemize}
 	\item \textbf{$Q$:} Set of modes.
-	\item \textbf{$V$:} Set of values.
-	\item \textbf{$V_0 \subseteq V$:} Set of initial values.
-	\item \textbf{$G$:} Set of guard conditions.
-	\item \textbf{$A$:} Set of assignments. $Q \rightarrow V \times V$
-	\item \textbf{$\tau$:} Set of transitions. $Q \times G \rightarrow Q$
-	\item \textbf{$q_0$:} $q_0 \in Q$ An initial starting mode.
+	\item \textbf{$V$:} Vector of variables $V : \lbrace V_0,V_1,V_2,..,V_n \rbrace \: where \: V_{0..n}\in \lbrace \mathbb{Z}_{128} \mid \mathbb{Z} \mid \mathbb{B} \mid \mathbb{R} \rbrace$
+	\item \textbf{$V_{init}$:} vector of intial values $V_{init} : \lbrace v_0,..,v_n \rbrace \: where \: (v_i \in \mathbb{Z}_{128} \mid v_i \in \mathbb{Z} \mid v_i \in \mathbb{B} \mid v_i \in \mathbb{R}), i=0..n$ 
+	\item \textbf{$G$:} Set of guard conditions. $V \rightarrow \mathbb{B}$
+	\item \textbf{$A$:} Set of assignments. $V \times Q \rightarrow V$
+	\item \textbf{$\tau$:} Set of transitions. $G \times Q \rightarrow Q$
+	\item \textbf{$q_0$:} An initial starting mode.
 \end{itemize}
 \end{definition}
 
-We do not refer to Q as a state since conventially a state is simply a collection of variables, instead we call Q a mode. In our system a mode represent different possible operations which may or may not be dependent of the the values. The mode must be considered seperate from the actual values of the system. Assignments in \plccharts happen in sequence rather than all at once this method was chosen to allow sequential forumlae to be computed in our system easily. Assignments can be in the form of a constant or an equation. If a series of assignment were found in a single mode as follows:
+We do not refer to Q as a state since conventially a state is a set of values. A mode in \plcchart may have many different values and still be considered in the same mode. Assignments in \plccharts happen in sequence rather than all at once this method was chosen to allow sequential forumlae to be computed in our system easily. Assignments can be in the form of a constant or an equation. If a series of assignment were found in a single mode as follows:
 
 \begin{align}
 v_1 := v_0 \label{eqn:assign0} \\ 

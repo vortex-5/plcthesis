@@ -15,7 +15,7 @@ State Charts
 \begin{itemize}
 	\item \textbf{Q:} Set of states.
 	\item \textbf{$\Sigma$:} Set of input symbols or actions
-	\item \textbf{G:} Set of guard functions $\Sigma \times \Sigma \rightarrow Boolean$.
+	\item \textbf{G:} Set of guard functions $\Sigma \times Q \rightarrow Boolean$.
 	\item \textbf{Z:} Set of output symbols
 	\item \textbf{Y:} A set of functions output functions: $\Sigma \times Q \rightarrow Z$
 	\item \textbf{$\delta$:} Set of state transitions with the mapping $\Sigma \times Q \times G \rightarrow Q$. 
@@ -34,7 +34,7 @@ A state represents a set of operating conditions that for example in figure \ref
     \label{fig:state_blink_light}
 \end{figure}
 
-Transitions are defined as functions that take an input $\Sigma$ a current state Q and a guard condition G and produces another state Q. Transitions may have a guard condition associated with them. If a guard condition does not exist then the transition can always be taken. If a transition can be taken it must be taken immediately. In addition to a guard condition each transition may have an output associated with them. Moore style state machines do not contain outputs on transition edges, Mealy machines do contain an extra output per transition (see: figure \ref{fig:state_moore_mealy}). The output edge on a Mealy machine are denoted by a ``/'' symbol. Although figure \ref{fig:state_moore_mealy} contains outputs for all edges, we can define ourselves a null output or a no change output in order to simulate an edge having no output as well. For purposes of the \plccharts language we do not require the power of a Mealy machine and thus we chose to stay with a simpler Moore machine. More details of this decision can be found in the language section \ref{sec:lang:statesemantics} State Chart Semantics.
+Transitions are defined as functions that take an input $\Sigma$ a current state Q and a guard condition G and produces another state Q. Transitions may have a guard condition associated with them. If a guard condition does not exist then the transition can always be taken. If a transition can be taken it must be taken immediately. In addition to a guard condition each transition may have an output associated with them. Moore style state machines do not contain outputs on transition edges, Mealy machines do contain an extra output per transition (see: figure \ref{fig:state_moore_mealy}). The output edge on a Mealy machine are denoted by a ``/'' symbol. Although figure \ref{fig:state_moore_mealy} contains outputs for all edges, we can define ourselves a null output or a no change output in order to simulate an edge having no output as well. For purposes of the \plccharts language we do not require the power of a Mealy machine and thus we chose to stay with a simpler Moore machine. More details of this decision can be found in section \ref{sec:statechartsem}.
 
 %diagram for Moore + Mealy state machines
 \begin{figure}[htp]
@@ -69,7 +69,7 @@ The \emphasize{UML State Charts}\cite{UML2} as shown in figure \ref{fig:state_um
     \label{fig:state_uml2}
 \end{figure}
 
-The syntax shown in figure \ref{fig:state_uml_light} is \emphasize{UML2 State Charts}\cite{UML2}. \emphasize{UML2 State Charts}\cite{UML2} allows for additional information in each state. In figure \ref{fig:state_uml2} we note the additional features of \emphasize{UML2 State Charts}\cite{UML2}. Each state in \emphasize{UML2 State Charts}\cite{UML2} can contain the following information as defined in definition \ref{def:uml2}. This inherent flexibility makes UML2 more useful for representing more practical programs. In addition \emphasize{UML2 State Charts}\cite{UML2} has a more precise syntax when compared to other methods of describing state charts namely \emphasize{State Charts}\cite{StateChartVis}, and \emphasize{UML State Charts}\cite{uml2}.
+The syntax shown in figure \ref{fig:state_uml_light} is \emphasize{UML2 State Charts}\cite{UML2}. \emphasize{UML2 State Charts}\cite{UML2} allows for additional information in each state. In figure \ref{fig:state_uml2} we note the additional features of \emphasize{UML2 State Charts}\cite{UML2}. Each state in \emphasize{UML2 State Charts}\cite{UML2} can contain the following information as defined in definition \ref{def:uml2}. This inherent flexibility makes UML2 more useful for representing more practical programs. In addition \emphasize{UML2 State Charts}\cite{UML2} has a more precise syntax when compared to other methods of describing state charts namely \emphasize{State Charts}\cite{StateChartVis}, and \emphasize{UML State Charts}\cite{UML2}.
 
 \begin{definition}
 UML2 State Charts
