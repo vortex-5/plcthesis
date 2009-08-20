@@ -492,7 +492,22 @@ output execution is correct with respect to the diagram.
 	\label{table:InputExecCombined}
 \end{table}
 
-TODO: Discussion area and analysis of correctness
+We must first note in this code trace that inputs require a variable in order to store
+their data. These inputs are intialized at the beginning of the execution where as 
+initialization is not required for our diagram since variables always have an initial
+value of 0 when first used. Our table starts with line 00, and 01 which initialize 
+our variable, we consider this ``house keeping'' and on the left side of our table we
+do not consider this process as entering one of our diagram modes. This time the start
+mode occurs 3 rows down with corresponding line 04 the execution of the start block 
+and diagram is identical to previous examples with the exception of different line numbers.
+The sequence of modes and variables is observed as {(start, var = 0), (input, var = PORTIN)}.
+We can observed that ``var'' is set to ``PORTIN'' on row 5 in the diagram and in the 
+execution the corresponding set occurs on row 6. Dispite the offset caused by the execution
+being a less abstract than the diagram the sequence of modes and variables are identical.
+Thus according to our definition of correctness we have shown that both diagram
+and execution follow the same modes and variable values as well the same sequence
+occurence. We can conclude from this that the execution of the input code sample is correct
+with respect to the diagram itself.
 
 
 \subsubsection{Store Diagram Execution}
@@ -560,4 +575,5 @@ Note: NC means ``no change''.
 	\label{table:StoreExecCombined}
 \end{table}
 
-TODO: Discussion area and analysis of correctness
+Similar to the input example the store example also has variables that must be initialized
+before it can enter it's first state. 

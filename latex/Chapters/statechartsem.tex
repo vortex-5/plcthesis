@@ -11,10 +11,10 @@ The semantics of \plcchart can be expressed mathematically as follows:
 	
 \begin{itemize}
 	\item \textbf{$Q$:} Set of modes.
-	\item \textbf{$V$:} Vector of variables $V : \lbrace V_0,V_1,V_2,..,V_n \rbrace \: where \: V_{0..n}\in \lbrace \mathbb{Z}_{128} \mid \mathbb{Z} \mid \mathbb{B} \mid \mathbb{R} \rbrace$
-	\item \textbf{$V_{init}$:} vector of intial values $V_{init} : \lbrace v_0,..,v_n \rbrace \: where \: (v_i \in \mathbb{Z}_{128} \mid v_i \in \mathbb{Z} \mid v_i \in \mathbb{B} \mid v_i \in \mathbb{R}), i=0..n$ 
+	\item \textbf{$V$:} Vector of variables $V = \langle V_0,V_1,V_2,..,V_n \rangle \: where \: V_{0..n}\in \lbrace \mathbb{Z}_{128}, \mathbb{Z}, \mathbb{B}, \mathbb{R} \rbrace$
+	\item \textbf{$V_{init}$:} vector of intial values $V_{init} : \lbrace v_0,..,v_n \rbrace \: where \: (v_i \in \lbrace \mathbb{Z}_{128}, \mathbb{Z}, \mathbb{B}, \mathbb{R} \rbrace), i=0..n$ 
 	\item \textbf{$G$:} Set of guard conditions. $V \rightarrow \mathbb{B}$
-	\item \textbf{$A$:} Set of assignments. $V \times Q \rightarrow V$
+	\item \textbf{$A$:} Set of assignments. $V^+ \times Q \rightarrow V^+$
 	\item \textbf{$\tau$:} Set of transitions. $G \times Q \rightarrow Q$
 	\item \textbf{$q_0$:} An initial starting mode.
 \end{itemize}

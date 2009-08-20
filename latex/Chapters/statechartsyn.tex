@@ -10,24 +10,24 @@ Abstract syntax of \plcchart language:
 	\item Eq := $\;$ \boldmath$=$\unboldmath $\; \mid \;$ \boldmath$\neq$\unboldmath $\; \mid \;$ \boldmath$<$\unboldmath $\; \mid \;$ \boldmath$\leq$\unboldmath $\; \mid \;$ \boldmath$>$\unboldmath $\; \mid \;$ \boldmath$\geq$\unboldmath	
 	\item Op := $\;$ \boldmath$+$\unboldmath $\; \mid \;$ \boldmath$-$\unboldmath $\; \mid \;$ \boldmath$*$\unboldmath $\; \mid \;$ \boldmath$/$\unboldmath $\; \mid \;$ \boldmath$\%$\unboldmath $\; \mid \;$ \boldmath$\&\&$\unboldmath $\; \mid \;$ \textbf{\texttt{||}} $\; \mid \;$ \boldmath$\mathbin{\char`\^}$\unboldmath
 
-	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Var $\mid$ \textbf{Constant}
+	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Variable $\mid$ \textbf{Constant}
 	
 	\item Type := \textbf{Char} $\mid$ \textbf{Int} $\mid$ \textbf{Long} $\mid$ \textbf{Bool} $\mid$ \textbf{Float}
-	\item Var := $\mathbf{v_0 \mid v_1 \mid v_2 \mid ... \mid v_n}$
+	\item Variable := $[A-Za-z]^+[A-Za-z0-9]^*$
 
-	\item Condition := Expression Eq Expression $\mid$ Var
+	\item Condition := Expression Eq Expression $\mid$ Variable
 
 		
-	\item StoreBlock := Type \textbf{Identifier} = Expression $\mid$ Type \textbf{Identifier} = Expresion; StoreBlock
-	\item DelayBlock := Expression
-	\item OutputBlock := \textbf{Identifier}
-	\item InputBlock := Type \textbf{Identifier}
+	\item StoreBlock := Type Variable = Expression $\mid$ Type Variable = Expresion; StoreBlock
+	\item DelayBlock := delay(Expression)
+	\item OutputBlock := PORTOUT = Variable
+	\item InputBlock := Type Variable = PORTIN
 	\item Block := StoreBlock $\mid$ OutputBlock $\mid$ DelayBlock $\mid$ InputBlock
 
 	
 	\item Transition := Block Condition Block
 	
-	\item Program := StartBlock Condition Block $\mid$ Transition
+	\item Program := \textbf{StartBlock} $\mid$ \textbf{StartBlock} Condition Block $\mid$ \textbf{StartBlock} Condition Transition
 \end{itemize}
 \end{definition}
 
