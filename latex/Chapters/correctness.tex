@@ -512,8 +512,6 @@ with respect to the diagram itself.
 
 \subsubsection{Store Diagram Execution}
 
-Note: NC means ``no change''.
-
 \begin{table}[htcb]
 	\caption{Store code execution combined table. For figure \ref{fig:correctness_ex_store}}
 	\centering
@@ -575,5 +573,27 @@ Note: NC means ``no change''.
 	\label{table:StoreExecCombined}
 \end{table}
 
-Similar to the input example the store example also has variables that must be initialized
-before it can enter it's first state. 
+The reader should note that we have shortened ``no change'' in the previous tables to ``NC'' in order to fit
+in the tables.  Similar to the input example the store example also has variables that must be initialized 
+before it can enter it's first state. Lines 00-02 in the table \ref{table:StoreExecCombined} represent the 
+``house keeping'' steps required in order to define, setup and initalize the variables. The entry to the start
+mode represent the start of our diagram as the reader can see from table \ref{table:StoreExecCombined} the two
+variables are considered intitialized to 0 in the diagram, that is ``a = 0, b = 0''. We may also note that this
+is taken care in the execution by lines 01 and 02. Thus, line 09 represents the start of our diagram after 
+initializations or in the case of diagrams assumptions.
+
+On line 12 we enter our first store block which we
+have denoted $store_1$. Observe that only variable ``a'' is modifed in this store block thus ``b'' takes on 
+a value of ``NC''. The corresponding operation for ``a = 0'' in the diagram occurs in the execution on line 16.
+Finally on line 18 we can see that mode $store_1$ is exited on the execution side by executing ``goto BLUID2''.
+
+On first entry to $store_2$ our diagram updates ``a'' and ``b'' to 1 and 1 respectively, The corresponding line 21 of
+the execution is just a line label and the update to variable ``a'' does not occur until line 25. In the generated
+code the order of variable assignments is preserved so variable ``a'' is assigned before variable ``b''. Thus, so
+far our execution produces the sequence (start, {a=0,b=0}), ($store_1$,{a=0,b=0}), ($store_2$,{a=1,b=1}). We note that
+both the diagram and execution produce the same values at this point before continuing.
+
+In the diagram transitions are understood to be evaluated and taken right after the work is done inside the mode.
+from table \ref{table:StoreExecCombined} row 8 we can see that the transitions are 
+\texttt{if ($a \geq 3$) $\rightarrow store_1$, if ($a < 3$) $\rightarrow store_2$ &	$store_2$} the result of the
+evaluation against a=1 and b=1 is $store_2$
