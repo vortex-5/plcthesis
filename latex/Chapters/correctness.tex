@@ -516,58 +516,58 @@ with respect to the diagram itself.
 	\caption{Store code execution combined table. For figure \ref{fig:correctness_ex_store}}
 	\centering
 	\tablefontsize
-		\begin{tabular}{| p{0.05\textwidth} | p{0.1\textwidth} | p{0.14\textwidth} | p{0.05\textwidth} | p{0.05\textwidth} | p{0.12\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
+		\begin{tabular}{|p{0.01\textwidth} | p{0.05\textwidth} | p{0.1\textwidth} | p{0.14\textwidth} | p{0.05\textwidth} | p{0.05\textwidth} | p{0.12\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
 			\hline
-			\textbf{Mode} 		&	\textbf{Var (Diag)} 		& 	\textbf{Transitions} 		& 	\textbf{Next}		&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
+			\textbf{\#} & \textbf{Mode} 		&	\textbf{Var (Diag)} 		& 	\textbf{Transitions} 		& 	\textbf{Next}		&	\textbf{Line}		&	\textbf{Var (Exec)	}	&	\textbf{Code}	&	\textbf{Next LN} \\
 			\hline			
-								&								&								&						&	00					& 	a = UNDEFINED \newline	b = UNDEFINED	&	(comment)		&	01	\\
+			1&					&								&								&						&	00					& 	a = UNDEFINED \newline	b = UNDEFINED	&	(comment)		&	01	\\
 			\hline
-								&								&								&						&	01					&	a = 0 \newline b = UNDEFINED	&	int a = 0				&	02	\\
+			2&					&								&								&						&	01					&	a = 0 \newline b = UNDEFINED	&	int a = 0				&	02	\\
 			\hline
-								&								&								&						&	02					&	a = 0 \newline b = 0		&	int b = 0					& 	09	\\
+			3&					&								&								&						&	02					&	a = 0 \newline b = 0		&	int b = 0					& 	09	\\
 			\hline
-			start				&	a = 0 \newline b = 0		&	if (true) $\rightarrow store_1$	& $store_1$			&	09					&	a = $NC$ \newline b = $NC$	&	goto BLUID1					&	12	\\
+			4&start				&	a = 0 \newline b = 0		&	if (true) $\rightarrow store_1$	& $store_1$			&	09					&	a = $NC$ \newline b = $NC$	&	goto BLUID1					&	12	\\
 			\hline
-			$store_1$			&	a = 0 \newline b = $NC$		&	if (true) $\rightarrow store_2$ & $store_2$			&	12					&	a = $NC$ \newline b = $NC$	&	(line label)				&	16	\\
+			5&$store_1$			&	a = 0 \newline b = $NC$		&	if (true) $\rightarrow store_2$ & $store_2$			&	12					&	a = $NC$ \newline b = $NC$	&	(line label)				&	16	\\
 			\hline
-								&								&								&						&	16					&	a = 0 \newline b = $NC$		&	a = 0						&	18	\\
+			6&					&								&								&						&	16					&	a = 0 \newline b = $NC$		&	a = 0						&	18	\\
 			\hline
-								&								&								&						&	18					&	a = $NC$ \newline b = $NC$	&	goto BLUID2					&	21	\\
+			7&					&								&								&						&	18					&	a = $NC$ \newline b = $NC$	&	goto BLUID2					&	21	\\
 			\hline	
-			$store_2$			&	a = 1	\newline b = 1		&	if ($a \geq 3$) $\rightarrow store_1$ \newline
+			8&$store_2$			&	a = 1	\newline b = 1		&	if ($a \geq 3$) $\rightarrow store_1$ \newline
 																	if ($a < 3$) $\rightarrow store_2$ &	$store_2$	&	21					&	a = $NC$ \newline b = $NC$	&	(line label)				&	25	\\
 			\hline
-								&								&								&						&	25					&	a = 1 \newline b = $NC$		&		a = a + 1				&	26	\\
+			9&					&								&								&						&	25					&	a = 1 \newline b = $NC$		&		a = a + 1				&	26	\\
 			\hline
-								&								&								&						&	26					&	a = $NC$ \newline b = 1		&		b = a					&	28	\\
+			10&					&								&								&						&	26					&	a = $NC$ \newline b = 1		&		b = a					&	28	\\
 			\hline
-								&								&								&						&	28					&	a = $NC$ \newline b = $NC$	& if (a \textgreater= 3) goto BLUID1 		&	29	\\
+			11&					&								&								&						&	28					&	a = $NC$ \newline b = $NC$	& if (a \textgreater= 3) goto BLUID1 		&	29	\\
 			\hline
-								&								&								&						&	29					&	a = $NC$ \newline b = $NC$	& if (a \textless 3) goto BLUID2		&	18	\\
+			12&					&								&								&						&	29					&	a = $NC$ \newline b = $NC$	& if (a \textless 3) goto BLUID2		&	18	\\
 			\hline
-			$store_2$			&	a = 2	\newline b = 2		&	if ($a \geq 3$) $\rightarrow store_1$ \newline
+			13&$store_2$			&	a = 2	\newline b = 2		&	if ($a \geq 3$) $\rightarrow store_1$ \newline
 																	if ($a < 3$) $\rightarrow store_2$ &	$store_2$	&	21					&	a = $NC$ \newline b = $NC$	&	(line label)				&	25	\\
 			\hline
-								&								&								&						&	25					&	a = 2	\newline b = $NC$	&	a = a + 1					&	26	\\
+			14&					&								&								&						&	25					&	a = 2	\newline b = $NC$	&	a = a + 1					&	26	\\
 			\hline
-								&								&								&						&	26					&	a = $NC$ \newline b = 2		&	b = a						&	28	\\
+			15&					&								&								&						&	26					&	a = $NC$ \newline b = 2		&	b = a						&	28	\\
 			\hline
-								&								&								&						&	28					&	a = $NC$ \newline b = $NC$	& if (a \textgreater= 3) goto BLUID1		&	29	\\
+			16&					&								&								&						&	28					&	a = $NC$ \newline b = $NC$	& if (a \textgreater= 3) goto BLUID1		&	29	\\
 			\hline
-								&								&								&						&	29					&	a = $NC$ \newline b = $NC$	& if (a \textless 3) goto BLUID2		&	21	\\
+			17&					&								&								&						&	29					&	a = $NC$ \newline b = $NC$	& if (a \textless 3) goto BLUID2		&	21	\\
 			\hline
-			$store_2$			&	a = 3	\newline b = 3		&	if ($a \geq 3$) $\rightarrow store_1$ \newline
+			18&$store_2$			&	a = 3	\newline b = 3		&	if ($a \geq 3$) $\rightarrow store_1$ \newline
 																	if ($a < 3$) $\rightarrow store_2$ &	$store_2$	&	21					&	a = $NC$ \newline b = $NC$	&	(line label)				&	25	\\
 			\hline
-								&								&								&						&	25					&	a = 3	\newline b = $NC$	&	a = a + 1					&	26	\\
+			19&					&								&								&						&	25					&	a = 3	\newline b = $NC$	&	a = a + 1					&	26	\\
 			\hline
-								&								&								&						&	26					&	a = $NC$ \newline b = 3		&	b = a						&	28	\\
+			20&					&								&								&						&	26					&	a = $NC$ \newline b = 3		&	b = a						&	28	\\
 			\hline
-								&								&								&						&	28					&	a = $NC$ \newline b = $NC$	& if (a \textgreater= 3) goto BLUID1		&	12	\\
+			21&					&								&								&						&	28					&	a = $NC$ \newline b = $NC$	& if (a \textgreater= 3) goto BLUID1		&	12	\\
 			\hline
-			$store_1$			&	a = 0 \newline b = $NC$		&	if (true) $\rightarrow store_2$ & $store_2$			&	12					&	a = $NC$ \newline b = $NC$	&	(line label)				&	16	\\
+			22&$store_1$			&	a = 0 \newline b = $NC$		&	if (true) $\rightarrow store_2$ & $store_2$			&	12					&	a = $NC$ \newline b = $NC$	&	(line label)				&	16	\\
 			\hline
-			\multicolumn{8}{|c|}{...}\\
+			23&\multicolumn{8}{|c|}{...}\\
 			\hline
 		\end{tabular}
 	\label{table:StoreExecCombined}
@@ -596,4 +596,12 @@ both the diagram and execution produce the same values at this point before cont
 In the diagram transitions are understood to be evaluated and taken right after the work is done inside the mode.
 from table \ref{table:StoreExecCombined} row 8 we can see that the transitions are 
 \texttt{if ($a \geq 3$) $\rightarrow store_1$, if ($a < 3$) $\rightarrow store_2$, $store_2$} the result of the
-evaluation against a=1 and b=1 is $store_2$
+evaluation against a=1 and b=1 is $store_2$. In lines 25-26 we can see the corresponding execution take place to
+produced the results for the diagram in row 8. First on line 25 $a = a + 1$ is executed so $a = 0$ that was last set
+on row 6 now becomes $a = 1$ after the execution, the following line 26 then sets $b = a$ which is to say $b = 1$ at
+this point.
+
+On row 12 we can see that the transitions are now being evaluated. Unlike row 8 on the diagram side where
+we treat evaluating transitions as a parallel operation (happening all at once). 
+
+%TODO: On line 12 finish this thought
