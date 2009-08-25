@@ -557,7 +557,7 @@ with respect to the diagram itself.
 			17&					&								&								&						&	29					&	a = $NC$ \newline b = $NC$	& if (a \textless 3) goto BLUID2		&	21	\\
 			\hline
 			18&$store_2$			&	a = 3	\newline b = 3		&	if ($a \geq 3$) $\rightarrow store_1$ \newline
-																	if ($a < 3$) $\rightarrow store_2$ &	$store_2$	&	21					&	a = $NC$ \newline b = $NC$	&	(line label)				&	25	\\
+																	if ($a < 3$) $\rightarrow store_2$ &	$store_1$	&	21					&	a = $NC$ \newline b = $NC$	&	(line label)				&	25	\\
 			\hline
 			19&					&								&								&						&	25					&	a = 3	\newline b = $NC$	&	a = a + 1					&	26	\\
 			\hline
@@ -601,7 +601,32 @@ produced the results for the diagram in row 8. First on line 25 $a = a + 1$ is e
 on row 6 now becomes $a = 1$ after the execution, the following line 26 then sets $b = a$ which is to say $b = 1$ at
 this point.
 
-On row 12 we can see that the transitions are now being evaluated. Unlike row 8 on the diagram side where
-we treat evaluating transitions as a parallel operation (happening all at once). 
+On row 11 we can see that the transitions are now being evaluated. Unlike row 8 on the diagram side where
+we treat evaluating transitions as a parallel operation during execution we see that the transitions are evaluated in. 
+sequence. Our definition for \plcchart stats that conditions for transitions must be mutually exclusive.
+If mutual exclusion was not the case sequence would be important. However, if the conditions are mutually
+exclusive it is not difficult to see that regardless of which order each condition is evaluated only a maximum
+of one will be true at any point in time. In our case on row 12 $a<3$ is true at this point and we continue to 
+execute on the self-loop back into $store_2$.
 
-%TODO: On line 12 finish this thought
+It is not difficult for the reader to see that row 13 to 17 plays out the same way as 8 to 12 with updates to
+variables $a=2, b=2$. We will continue our justification on row 18 were we see that on the diagram side $a=3,b=3$.
+We can see that with this condition in place the edge that should be taken according to the diagram is now changed
+to $store_1$. We continue to show that the execution trace follows. On line 25 we see that $a=a+1$ updates the 
+variable to $a=3$, and line 26 updates $b=a$ making $b=3$. With the variable updated we can now take a look at our
+conditions. We can see that $a >= 3$ is now true on line 28 therefore we execute the goto that takes us to $BLUID1$
+which is on line 12. This occurs on row 22 of our execution trace.
+
+It is not difficult to see at this point that row 22 is identical to row 5 in both modes and values so they are the
+same in our system. This means that our sequence repeates and line 23,24,25... would be identical to 6,7,8... 
+respectively. A full execution trace is now (start, {a=0,b=0}), ($store_1$,{a=0,b=0}), ($store_2$,{a=1,b=1},
+($store_2$,{a=2,b=2}), ($store_2$,{a=3,b=3}), ($store_1$,{a=0,b=0}), ($store_2$,{a=1,b=1},
+($store_2$,{a=2,b=2}), ($store_2$,{a=3,b=3}), ...) repeating forever. We note that both excution and the diagram
+were shown to produce this sequence of modes and values, and by our definition we have shown that this 
+corresponding code execution is correct with respect to the diagram. 
+
+By showing all executions for all basic atoms in our system we have shown that our system is correct in execution.
+All more complex systems can be demonstrated correct in a similar fashion. Because all systems regardless of how
+complex are just a combination of atoms any system constructed from these same atoms that are already proved correct,
+will also inherently be correct in execution. Thus we can conclude that the execution of this system is then correct
+by construction with respect to it's base atoms.
