@@ -1,6 +1,7 @@
 %Implementation
 \section{Implementation}
 \subsection{GUI and IDE}
+\label{IDE}
 \subsubsection{Introduction}
 
 The gui and ide are both implemented in JAVA with the JHotDraw 7.1 framework chosen as a basis. The gui was decided early on to function like other popular tools for drawing state charts such as Visio, IBM's Rational software, and Dia. All of these tools choose to be interactive in the drawing phase rather than compile a graph in post. The reason for enforcing interactive drawing is that this tool is design to simplify the original implementation of ladder logic, and building it on a textual graphical language will significantly hurt the primary goal of ease of use. Secondly JAVA was chosen for portability as it was simplier to test one deployment version than multiple ports for the short duration of this project.
@@ -126,6 +127,7 @@ If at any point no edges are valid the the program will terminate by going to th
 
 %TODO: Finish the compilation section
 \subsection{Compilation}
+\label{compiler}
 Each of the blocks will compile their own snippets of code. It may be helpful when reading this section to refer to definition \ref{def:genCodeStruct} for the generic block structure definition.
 
 \subsubsection{Start Block}
