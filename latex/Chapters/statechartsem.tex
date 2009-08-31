@@ -4,23 +4,23 @@
 
 The semantics used for our project was purposely modelled after \emphasize{UML2 State Charts}\cite{UML2}. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state charts with extensions added on to describe behaviours in states. The motivation to using \emphasize{UML2 State Charts}\cite{UML2} as a basis for our state chart system consists of three primary details. First \emphasize{UML2 State Charts}\cite{UML2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Charts}\cite{UML2} state chart syntax is more concrete than the other forms of state charts, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Charts}\cite{UML2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
 
-The semantics of \plcchart can be expressed mathematically as follows:
+The semantics of \plcchart is expressed mathematically as follows:
 
 \begin{definition}
 	\plcchart
 	
 \begin{itemize}
 	\item \textbf{$Q$:} Set of modes.
-	\item \textbf{$V$:} Vector of variables $V = \langle V_0,V_1,V_2,..,V_n \rangle \: where \: V_{0..n}\in \lbrace \mathbb{Z}_{128}, \mathbb{Z}, \mathbb{B}, \mathbb{R} \rbrace$
-	\item \textbf{$V_{init}$:} vector of intial values $V_{init} : \lbrace v_0,..,v_n \rbrace \: where \: (v_i \in \lbrace \mathbb{Z}_{128}, \mathbb{Z}, \mathbb{B}, \mathbb{R} \rbrace), i=0..n$ 
+	\item \textbf{$V$:} Vector of values $V = \langle V_0,V_1,V_2,..,V_n \rangle \: where \: V_{0..n}\in \lbrace \mathbb{Z}_{128}, \mathbb{Z}, \mathbb{B}, \mathbb{R} \rbrace$
+	\item \textbf{$V_{init}$:} vector of intial values $V_{init} : \lbrace v_0,..,v_n \rbrace \: where \: (v_i \in \mathbb{Z}_{128}| v_i \in \mathbb{Z}| v_i \in \mathbb{B}| v_i \in \mathbb{R}), i=0..n$ 
 	\item \textbf{$G$:} Set of guard conditions. $V \rightarrow \mathbb{B}$
-	\item \textbf{$A$:} Set of assignments. $V^+ \times Q \rightarrow V^+$
+	\item \textbf{$A$:} Set of assignments. $V \times Q \rightarrow V$
 	\item \textbf{$\tau$:} Set of transitions. $G \times Q \rightarrow Q$
 	\item \textbf{$q_0$:} An initial starting mode.
 \end{itemize}
 \end{definition}
 
-We do not refer to Q as a state since a state is a set of values. A mode in \plcchart may have many different values and still be considered in the same mode. Assignments in \plccharts happen in sequence rather than all at once this method was chosen to allow sequential forumlae to be computed in our system easily. Assignments can be in the form of a constant or an equation. If a series of assignment were found in a single mode as follows:
+We do not refer to Q as a state since a state is a set of values. A mode in \plccharts may have many different values and still be considered in the same mode. Assignments in \plccharts happen in sequence rather than all at once this method was chosen to allow sequential forumlae to be computed in our system easily. Assignments can be in the form of a constant or an equation. If a series of assignment were found in a single mode as follows:
 
 \begin{align}
 v_1 := v_0 \label{eqn:assign0} \\ 

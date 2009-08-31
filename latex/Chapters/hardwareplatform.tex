@@ -8,6 +8,7 @@ In addition the PIC18F452 has the following features that are essential for PLC 
 \begin{itemize}
 \item 8 Digital inputs.
 \item 8 Digital outputs.
+\item 2 Ports.
 \item Has support for C syntax.
 \item Accessable hardware clock.
 \item Onboard program memory.
@@ -16,3 +17,15 @@ In addition the PIC18F452 has the following features that are essential for PLC 
 These minimum specification have become the baseline for our hardware requirements. In order to utilize a different chip with our programming software the hardware support team will be required to implement a driver layer as described in seciton \ref{sec:hardwareframework}.
 
 For real time operation hardware requirements on clock speed will become more critical execution of ``goto'' should occur as close as possible to constant time or O(1). Without the ability to execute ``goto'' in constant time delays between transitions become increasingly harder to predict and account for.
+
+The specifications for the PIC18F452 are as follows:
+\begin{itemize}
+	\item CPU Frequency: 40Mhz
+	\item Program Memory: 32K
+	\item Data Memory: 1536 Bytes
+	\item I/O Ports: 5
+	\item Timers: 4
+	\item 10-Bit A/D: 8 inputs channels
+\end{itemize}
+
+As the reader may observe the PIC18F452 exceeds our minimum requirements for hardware that will run our OS and software. In particular we currently do not include provisions to take inputs from our A/D channels which is a quite useful feature. This was done because we wanted seperate I/O modules to handle the inputs and outputs. Given more time on this project it would have been possible to fully utilize the onboard hardware.
