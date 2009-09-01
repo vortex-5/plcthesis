@@ -189,36 +189,36 @@ Since semantically the two are equivalent this paper will focus to the first con
 \begin{figure}[htp]
     \centering
     \includegraphics[trim= 0 140mm 40mm 10mm, clip, width=\imgmed]{./images/intro_and_graph.pdf} %custom size
-    \caption{State chart conversion for table \ref{table:table_for_fig2}}
+    \caption{State diagram conversion for table \ref{table:table_for_fig2}}
     \label{fig:intro_and_graph}
 \end{figure}
 
 A rung can be defined as a directed acyclic graph with exactly one source and one sink. The state variables form guard conditions along the edges. A branch in this case represents 2 edges leaving one node. For example figure \ref{fig:intro_fig2}
-can be easily converted into a state chart by observing the results in table \ref{table:table_for_fig2}. 
+can be easily converted into a state diagram by observing the results in table \ref{table:table_for_fig2}. 
 Each row of table \ref{table:table_for_fig2} is directly converted into an edge with the appropriate guard conditions.
 Each output assertion is given their own state. Finally in figure \ref{fig:intro_and_graph} we observe 1 source for the
-graph being the start state of the rung, and one sink for the graph being the end state for the rung. We can equivalently take figure \ref{fig:intro_fig3} observe its function table \ref{table:table_for_fig3} and produce an equivalent state chart from its function table.
+graph being the start state of the rung, and one sink for the graph being the end state for the rung. We can equivalently take figure \ref{fig:intro_fig3} observe its function table \ref{table:table_for_fig3} and produce an equivalent state digram from its function table.
 
 \pagebreak[3]
 
 \begin{figure}[htp]
     \centering
     \includegraphics[trim= 00mm 140mm 40mm 10mm, clip, width=\imgmed]{./images/intro_or_graph.pdf} %custom size
-    \caption{State chart conversion for table \ref{table:table_for_fig3}}
+    \caption{State diagram conversion for table \ref{table:table_for_fig3}}
     \label{fig:intro_or_graph}
 \end{figure}
 
-Thus, each rung can be converted into an equivalent state chart by examining its 
+Thus, each rung can be converted into an equivalent state diagram by examining its 
 function table, assigning the state variables to guard conditions, and creating a
 state for each of the outputs. For completeness we complete this procedure to produce
-a state chart equivalent representation for figure \ref{fig:intro_fig3a} and its
+a state diagram equivalent representation for figure \ref{fig:intro_fig3a} and its
 corresponding table \ref{table:table_for_fig3a}.
 
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=\imgmedsmall]{./images/intro_or_graph_3a.pdf} %custom size
-    \caption{State chart conversion for table \ref{table:table_for_fig3a}}
+    \caption{State diagram conversion for table \ref{table:table_for_fig3a}}
     \label{fig:intro_or_graph_3a}
 \end{figure}
 
