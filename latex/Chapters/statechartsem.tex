@@ -2,7 +2,7 @@
 \section{Semantics of \plcchart}
 \label{sec:statechartsem}
 
-The semantics used for our project was purposely modelled after \emphasize{UML2 State Machine Diagram}\cite{UML2}. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state charts with extensions added on to describe behaviours in states. The motivation to using \emphasize{UML2 State Machine Diagram}\cite{UML2} as a basis for our state chart system consists of three primary details. First \emphasize{UML2 State Machine Diagram}\cite{UML2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Machine Digram}\cite{UML2} state chart syntax is more concrete than the other forms of state charts, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Machine Diagram}\cite{UML2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
+The semantics used for our project was purposely modelled after \emphasize{UML2 State Machine Diagram}\cite{UML2}. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard staet machine with extensions added on to describe behaviours in states. The motivation to using \emphasize{UML2 State Machine Diagram}\cite{UML2} as a basis for our state machine system consists of three primary details. First \emphasize{UML2 State Machine Diagram}\cite{UML2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Machine Digram}\cite{UML2} state machine syntax is more concrete than the other forms of state machines, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Machine Diagram}\cite{UML2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
 
 The semantics of \plcchart is expressed mathematically as follows:
 
@@ -36,7 +36,7 @@ v_1 := v_0 \label{eqn:assign0} \\
 v_0 := v_1 \label{eqn:assign1}
 \end{align}
 
-We would see that the result $v_1 = v_0$ it is important to note this since generally in \emphasize{State Charts}\cite{StateChartVis}  it is understood that assignments happen cocurrently in such a case equations \ref{eqn:assign0} and \ref{eqn:assign1} would produce a swap where $v'_1 = 'v_0$ and $v'_0 = 'v_1$ (where $'v$ denotes the value of $v$ before the assignments are executed and $v'$ the value of $v$ after the assignment is completed). In normal state charts we read assignments such as in equations \ref{eqn:assign0} and \ref{eqn:assign1} as these assignments will take place upon entry of the state. For our semantics however, we read them in a sequential fashion for example: Upon entry of the mode, first equation \ref{eqn:assign0} is assigned, then \ref{eqn:assign1} right afterwards.
+We would see that the result $v_1 = v_0$ it is important to note this since generally in \emphasize{Finite State Machines}\cite{booth}  it is understood that assignments happen cocurrently in such a case equations \ref{eqn:assign0} and \ref{eqn:assign1} would produce a swap where $v'_1 = 'v_0$ and $v'_0 = 'v_1$ (where $'v$ denotes the value of $v$ before the assignments are executed and $v'$ the value of $v$ after the assignment is completed). In normal state machines we read assignments such as in equations \ref{eqn:assign0} and \ref{eqn:assign1} as these assignments will take place upon entry of the state. For our semantics however, we read them in a sequential fashion for example: Upon entry of the mode, first equation \ref{eqn:assign0} is assigned, then \ref{eqn:assign1} right afterwards.
 
 \begin{figure}[htp]
     \centering
@@ -45,7 +45,7 @@ We would see that the result $v_1 = v_0$ it is important to note this since gene
     \label{fig:state_uml2_fir}
 \end{figure}
 
-The advantage of sequential assignments over cocurrent assignments can be seen when trying to compute the 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are very useful for the initial step without it many more modes would be required to do each simple assignement. Thus although this design choice slightly deviates from \emphasize{UML2 State Charts}\cite{UML2} it was decided the benefits to usability was too great to strictly adhere to the \emphasize{UML2 State Chart}\cite{UML2} semantics.
+The advantage of sequential assignments over cocurrent assignments can be seen when trying to compute the 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are very useful for the initial step without it many more modes would be required to do each simple assignement. Thus although this design choice slightly deviates from \emphasize{UML2 State Machine Diagram}\cite{UML2} it was decided the benefits to usability was too great to strictly adhere to the \emphasize{UML2 State Machine Diagram}\cite{UML2} semantics.
 
 \begin{figure}[htp]
     \centering
@@ -61,4 +61,4 @@ The advantage of sequential assignments over cocurrent assignments can be seen w
     \label{fig:tool_transition_example_bad}
 \end{figure}
 
-Transitions in the language must be mutually exclusive that is if it is invalid to have two transitions that can both be taken at any point. Figure \ref{fig:tool_transition_example} shows an example of this done correctly the two guard conditions ``count $<$ 10'' and ``count $\geq$ 10'' ensure mutal exclusivity. When mutual exclusion is not ensured such as in figure \ref{fig:tool_transition_example_bad} the language is undefined. The state chart language currently does not allow for cocurrent execution. Therefore when drawn in our language this would be ambiguous and the outcome (as in which edge would be taken) is undefined.
+Transitions in the language must be mutually exclusive that is if it is invalid to have two transitions that can both be taken at any point. Figure \ref{fig:tool_transition_example} shows an example of this done correctly the two guard conditions ``count $<$ 10'' and ``count $\geq$ 10'' ensure mutal exclusivity. When mutual exclusion is not ensured such as in figure \ref{fig:tool_transition_example_bad} the language is undefined. \plccharts currently does not allow for cocurrent execution. Therefore when drawn in our language this would be ambiguous and the outcome (as in which edge would be taken) is undefined.

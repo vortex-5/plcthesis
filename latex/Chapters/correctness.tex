@@ -7,7 +7,7 @@
     \caption{Code Transformations}
     \label{fig:correctness_graph1}
 \end{figure}
-The graph structure chosen is simple directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem} respectively. Our program preforms transformations on the diagram to form code constructs. In order to show correctness we will demonstrate that our transformations follow figure \ref{fig:correctness_graph1}. Figure \ref{fig:correctness_graph1} essentially says that a simulated evaluation of each expression ($\delta$) to a value will be equivalent to the actual executed program of the same value. In addition we also need to justify the program structure
+The graph structure is directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem}. Our tool constructs executable code from on the diagram constructs. In order to show correctness we will demonstrate that our code follow figure \ref{fig:correctness_graph1}. Figure \ref{fig:correctness_graph1} essentially says that an evaluation of each expression given by $\delta$ will map to the executed value obtained from our program. In addition we also need to justify the program structure generated from an graph structure is correct. To do so we extend figure \ref{fig:correctness_graph1} iteratively to obtain figure \ref{fig:correctness_graph2} to incorporate transitions.
 
 \begin{figure}[htb]
     \centering
@@ -16,9 +16,7 @@ The graph structure chosen is simple directed graph in which the syntax and sema
     \label{fig:correctness_graph2}
 \end{figure}
 
-generated from an graph structure is correct. To do so we extend figure \ref{fig:correctness_graph1} iteratively to obtain figure \ref{fig:correctness_graph2} to evaluate the transitions.
-
-In this section we will begin by showing that each of the transformations are correct by constructing basic atoms. We will start by looking at atoms that have the simplest expressions first. The simplest of these is a diagram in which only the start node exists as shown in \ref{fig:correctness_ex_start}.
+In this section we will begin by showing that each of the transformations to code are correct examining the basic atoms. We will start by looking at atoms that have the simplest expressions first. The simplest of these is a diagram in which only the start node exists as shown in \ref{fig:correctness_ex_start}.
 
 \subsection{Correctness over Structure}
 \subsubsection{Start}
