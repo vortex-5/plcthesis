@@ -19,7 +19,7 @@ Abstract syntax of \plcchart language:
 
 		
 	\item StoreBlock := Type Variable = Expression $\mid$ Type Variable = Expresion; StoreBlock
-	\item DelayBlock := \textbf{delay}(Expression)
+	\item DelayBlock := Expression
 	\item OutputBlock := \textbf{PORTOUT} = Variable
 	\item InputBlock := Type Variable = \textbf{PORTIN}
 	\item Block := StoreBlock $\mid$ OutputBlock $\mid$ DelayBlock $\mid$ InputBlock

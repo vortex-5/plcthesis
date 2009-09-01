@@ -1,26 +1,23 @@
 %Introduction to state charts
-\section{Overview of State Charts} \label{sec:overviewstatechart}
+\section{Overview of State Machines} \label{sec:overviewstatechart}
 
-Our proposed visual programming language involves using directed state charts with guarded edges. Our languages differs in a few concepts from the usual state charts syntax in order to support features of the hardware. To better understand these differences we will first introduce all the syntax and semantics of a \emphasize{State Charts}\cite{StateChartVis}, \emphasize{UML State Charts}\cite{UML2}, and \emphasize{UML2 State Charts}\cite{UML2}.
+Our proposed visual programming language involves using state machines with guarded edges. Our languages differs in a few concepts from the usual state machine syntax in order to support features of the hardware. To better understand these differences we will first introduce all the syntax and semantics of a \emphasize{Finite State Machines}\cite{booth} and \emphasize{UML2 State Machine Diagrams}\cite{UML2}.
 
-A \emphasize{State Chart}\cite{StateChartVis} is generally defined as a diagram describing the behaviour of a discrete system. Such systems are usually finite state machines. 
+A \emphasize{Finite State Machines}\cite{booth} defined as a diagram describing the behaviour of a discrete system. Such systems are finite state machines. 
 
-%http://en.wikipedia.org/wiki/State_diagram (find different source Taylor atomata paper
-Mathematically a state chart is defined as $M = \lbrace Q, \Sigma, Z, Y, \Delta, q_0\rbrace$
+A \emphasize{Finite State Machines} is defined as $M = \lbrace Q, I, Z, \delta, \omega, q_0\rbrace$
 
 \begin{definition}
 State Charts
 
 \label{def:statecharts}
 \begin{itemize}
-	\item Q: Set of states.
-	\item $\Sigma$: Set of input symbols.
-	\item Z: Set of output symbols.
-	\item Y: An output function: $\Sigma \times Q \rightarrow Z$
-	\item $\Delta$: A state transition function: $\Sigma \times Q \rightarrow Q$. 
+	\item $Q$: Set of states.
+	\item $I$: Set of input symbols.
+	\item $Z$: Set of output symbols.
+	\item $\delta$: A state transition function: $I \times Q \rightarrow Q$. 
+	\item $\omega$: An output function: $I \times Q \rightarrow Z$
 	\item $q_0$: Starting state.
-%% Accepting states removed as they are not required for standard states.
-%%	\item \textbf{F:} Accepting states for the system, can also sometimes represent the final state. Drawn as a double outline to the state symbol.
 \end{itemize}
 \end{definition}
 
@@ -33,7 +30,7 @@ A state represents a set of operating conditions that for example in figure \ref
     \label{fig:state_blink_light}
 \end{figure}
 
-Transitions are defined as functions that take an input $\Sigma$ a current state Q and produces another state Q. Each transition may have an output associated with them. Moore style state machines do not contain outputs on transition edges, Mealy machines do contain an extra output per transition (see: figure \ref{fig:state_moore_mealy}). The output edge on a Mealy machine are denoted by a ``/'' symbol. Although figure \ref{fig:state_moore_mealy} contains outputs for all edges, we can define ourselves a null output or a no change output in order to simulate an edge having no output as well. For purposes of the \plccharts language we do not require the power of a Mealy machine and thus we chose to stay with a simpler Moore machine. More details of this decision can be found in section \ref{sec:statechartsem}.
+Transitions are defined as functions that take an inputs $i_1,i_2 \in I$ a current state $q_1 \in Q$ and produces another state $q_2 \in Q$. Machines that satisfy definition \ref{def:statecharts} are referred to as \emphasize{Mealy machines}\cite{booth}. \emphasize{Moore machines} are further restricted in that output functions are only dependent on state. To obtain a \emphasize{Moore machine} from definition \ref{def:statecharts} we change our output function to $Q \rightarrow Z$. Although figure \ref{fig:state_moore_mealy} contains outputs for all edges, we can define ourselves a null output or a no change output in order to simulate an edge having no output as well. For purposes of the \plccharts language we do not require the power of a Mealy machine and thus we chose to stay with a simpler Moore machine. More details of this decision can be found in section \ref{sec:statechartsem}.
 
 %diagram for Moore + Mealy state machines
 \begin{figure}[htp]
