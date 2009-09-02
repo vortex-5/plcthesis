@@ -86,7 +86,30 @@ var = PORTIN;
 \end{lstlisting}
 
 
-The input atom generates final code that is slightly different that what is shown on the digram. We can see in figure \ref{fig:correctness_atom_input} that the diagram clearly shows ``int var := PORTIN''. The final compiled code for the atom is ``var = PORTIN'' the differences are ``int'' is not stated in the final compiled code the type information is used in the construction shown in section \ref{structure}. In addition similarily ``:='' is replaced by ``='' in the compiled code. The left hand side must be a valid variable name as specified in the syntax of \plccharts. The variable can be any type however PORTIN will always be an 8-bit integer any variable on the left hand side that is not integer would have PORTIN automatically casted to the appropreate type.
+The input atom generates final code that is slightly different that what is shown on the digram. We can see in figure \ref{fig:correctness_atom_input} that the diagram clearly shows ``int var := PORTIN''. The final compiled code for the atom is ``var = PORTIN'' the differences are ``int'' is not stated in the final compiled code the type information is used in the construction shown in section \ref{structure}. In addition similarly ``:='' is replaced by ``='' in the compiled code. The left hand side must be a valid variable name as specified in the syntax of \plccharts. The variable can be any type however PORTIN will always be an 8-bit integer any variable on the left hand side that is not integer would have PORTIN automatically casted to the appropriate type.
+
+
+\subsubsection{store}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\imgmedphoto]{./images/correctness_atom_store.png}
+	\caption{Input Atom}
+	\label{fig:correctness_atom_store}
+\end{figure}
+
+\begin{lstlisting}[frame=single]
+a = a + 1;
+b = a;
+\end{lstlisting}
+
+The store block is used for basic assignments. Similar to the input and output examples above
+
+\begin{verbatim}
+STILL WORKING ON THE STORE
+\end{verbatim}
+
+
 
 
 

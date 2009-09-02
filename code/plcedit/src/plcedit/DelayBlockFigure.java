@@ -54,6 +54,10 @@ public class DelayBlockFigure extends CodeBlockFigure{
         attrib.add(spacer);
         attrib.add(textdelay);
         attrib.add(spacer);
+        TextFigure ms = new TextFigure("ms");
+        ms.setEditable(false);
+        attrib.add (ms);
+        attrib.add(spacer);
 
         update_base();
         changed();
