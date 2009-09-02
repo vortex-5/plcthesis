@@ -7,3 +7,4 @@ pdflatex main
 pdflatex main
 pdflatex main
 pdflatex main
+open main.pdf
