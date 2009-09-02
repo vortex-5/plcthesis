@@ -7,7 +7,8 @@
     \caption{Code Transformations}
     \label{fig:correctness_graph1}
 \end{figure}
-The graph structure is directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem}. Our tool constructs executable code from on the diagram constructs. In order to show correctness we will demonstrate that our code follow figure \ref{fig:correctness_graph1}. Figure \ref{fig:correctness_graph1} essentially says that an evaluation of each expression given by $\delta$ will map to the executed value obtained from our program. In addition we also need to justify the program structure generated from an graph structure is correct. To do so we extend figure \ref{fig:correctness_graph1} iteratively to obtain figure \ref{fig:correctness_graph2} to incorporate transitions.
+
+The graph structure is directed graph in which the syntax and semantics are discussed in detail in sections \ref{sec:statechartsyn}, \ref{sec:statechartsem}. Our tool constructs executable code from on the diagram constructs. In order to show correctness we will demonstrate that our code follows figure \ref{fig:correctness_graph1}. Figure \ref{fig:correctness_graph1} essentially says that an evaluation of each expression given by $\delta$ will map to the executed value obtained from our program. In addition we also need to justify the program structure generated from an graph structure is correct. To do so we extend figure \ref{fig:correctness_graph1} iteratively to obtain figure \ref{fig:correctness_graph2} to incorporate transitions.
 
 \begin{figure}[htb]
     \centering
@@ -18,17 +19,90 @@ The graph structure is directed graph in which the syntax and semantics are disc
 
 In this section we will begin by showing that each of the transformations to code are correct examining the basic atoms. We will start by looking at atoms that have the simplest expressions first. The simplest of these is a diagram in which only the start node exists as shown in \ref{fig:correctness_ex_start}.
 
-\subsection{Correctness over Structure}
+\clearpage
+\subsection{Atoms}
+
+
+\subsubsection{Start}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\imgmedphoto]{./images/correctness_atom_start.png}
+	\caption{Start Atom}
+	\label{fig:correctness_atom_start}
+\end{figure}
+
+\begin{lstlisting}[frame=single]
+(No atomic assignments or operations in code)
+\end{lstlisting}
+
+The start atom is the only atom in our system to not generate any actual code for the atom itself. Instead as the structure section \ref{structure} will show the start atom is used as a place holder so that transitions can be constructed. It also structurally indicates where the program should start.
+
+
+\subsubsection{Delay}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\imgmedphoto]{./images/correctness_atom_delay.png}
+	\caption{Delay Atom}
+	\label{fig:correctness_atom_delay}
+\end{figure}
+
+\begin{lstlisting}[frame=single]
+delayms(10);
+\end{lstlisting}
+
+The delay atom generates ``delayms($<$expression$>$)''. The expression is the same as in the diagram. The units shown in figure \ref{fig:correctness_atom_delay} as ``ms'' is not included as part of the expression. However the units in the visual representation serves as a reminder that the delay is always measured in milliseconds. Expressions follow the syntax given in the syntax section \ref{sec:statechartsyn} for \plccharts.
+
+
+\clearpage
+\subsubsection{Output}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\imgmedphoto]{./images/correctness_atom_output.png}
+	\caption{Output Atom}
+	\label{fig:correctness_atom_output}
+\end{figure}
+
+\begin{lstlisting}[frame=single]
+PORTOUT = 0xF2;
+\end{lstlisting}
+
+The output atom generated refers to PORTOUT, which is mapped on a hardware level to the PLC hardware implementer's designation of an appropriate output port. This is done to allow the hardware manufacturer a bit of flexability. In our implementation PORTOUT can be assigned any 8-bit value. Any values larger than 8-bit will be trucated. In our example shown in figure \ref{fig:correctness_atom_output} we can see that the line observed in the diagram is ``PORTOUT := 0xF2'' and the final output is ``PORTOUT = 0xF2''. The expressions differ by the syntax ``:='' is replaced by ``='' noting this we can assign any expression as long as it follows the syntax for \plccharts, and it can be evaluated to a value.
+
+
+\subsubsection{Input}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\imgmedphoto]{./images/correctness_atom_input.png}
+	\caption{Input Atom}
+	\label{fig:correctness_atom_input}
+\end{figure}
+
+\begin{lstlisting}[frame=single]
+var = PORTIN;
+\end{lstlisting}
+
+
+The input atom generates final code that is slightly different that what is shown on the digram. We can see in figure \ref{fig:correctness_atom_input} that the diagram clearly shows ``int var := PORTIN''. The final compiled code for the atom is ``var = PORTIN'' the differences are ``int'' is not stated in the final compiled code the type information is used in the construction shown in section \ref{structure}. In addition similarily ``:='' is replaced by ``='' in the compiled code. The left hand side must be a valid variable name as specified in the syntax of \plccharts. The variable can be any type however PORTIN will always be an 8-bit integer any variable on the left hand side that is not integer would have PORTIN automatically casted to the appropreate type.
+
+
+
+\subsection{Constructors and Compiled Structure}
+\label{structure}
+The construction from atoms to compiled structure follows the constructs outlined in section \ref{sec:implimentation:struct}. Here they are shown in detail in the final compiled form without omissions.
+
 \subsubsection{Start}
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_start.png}
+	\includegraphics[width=\imgsmall]{./images/correctness_ex_start.png}
 	\caption{Singular Start Block}
 	\label{fig:correctness_ex_start}
 \end{figure}
 In this simple example the following generated intermediate code \emphasize{IL} is created.
 
-\begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 00 // BEGIN VARIABLE INITIALIZATIONS //
 01 // END VARIABLE INITIALIZATIONS //
@@ -42,16 +116,15 @@ In this simple example the following generated intermediate code \emphasize{IL} 
 09 EOF:
 10 return;
 \end{lstlisting}
-\end{minipage}
 
-In this simplest example we have a label inserted at the beginning of the start block so we can re-enter the start block namely BLUID0. Following the label a comment header to denote the block type, and no variables declared.  Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program. In our system this is analogous to ``staying in a state indefinitely'' as the behaviour after return is executed is to just halt the chip.
+In this simplest example we have a label inserted at the beginning of the start block so we can re-enter the start block namely BLUID0. Following the label a comment header to denote the block type, and no variables declared.  Because there is no other transition or block an automatic transition to \emphasize{EOF} is setup in order to terminate the program. In our system this is analogous to ``staying in a state indefinitely'' as the behaviour after return is executed is to just halt the program.
 
 
 \subsubsection{Delay Element}
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_delay.png}
+	\includegraphics[width=\imgmedsmall]{./images/correctness_ex_delay.png}
 	\caption{Delay Block}
 	\label{fig:correctness_ex_delay}
 \end{figure}
@@ -59,7 +132,6 @@ In this simplest example we have a label inserted at the beginning of the start 
 Moving up in complexity we have a start block followed by our next simplest element the delay block, joined by one transition leaving the start block. We can see from figure \ref{fig:correctness_ex_delay}
 the structure of this new graph. We will use this example to examine transitions are compiled into final code, but first we shall look at the delay block itself.
 
-\begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 // VARIABLE INITIALIZATIONS //
 ...
@@ -74,11 +146,9 @@ goto EOF;
 EOF:
 return;
 \end{lstlisting}
-\end{minipage}
 
 The delay block itself has a structure identical to the start block. The only difference in this case is the delay block doesn't have a null code section. The delay block generates one line of code, namely delay(integer). The actual delay routine is implemented on the driver level per device since certain devices lack internal timers. It will be up to each implementer to ensure that the delay will correctly delay each the integer specified (in milliseconds). 
 
-\begin{minipage}{\textwidth}
 \begin{lstlisting}[frame=single]
 00 // BEGIN VARIABLE INITIALIZATIONS //
 01 // END VARIABLE INITIALIZATIONS //
@@ -100,7 +170,6 @@ The delay block itself has a structure identical to the start block. The only di
 17 EOF:
 18 return;
 \end{lstlisting}
-\end{minipage}
 
 In the example shown in figure \ref{fig:correctness_ex_delay} a transition can be seen. The reader will observe that we have directly mapped each edge to a goto statement that is guarded by the guard condition on the edge itself. As defined in section \ref{sec:statechartsyn} the transitions are always mutually exclusive and to not do so would be considered a syntax error. The reason is there is no way to enforce sequence in which each edge is evaluated that would make sense to the programmer constructing the diagram in a visual way. It is up to the programmer (diagram constructor) to ensure that we never run into a condition where two edges actually have an area of overlap. This is not a problem for our simple case as shown in figure \ref{fig:correctness_ex_delay} as we only have one edge leaving the delay block.
 
