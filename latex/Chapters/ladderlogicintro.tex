@@ -4,14 +4,23 @@
 \section{Background of Ladder Logic}
 \label{section:ladderlogic}
 
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=\imgsmlphoto]{./images/lltoggle_light.png}
+    \caption{Togglable Light in Ladder Logic}
+    \label{fig:lltoggle_light}
+\end{figure}
+
 %docment link: http://www.plcs.net/chapters/whatis1.htm
 %reasons for development
 Ladder logic was originally developed to replace physical relays in PLC's.
 As a result the ``language'' resembles a circuit diagram. The left most
-and right most ``rung'' represent power rails analogous to GND and VCC what's
-placed in between those rungs is the load components /cite{ebookmorris}. In 
+and right most ``rung'' represent power rails analogous to GND (or negative)
+ and VCC (or positive) what's
+placed in between those rungs is the load components \cite{ebookmorris}. In 
 the case of programming the entire logic is created from loads you place 
-inside these power rails. 
+inside these power rails. Each horizontal ``rung'' then becomes it's own
+independent electrical circuit.
 
 Several other conventions are also observed, power always flows from left 
 to right along each rung. Power also flows from top to bottom along the 
@@ -78,7 +87,7 @@ We also assume negligible delay between the action occurring and the result bein
 It is important to note that our function table must be complete that is have an entry for
 all possible combinations in the input domain.
 
-\begin{figure}[htp]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\imgsmall]{./images/intro_fig2.png}
     \caption{Simple AND Logic Diagram}
@@ -92,7 +101,7 @@ $$M=\lbrace in_1, in_2 \rbrace, S=\lbrace out_1 \rbrace, C=\lbrace out_1 \rbrace
 
 We can see that both $in_1$ and $in_2$ are on $rung_1$. This is interpreted as follows:
 
-\begin{table}[htp]
+\begin{table}[h]
     \centering
        \begin{tabular}{|l|l|l|}
         \hline
@@ -113,7 +122,7 @@ The conditions $in_1$ and $in_2$ are combined to form our composed action $@T(in
 as seen in table \ref{table:table_for_fig2}. We also note that there is no action for each individual condition
 becoming true nor do we need to individually calculate the timing on $in_1$ or $in_2$ individually.
 
-\begin{figure}[htp]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\imgsmall]{./images/intro_fig3.png}
     \caption{Branching Rungs}
@@ -126,14 +135,14 @@ show in figure \ref{fig:intro_fig3} behaves like a logical OR. In addition two o
 as show in figure \ref{fig:intro_fig3a}. The semantics are equivalent in both figure \ref{fig:intro_fig3} and 
 figure \ref{fig:intro_fig3a}.
 
-\begin{figure}[htp]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\imgsmall]{./images/intro_fig3a.png}
     \caption{Branching Rungs (Alternative)}
     \label{fig:intro_fig3a}
 \end{figure}
 
-\begin{table}[htp]
+\begin{table}[h]
     \centering
        \begin{tabular}{|l|l|l|}
         \hline
@@ -154,7 +163,7 @@ Since the semantics are the same for both figure \ref{fig:intro_fig3} and figure
 express both outcomes with function table \ref{table:table_for_fig3}.
 As before in table \ref{table:table_for_fig2} in table \ref{table:table_for_fig3} $in_1$ and $in_2$ are composed to form our composed action $@T(in_1 = true \vee in_2 = true)$. However it is also possible to represent this action another way.
 
-\begin{table}[htp]
+\begin{table}[h]
     \centering
        \begin{tabular}{|l|l|l|}
         \hline
@@ -181,12 +190,7 @@ table \ref{table:table_for_fig3a} since it will allow more complex functions to 
 Since semantically the two are equivalent this paper will focus to the first convention.
 
 
-
-
-%not sure if I should put rung definition here
-\pagebreak[4]
-
-\begin{figure}[htp]
+\begin{figure}[h]
     \centering
     \includegraphics[trim= 0 140mm 40mm 10mm, clip, width=\imgmed]{./images/intro_and_graph.pdf} %custom size
     \caption{State diagram conversion for table \ref{table:table_for_fig2}}
@@ -199,9 +203,8 @@ Each row of table \ref{table:table_for_fig2} is directly converted into an edge 
 Each output assertion is given their own state. Finally in figure \ref{fig:intro_and_graph} we observe 1 source for the
 graph being the start state of the rung, and one sink for the graph being the end state for the rung. We can equivalently take figure \ref{fig:intro_fig3} observe its function table \ref{table:table_for_fig3} and produce an equivalent state digram from its function table.
 
-\pagebreak[3]
 
-\begin{figure}[htp]
+\begin{figure}[h]
     \centering
     \includegraphics[trim= 00mm 140mm 40mm 10mm, clip, width=\imgmed]{./images/intro_or_graph.pdf} %custom size
     \caption{State diagram conversion for table \ref{table:table_for_fig3}}
@@ -215,7 +218,7 @@ a state diagram equivalent representation for figure \ref{fig:intro_fig3a} and i
 corresponding table \ref{table:table_for_fig3a}.
 
 
-\begin{figure}[htp]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\imgmedsmall]{./images/intro_or_graph_3a.pdf} %custom size
     \caption{State diagram conversion for table \ref{table:table_for_fig3a}}
@@ -225,7 +228,7 @@ corresponding table \ref{table:table_for_fig3a}.
 So far we've been looking at logic that has things happening instantaneously however ladder logic does contain methods for expressing more advance behaviour. Suppose you have a light that you want to be able to turn on and stay on after you push a button. With any of the ladder diagrams shown above the light would go out as soon as the buttons were all released. In order to keep the light on and constantly on after the button is pressed we introduce the concept of a latch. We modify our diagram shown in figure \ref{fig:intro_fig3a} making the output feed back into one of the inputs to our OR circuit. The result is show in figure \ref{fig:intro_fig_latched}.
 
 %figure for latched circuits 
-\begin{figure}[htp]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\imgsmall]{./images/intro_fig_latched.png} 
     \caption{Latched ladder logic circuit.}
@@ -233,3 +236,5 @@ So far we've been looking at logic that has things happening instantaneously how
 \end{figure}
 
 The latched circuit operates the same way as the behaviour show in \ref{table:table_for_fig3a} the key difference is the feedback of the OR circuit replaces the second row of the function table.
+
+All ladder logic programs are built off these basic primitives in addition each manufacturer offers their own convinence functions and additional blocks that allow operations like add subtract to be done in one block rather than attempt to formulate it through the circuit diagram.
