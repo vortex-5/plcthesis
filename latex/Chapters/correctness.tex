@@ -93,24 +93,28 @@ The input atom generates final code that is slightly different that what is show
 
 \begin{figure}[h]
 	\centering
+	\includegraphics[width=\imgmedphoto]{./images/correctness_atom_store_single.png}
 	\includegraphics[width=\imgmedphoto]{./images/correctness_atom_store.png}
-	\caption{Input Atom}
+	\caption{Store Atom}
 	\label{fig:correctness_atom_store}
 \end{figure}
 
+Single Assign (Left Diagram)
+\begin{lstlisting}[frame=single]
+a = 0;
+\end{lstlisting}
+
+Multiple Assign (Right Diagram)
 \begin{lstlisting}[frame=single]
 a = a + 1;
 b = a;
 \end{lstlisting}
 
-The store block is used for basic assignments. Similar to the input and output examples above the store block generates code that slightly differs from the diagram. First ``:='' is also replaced with ``='' as before where it occurs.
+The store block is used for basic assignments. Similar to the input and output examples above the store block generates code that slightly differs from the diagram. First ``:='' is also replaced with ``='' as before where it occurs. In the left example in figure \ref{fig:correctness_atom_store} we see a store with one assign statement and to the right of figure \ref{fig:correctness_atom_store} we see that store blocks can contain multiple atomic assign statement. 
 
-\begin{verbatim}
-STILL WORKING ON THE STORE
-\end{verbatim}
+Looking at the left diagram first we note that the assign statement is ``int a := 0'' and there is an additional line ``<double click here> <name> := <value>'' first we observe that the last line is omitted entirely the last line is a place holder to allow the user to add more lines. Next we note that the substituttion ``:='' to ``='' is made. Finally we note that the type ``int'' is not included in the final generated code ``a = 0''. Similar to the input and output atoms previous the type is used in construction only and is not part of the atomic assigns.
 
-
-
+Looking at the right diagram we see that the last line is also omitted int he final atom. However each line off the assign are their own atomic assign statements. We see that ``int a := a +1'' becomes ``a = a + 1'' and ``int b := a'' becomes ``b = a''. Once again the type does not show up in the atomic assigns as it's use to declare and initialize the variables in the final construction (more details are in the constructor section \ref{structure}). We note that we can create equivalent store atoms by having two single line store atoms on the left diagram. Thus, it is not difficult to see that the right diagram is just a visual grouping of several atomic assigns for visual simplicity when drawn. Being able to group assigns together into one atomic diagram removes the need to have several atomic assign blocks which ends up being visual noise.
 
 
 \subsection{Constructors and Compiled Structure}
