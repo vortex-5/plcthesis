@@ -18,16 +18,16 @@ Abstract syntax of \plcchart language:
 	\item Condition := Expression Eq Expression $\mid$ Variable
 
 		
-	\item StoreBlock := Type Variable = Expression $\mid$ Type Variable = Expresion; StoreBlock
+	\item StoreBlock := Type Variable := Expression $\mid$ Type Variable := Expresion; StoreBlock
 	\item DelayBlock := Expression
-	\item OutputBlock := \textbf{PORTOUT} = Variable
-	\item InputBlock := Type Variable = \textbf{PORTIN}
+	\item OutputBlock := \textbf{PORTOUT} := Variable
+	\item InputBlock := Type Variable := \textbf{PORTIN}
 	\item Block := StoreBlock $\mid$ OutputBlock $\mid$ DelayBlock $\mid$ InputBlock
 
 	
-	\item Transition := Block Condition Block $\mid$ Block Condition Transition
+	\item Transition := \textbf{EMPTY} $\mid$ Block Condition Transition
 	
-	\item Program := \textbf{StartBlock} $\mid$ \textbf{StartBlock} Condition Block $\mid$ \textbf{StartBlock} Condition Transition
+	\item Program := \textbf{StartBlock} Transition
 \end{itemize}
 \end{definition}
 

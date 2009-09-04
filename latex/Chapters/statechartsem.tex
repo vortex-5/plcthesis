@@ -2,16 +2,16 @@
 \section{\plcchart s}
 \label{sec:statechartsem}
 
-The language used for our project was purposely modelled after \emphasize{UML2 State Machine Diagram}\cite{UML2}. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state machine with extensions added on to describe behaviours in states. The motivation to using \emphasize{UML2 State Machine Diagram}\cite{UML2} as a basis for our state machine system consists of three primary details. First \emphasize{UML2 State Machine Diagram}\cite{UML2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Machine Digram}\cite{UML2} state machine syntax is more concrete than the other forms of state machines, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Machine Diagram}\cite{UML2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
+The language used for our project was purposely modelled after \emphasize{UML2 State Machine Diagram}\cite{UML2}. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state machine with extensions added on to describe behaviours in states. The motivation in using \emphasize{UML2 State Machine Diagram}\cite{UML2} as a basis for our state machine system consists of three primary details: First \emphasize{UML2 State Machine Diagram}\cite{UML2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Machine Digram}\cite{UML2} state machine syntax is more concrete than the other forms of state machines, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Machine Diagram}\cite{UML2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
 
-The semantics of \plcchart is expressed mathematically as follows:
+The model of \plcchart $\:$ is expressed mathematically as follows:
 
 \begin{definition}
 	\plcchart
 	
 \begin{itemize}
 	\item \textbf{$Q$:} Set of modes.
-	\item \textbf{$V$:} Vector of state spaces $V = \langle V_0,V_1,V_2,..,V_n \rangle \: where \: V_{0..n}\in \lbrace \mathbb{Z}_{128}, \mathbb{Z}, \mathbb{B}, \mathbb{R} \rbrace$
+	\item \textbf{$V$:} The state spaces $V = \langle V_0,V_1,V_2,..,V_n \rangle \: where \: V_{0..n}\in \lbrace \mathbb{Z}_{128}, \mathbb{Z}, \mathbb{B}, \mathbb{R} \rbrace$
 	\item $\mathbf{v}_{init}$: vector of initial values $\mathbf{v}_{init}$: $\lbrace v_0,..,v_n \rbrace \: where \: (v_i \in V_i)$
 	\item \textbf{$G$:} Set of guard conditions. $V \rightarrow \mathbb{B}$
 	\item \textbf{$A$:} Set of assignments. $V \times Q \rightarrow V$
@@ -20,7 +20,7 @@ The semantics of \plcchart is expressed mathematically as follows:
 \end{itemize}
 \end{definition}
 
-A mode in \plccharts may have many have many different states. For example in a finite state machine we may have states (1) and (2) if we add modes then we have (0,1), (0,2). We can say that both states are in the same mode 0 but have different values. State spaces in our system are used for variable assignments when a variable is typed it is assigned a state space, for example $V_0 \in \mathbb{Z}$ states that we have the a variable of type $\mathbb{Z}$. Initial values in our system is a vector of elements that come from the state spaces that is defined by $V$ that they are type restricted by what we choose for $V$. This is to ensure that if we have $V_0 = \mathbb{Z}$ we always will assign $v_0$ to be of type $\mathbb{Z}$ and this cannot be changed throughout the entire model. Guard conditions are mappings from states spaces onto boolean values for example if our state space is {1,(2,3)} $(1) \rightarrow true$, $(2,3) \rightarrow false$ would be two guard conditions.
+As the system is in one mode it could be in many different states. For example in a finite state machine we may have states (1) and (2) if we add modes then we have (0,1), (0,2). We can say that both states are in the same mode 0 but have different values. State spaces in our system are used for variable assignments when a variable is typed it is assigned a state space, for example $V_0 \in \mathbb{Z}$ states that we have the a variable of type $\mathbb{Z}$. Initial values in our system is a vector of elements that come from the state spaces that is defined by $V$ that they are type restricted by what we choose for $V$. This is to ensure that if we have $V_0 = \mathbb{Z}$ we always will assign $v_0$ to be of type $\mathbb{Z}$ and this cannot be changed throughout the entire model. Guard conditions are mappings from states spaces onto boolean values for example if our state space is {1,(2,3)} $(1) \rightarrow true$, $(2,3) \rightarrow false$ would be two guard conditions.
 
 Assignments in our system take the form $V \times Q \rightarrow V$ suppose we have variables $v_0,v_1,v_2$ mode $q_1$ one possible assignment is then $(v_0,q_1) \rightarrow (v_1)$. In this case we choose to update $v_1$ after looking at $v_0$ in $q_1$. Assignments in \plccharts happen in sequence rather than all at once this method was chosen to allow sequential formulae to be computed in our system easily. Assignments can be in the form of a constant or an equation. If a series of assignment were found in a single mode as follows:
 
