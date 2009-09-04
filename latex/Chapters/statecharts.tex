@@ -3,12 +3,10 @@
 
 Our proposed visual programming language involves using state machines with guarded edges. Our languages differs in a few concepts from the usual state machine syntax in order to support features of the hardware. To better understand these differences we will first introduce all the syntax and semantics of a \emphasize{Finite State Machines}\cite{booth} and \emphasize{UML2 State Machine Diagrams}\cite{UML2}.
 
-A \emphasize{Finite State Machines}\cite{booth} defined as a diagram describing the behaviour of a discrete system. Such systems are finite state machines. 
-
-A \emphasize{Finite State Machines} is defined as $M = \lbrace Q, I, Z, \delta, \omega, q_0\rbrace$
+A \emphasize{Finite State Machines}\cite{booth} defined as a diagram describing the behaviour of a discrete system.
 
 \begin{definition}
-Finite State Machine
+A \emphasize{Finite State Machines} is defined as $M = \lbrace Q, I, Z, \delta, \omega, q_0\rbrace$
 
 \label{def:statecharts}
 \begin{itemize}
@@ -21,7 +19,7 @@ Finite State Machine
 \end{itemize}
 \end{definition}
 
-A state represents a set of operating conditions that for example in figure \ref{fig:state_blink_light} the states are ``Light On'' and ``Light Off''.
+A state represents a set of operating conditions. For example in figure \ref{fig:state_blink_light} the states are ``Light On'' and ``Light Off''.
 
 \begin{figure}[htp]
     \centering
@@ -30,7 +28,7 @@ A state represents a set of operating conditions that for example in figure \ref
     \label{fig:state_blink_light}
 \end{figure}
 
-Transitions are defined as functions that take an inputs $i_1,i_2 \in I$ a current state $q_1 \in Q$ and produces another state $q_2 \in Q$. Machines that satisfy definition \ref{def:statecharts} are referred to as \emphasize{Mealy machines}\cite{booth}. \emphasize{Moore machines} are further restricted in that output functions are only dependent on state. To obtain a \emphasize{Moore machine} from definition \ref{def:statecharts} we change our output function to $Q \rightarrow Z$. Although figure \ref{fig:state_moore_mealy} contains outputs for all edges, we can define ourselves a null output or a no change output in order to simulate an edge having no output as well. For purposes of the \plccharts language we do not require the power of a Mealy machine and thus we chose to stay with a simpler Moore machine. More details of this decision can be found in section \ref{sec:statechartsem}.
+Transitions are defined as functions $\delta(i,q_1) = q_2$ where inputs $i \in I$ a current state $q_1 \in Q$ and a next state $q_2 \in Q$.  Outputs can be formalized to $\omega(i,q_1)=z_1$ where $z_1 \in Z$. Machines that satisfy definition \ref{def:statecharts} are referred to as \emphasize{Mealy machines} \cite{booth}. A \emphasize{Moore machine} is the same as a defined above but output functions are only dependent on state. To obtain a \emphasize{Moore machine} from definition \ref{def:statecharts} we change our output function to $Q \rightarrow Z$. Although figure \ref{fig:state_moore_mealy} contains outputs for all edges, we can define ourselves a null output or a no change output in order to simulate an edge having no output as well. For purposes of the \plccharts language we do not require the power of a Mealy machine and thus we chose to stay with a simpler Moore machine. More details of this decision can be found in section \ref{sec:statechartsem}.
 
 %diagram for Moore + Mealy state machines
 \begin{figure}[htp]
