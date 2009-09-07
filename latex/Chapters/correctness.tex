@@ -1,7 +1,7 @@
 %Correctness
 \section{Correctness}
 
-In this section we will look at the correctness of the translation process. Correctness for us can be described as a mapping show in Figure \ref{fig:correctness_graph1}. Expressions in our system are compiled into the program code. Expressions can be evaluated by hand ($\delta$) to produced a value. Likewise the program can be executed to produce a final value. Correctness holds in our system if the value of the evaluation ($\delta$) is the same as a value achieved by execution.
+In this section we will look at the correctness of the code generation process. Correctness for us can be described as the mapping shown in Figure \ref{fig:correctness_graph1}. Expressions in our system are compiled into the program code. Expressions can be evaluated by hand ($\delta$) to produce a value. Likewise the program can be executed to produce a final value. Correctness holds in our system if the value of the evaluation ($\delta$) is the same as a value achieved by execution.
 
 \begin{figure}[htb]
     \centering
@@ -19,7 +19,7 @@ The graph structure of \plccharts is directed graph in which the constructs are 
     \label{fig:correctness_graph2}
 \end{figure}
 
-In this section we will begin by showing that each of the transformations to code are correct examining the basic atoms. We will start by looking at atoms that have the simplest expressions first. The simplest of these is a diagram in which only the start node exists as shown in \ref{fig:correctness_ex_start}.
+In this section we will begin by showing that each of the transformations to code are correct examining the basic atoms. We will start by looking at atoms that have the simplest assignments first.
 
 \clearpage
 \subsection{Atoms}
@@ -39,7 +39,7 @@ Each block in \plccharts compiles to their own atomic assign statements. In the 
 (No atomic assignments or operations in code)
 \end{lstlisting}
 
-The start atom is the only atom in our system to not generate any actual code for the atom itself. Instead as the structure section \ref{structure} will show the start atom is used as a place holder so that transitions can be constructed. It also structurally indicates where the program should start.
+The start atom is the only atom in our system to not generate any actual code for the atom itself. Instead the start atom is used as a place holder so that transitions can be constructed. It also structurally indicates where the program should start. Since the start block contains no atomic code it is trivially correct as it does nothing itself.
 
 
 \subsubsection{Delay Block}
@@ -55,7 +55,7 @@ The start atom is the only atom in our system to not generate any actual code fo
 delayms(10);
 \end{lstlisting}
 
-The delay atom generates ``delayms($<$expression$>$)''. The expression is the same as in the diagram. The units shown in figure \ref{fig:correctness_atom_delay} as ``ms'' is not included as part of the expression. However the units in the visual representation serves as a reminder that the delay is always measured in milliseconds. Expressions follow the syntax given in the syntax section \ref{sec:statechartsyn} for \plccharts.
+The delay atom generates ``delayms($<$expression$>$)''. The expression is the same as in the diagram. The units shown in figure \ref{fig:correctness_atom_delay} as ``ms'' is not included as part of the expression. However the units in the visual representation serves as a reminder that the delay is always measured in milliseconds. Expressions follow the syntax given in the syntax section \ref{sec:statechartsyn} for \plccharts. Since there are no assignments it is trivially correct.
 
 
 \subsubsection{Output Block}
@@ -71,7 +71,7 @@ The delay atom generates ``delayms($<$expression$>$)''. The expression is the sa
 PORTOUT = 0xF2;
 \end{lstlisting}
 
-The output atom generated refers to PORTOUT, which is mapped on a hardware level to the PLC hardware implementer's designation of an appropriate output port. This is done to allow the hardware manufacturer a bit of flexability. In our implementation PORTOUT can be assigned any 8-bit value. Any values larger than 8-bit will be trucated. In our example shown in figure \ref{fig:correctness_atom_output} we can see that the assign line diagram is ``PORTOUT := 0xF2''. We can say that the meaning of this line is $\delta(PORTOUT) = 0xF2$. The final compiled output code is ``PORTOUT = 0xF2''. We can see that $Execution(PORTOUT) = 0xF2$ since we have a direct mapping from the value in diagram to value in execution ($\delta(PORTOUT) = Execution(PORTOUT)$). We can conclude that the assignment in the output block is done correctly with respect to the diagram.
+The output atom generated refers to PORTOUT, which is mapped on a hardware level to the PLC hardware implementer's designation of an appropriate output port. This is done to allow the hardware manufacturer a bit of flexability. In our implementation PORTOUT can be assigned any 8-bit value. Any values larger than 8-bit will be trucated. In our example shown in figure \ref{fig:correctness_atom_output} we can see that the assign line diagram is ``PORTOUT := 0xF2''. We can say that the meaning of this line is $\delta(PORTOUT) = (F2)_{16}$. The final compiled output code is ``PORTOUT = 0xF2''. We can see that $Execution(PORTOUT) = (F2)_{16}$ since we have a direct mapping from the value in diagram to value in execution ($\delta(PORTOUT) = Execution(PORTOUT)$), we can conclude that the assignment in the output block is done correctly with respect to the diagram.
 
 
 \subsubsection{Input Block}
@@ -112,16 +112,16 @@ a = a + 1;
 b = a;
 \end{lstlisting}
 
-The store block is used for assignments. In the left example in figure \ref{fig:correctness_atom_store} we see a store with one assign statement and to the right of figure \ref{fig:correctness_atom_store} we see that store blocks can contain multiple atomic assign statement. 
+The store block is used for assignments. In the left example in figure \ref{fig:correctness_atom_store} we see a store with one assign statement and to the right of figure \ref{fig:correctness_atom_store} we see that store blocks can contain multiple atomic assign statements. 
 
-Looking at the left diagram first we note that the assign statement is ``int a := 0'' that is $\delta(a) = 0$. We see the final generated code is ``$a = 0$'' and $Execution(a) = 0$. We see that $\delta(a) = Execution(a)$ that is to say there exists a mapping from the value in the diagram to the value from execution. We can say that that code generated is correct with respect to the diagram. Looking at the right diagram we see that each line of the store block becomes own atomic assign statements. We see that the diagram has ``int a := a +1'' and ``int b := a'' and by evaluation $\delta(a) = a + 1, \delta(b) = a$. The generated code is then ``a = a + 1'' and ``b = a'' and the executed values $Execution(a) = a + 1, Execution(b) = a$. We can see at this point that $\delta(a) = Execution(a)$ and $\delta(b) = Execution(b)$. Thus we can conclude that the Store Block generated code is correct with respect to our diagram. We note that we can create equivalent store atoms by having two single line store atoms. Thus, it is not difficult to see that the right diagram is just a visual grouping of several atomic assigns for visual simplicity when drawn. Being able to group assigns together into one atomic diagram removes the need to have several atomic assign blocks which ends up being visual noise.
+Looking at the left diagram first we note that the assign statement is ``int a := 0'' that is $\delta(a) = 0$. We see the final generated code is ``$a = 0$'' meaning $Execution(a) = 0$. We see that $\delta(a) = Execution(a)$ that is to say there exists a mapping from the value in the diagram to the value from execution. We can say that that code generated is correct with respect to the diagram. Looking at the right diagram we see that each line of the store block becomes own atomic assign statements. We see that the diagram has ``int a := a +1'' and ``int b := a'' and by evaluation $\delta(a) = a + 1, \delta(b) = a$. The generated code is then ``a = a + 1'' and ``b = a'' and the executed values $Execution(a) = a + 1, Execution(b) = a$. We can see at this point that $\delta(a) = Execution(a)$ and $\delta(b) = Execution(b)$. Thus we can conclude that the Store Block generated code is correct with respect to our diagram. We note that we can create equivalent store atoms by having two single line store atoms. Thus, it is not difficult to see that the right diagram is just a visual grouping of several atomic assigns for visual simplicity when drawn. Being able to group assigns together into one atomic diagram removes the need to have several atomic assign blocks which ends up being visual noise.
 
 
 \subsection{Constructors and Transitions}
 
-Aside from atoms compiled code has a few additional constructions. In the example code below we demonstrate the constructed sections for any compiled code. From lines 00-07 is the variable initialization section, any varaibles used are initialized and the type is defined here. Variables in our program are collected at compile time by scanning all the diagram objects and collecting any variables used. Any conflicts between two variable types with the same name are caught and will cause a code generation error at this phase. The initialization section will set all variables to a default value after defning the type.
+Aside from atoms compiled code has a few additional constructions. In the example code below we demonstrate the constructed sections for any compiled code. From lines 00-07 is the variable initialization section, any varaibles used are initialized and the type is defined here. Variables in our program are collected at compile time by scanning all the diagram objects and collecting any variables used. Any conflicts between two variable types with the same name are caught and will cause a code generation error. The initialization section will set all variables to a default value after defning the type.
 
-The generated constructs also provide a way for each of the states to terminate the program if no departing transitions exist. This is accomplished by lines 32-33 ``an end of file'' label is generated to mark the end of the program followed by a return statement to end the program and return control to the programmable logic controller chip. A return statement that exists the program is equivalent to a halt in our case.
+The generated constructs also provide a way for each of the states to terminate the program if no departing transitions exist. This is accomplished by lines 32-33 ``an end of file'' label is generated to mark the end of the program followed by a return statement to end the program and return control to the programmable logic controller chip. On recieving a return the \emphasize{Programmable Logic Controller} will hold all last known values on every port and halt, simulating a stop.
 
 
 \begin{lstlisting}[frame=single]
@@ -137,9 +137,7 @@ The generated constructs also provide a way for each of the states to terminate 
 33 return;
 \end{lstlisting}
 
-
-\clearpage
-Transitions are used to string together a sequence of atoms in order to perform the computations necessary in our program. In order to show correctness we must show that the transitions are structurally correct. We must show Transitions will correctly map modes in the right sequence. Figure \ref{fig:correctness_graph2} shows how transitions factor into our overall structure.
+Transitions are used to string together a sequence of atoms in order to perform the computations necessary in our program. In order to show correctness we must show that the transitions are structurally correct that is, we must show Transitions will correctly map modes in the right sequence. Figure \ref{fig:correctness_graph2} shows how transitions factor into our overall structure.
 
 \begin{figure}[h]
 	\centering
@@ -189,7 +187,7 @@ Starting by looking at the code above we can see that our first entry point into
 
 Transitions in our program are compiled to ``goto'' statements. Each block is given a unique ``Block Unique Identifier'' which is a line label starting with ``BLUID''. BLUID's are generated as each block is scanned at compile time and a monotonically increasing number is appended to the end of the label. The ``goto'' transitions always occur after the atomic block assignments have been made.
 
-Looking at diagram \ref{fig:correctness_ex_transition} we note that the start block transitions to ``BLOCK1'' with an edge guarded by ``true''. In the code ``BLOCK1'' has label ``BLUID1'' accociated with it's section of code. We see that the generated code for the start block has a ``goto BLUID1'' on line 9. This corresponds to transition leaving the start block. Next we have a transition from ``BLOCK1'' to ``BLOCK2'' in Figure \ref{fig:correctness_ex_transition}. We can see the code corresponding to the transition on line 18 ``goto BUILD2'' where ``BLUID2'' refers to BLOCK2. Finally we note the two guarded transitions leaving ``BLOCK2''. For the guarded edge ``$a >= 3$'' we can see the generated code ``\texttt{if (a >= 3) goto BLUID1}'' on line 27. We note that ``BLUID1'' refers to ``BLOCK1'' in the diagram so the transition goes from ``BLOCK2'' to ``BLOCK1'' which is correct. For the transition guarded by ``$a < 3$'' we note the generated code on line 28 ``\texttt{if (a < 3) goto BLUID2}''. We see that ``BLUID2'' refers to ``BLOCK2'' so the transition is a self loop, which is correct with respect to the diagram in Figure \ref{fig:correctness_ex_transition}.
+Looking at diagram \ref{fig:correctness_ex_transition} we note that the start block transitions to ``BLOCK1'' with an edge guarded by ``true''. In the code ``BLOCK1'' has label ``BLUID1'' associated with it's section of code. We see that the generated code for the start block has a ``goto BLUID1'' on line 9. This corresponds to transition leaving the start block. Next we have a transition from ``BLOCK1'' to ``BLOCK2'' in Figure \ref{fig:correctness_ex_transition}. We can see the code corresponding to the transition on line 18 ``goto BUILD2'' where ``BLUID2'' refers to BLOCK2. Finally we note the two guarded transitions leaving ``BLOCK2''. For the guarded edge ``$a >= 3$'' we can see the generated code ``\texttt{if (a >= 3) goto BLUID1}'' on line 27. We note that ``BLUID1'' refers to ``BLOCK1'' in the diagram so the transition goes from ``BLOCK2'' to ``BLOCK1'' which is correct. For the transition guarded by ``$a < 3$'' we note the generated code on line 28 ``\texttt{if (a < 3) goto BLUID2}''. We see that ``BLUID2'' refers to ``BLOCK2'' so the transition is a self loop, which is correct with respect to the diagram in Figure \ref{fig:correctness_ex_transition}.
 
 
 
@@ -464,10 +462,11 @@ Looking at diagram \ref{fig:correctness_ex_transition} we note that the start bl
 %of each diagram.
 
 
-\subsection{Correctness over Execution}
+\subsection{Correctness on Execution}
+
 \subsubsection{Table Representation}
 
-In order to show the correctness of the execution it is necessary to identify the differences between graphical traces and execution. Both contain a ``mode'' however in execution the mode can be directly accociated to a set of line numbers. Line numbers don't exist in the diagram view. Both however do have variables and modes, and correct execution is a trace where all modes and variables are identical. To build up our comparison tables we will start with a simple start diagram as shown in Figure \ref{fig:correctness_ex_start}.
+In order to show the correctness of the execution it is necessary to identify the differences between graphical traces and execution. Both contain a ``mode'' however in execution the mode can be directly associated to a set of line numbers. Line numbers don't exist in the diagram view. Both however do have variables and modes, and correct execution is a trace where all modes and variables are identical. To build up our comparison tables we will start with a simple start diagram as shown in Figure \ref{fig:correctness_ex_start}.
 
 \clearpage
 \begin{figure}[h]
@@ -532,7 +531,7 @@ To show an execution trace we replace mode with line number and we get the follo
 
 It is not to difficult to see that from lines 00 to 07 we are in the ``start'' mode so we can append a
 mode marker to the end of the table. We can also identify that line 09 ``EOF'' represents the end of the
-file and thus has no mode accociated with it or goes to a null mode.
+file and thus has no mode associated with it or goes to a null mode.
 
 \begin{table}[htcb]
 	\caption{Start code execution for compiled code from diagram extended\ref{fig:correctness_ex_start}}
@@ -554,7 +553,7 @@ file and thus has no mode accociated with it or goes to a null mode.
 \end{table}
 
 We can already see that the two traces produce the same outcome however for ease of comparison we can
-merge the two tables side by side so we can directly compare each executed line to it's accocated graph.
+merge the two tables side by side so we can directly compare each executed line to it's allocated graph.
 
 \begin{table}[htcb]
 	\caption{Start code execution combined table. For figure \ref{fig:correctness_ex_start}}
@@ -575,7 +574,7 @@ merge the two tables side by side so we can directly compare each executed line 
 \end{table}
 
 In table \ref{table:BasicExecCombined} we can easily compare the combined execution vs the diagram code trace. 
-We can see that line numbers can be accociated with a mode dispite not having one themselves. In order to verify 
+We can see that line numbers can be associated with a mode despite not having one themselves. In order to verify 
 correct execution it is necessary to show that the sequence of modes and values are the same. In the above example
  in which we run our first trivially simple start code snippet it is easy to see that this holds. Therefore we can
   conclude that the execution is correct for the start diagram shown in figure \ref{fig:correctness_ex_start}.
@@ -584,7 +583,7 @@ correct execution it is necessary to show that the sequence of modes and values 
 
 Please see table \ref{table:BasicExecCombined}. We may note that the only mode is ``start'' and that the mode
 is followed through the executed line by line trace. We can also note that the code stops after ``start'' 
-mode is finished which also is correct behavior. Finally we can note that there are no varibles listed in
+mode is finished which also is correct behaviour. Finally we can note that there are no variables listed in
 our system so both sets of variables are trivially correct.
 
 \subsubsection{Delay Diagram Execution}
@@ -648,8 +647,8 @@ Generated \emphasize{IL} code for diagram in Figure \ref{fig:correctness_ex_dela
 
 Once again in this example we don't have any variable so they are easily verified by checking that in both cases
 there are no variables. All that's left to justify correctness is ensuring the sequence of modes is executed correctly.
-It should be easy to see that the sequence: start, delay, stop. Is clearly implimented by the executed code from the table
-\ref{table:DelayExecCombined}. We can therefor conclude that the excuted code trace is correct with respect to the original
+It should be easy to see that the sequence: start, delay, stop. Is clearly implemented by the executed code from the table
+\ref{table:DelayExecCombined}. We can therefor conclude that the executed code trace is correct with respect to the original
 diagram.
 
 \subsubsection{Output Diagram Execution}
@@ -782,7 +781,7 @@ Generated \emphasize{IL} code for the diagram in Figure \ref{fig:correctness_ex_
 \end{table}
 
 We must first note in this code trace that inputs require a variable in order to store
-their data. These inputs are intialized at the beginning of the execution where as 
+their data. These inputs are initialized at the beginning of the execution where as 
 initialization is not required for our diagram since variables always have an initial
 value of 0 when first used. Our table starts with line 00, and 01 which initialize 
 our variable, we consider this ``house keeping'' and on the left side of our table we
@@ -791,11 +790,11 @@ mode occurs 3 rows down with corresponding line 04 the execution of the start bl
 and diagram is identical to previous examples with the exception of different line numbers.
 The sequence of modes and variables is observed as {(start, var = 0), (input, var = PORTIN)}.
 We can observed that ``var'' is set to ``PORTIN'' on row 5 in the diagram and in the 
-execution the corresponding set occurs on row 6. Dispite the offset caused by the execution
+execution the corresponding set occurs on row 6. Despite the offset caused by the execution
 being a less abstract than the diagram the sequence of modes and variables are identical.
 Thus according to our definition of correctness we have shown that both diagram
 and execution follow the same modes and variable values as well the same sequence
-occurence. We can conclude from this that the execution of the input code sample is correct
+occurrence. We can conclude from this that the execution of the input code sample is correct
 with respect to the diagram itself.
 
 \clearpage
@@ -912,14 +911,14 @@ Generated \emphasize{IL} code for diagram in Figure \ref{fig:correctness_ex_stor
 The reader should note that we have shortened ``no change'' in the previous tables to ``NC'' in order to fit
 in the tables.  Similar to the input example the store example also has variables that must be initialized 
 before it can enter it's first state. Lines 00-02 in the table \ref{table:StoreExecCombined} represent the 
-``house keeping'' steps required in order to define, setup and initalize the variables. The entry to the start
+``house keeping'' steps required in order to define, setup and initialize the variables. The entry to the start
 mode represent the start of our diagram as the reader can see from table \ref{table:StoreExecCombined} the two
-variables are considered intitialized to 0 in the diagram, that is ``a = 0, b = 0''. We may also note that this
+variables are considered initialized to 0 in the diagram, that is ``a = 0, b = 0''. We may also note that this
 is taken care in the execution by lines 01 and 02. Thus, line 09 represents the start of our diagram after 
 initializations or in the case of diagrams assumptions.
 
 On line 12 we enter our first store block which we
-have denoted $store_1$. Observe that only variable ``a'' is modifed in this store block thus ``b'' takes on 
+have denoted $store_1$. Observe that only variable ``a'' is modified in this store block thus ``b'' takes on 
 a value of ``NC''. The corresponding operation for ``a = 0'' in the diagram occurs in the execution on line 16.
 Finally on line 18 we can see that mode $store_1$ is exited on the execution side by executing ``goto BLUID2''.
 
@@ -954,10 +953,10 @@ conditions. We can see that $a >= 3$ is now true on line 28 therefore we execute
 which is on line 12. This occurs on row 22 of our execution trace.
 
 It is not difficult to see at this point that row 22 is identical to row 5 in both modes and values so they are the
-same in our system. This means that our sequence repeates and line 23,24,25... would be identical to 6,7,8... 
+same in our system. This means that our sequence repeats and line 23,24,25... would be identical to 6,7,8... 
 respectively. A full execution trace is now (start, {a=0,b=0}), ($store_1$,{a=0,b=0}), ($store_2$,{a=1,b=1},
 ($store_2$,{a=2,b=2}), ($store_2$,{a=3,b=3}), ($store_1$,{a=0,b=0}), ($store_2$,{a=1,b=1},
-($store_2$,{a=2,b=2}), ($store_2$,{a=3,b=3}), ...) repeating forever. We note that both excution and the diagram
+($store_2$,{a=2,b=2}), ($store_2$,{a=3,b=3}), ...) repeating forever. We note that both execution and the diagram
 were shown to produce this sequence of modes and values, and by our definition we have shown that this 
 corresponding code execution is correct with respect to the diagram. 
 

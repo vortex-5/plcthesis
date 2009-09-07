@@ -6,23 +6,29 @@ The hardware framework allows different chips to be utilized with the same softw
 
 
 \subsection{Hardware Framework Overview}
-TODO: include a diagram of the different hardware sections and how they fit together including the userland program.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[trim= 10mm 150mm 10mm 10mm, clip, width=\imgmedium]{./images/hardwareframework.pdf}
+    \caption{Hardware Framework Components}
+    \label{fig:hardwareframework}
+\end{figure}
+
+The hardware framework was designed to allow multiple targets. Our IDE generates a program.c file that refers to hardware functions and definitions that must be implemented in ``plcmcu.h'' and ``plcmcu.c'' and combined with an optional ``plcmcu.mcp'' project file if so desired. ``plcmcu.h'' contains definitions of the hardware. These are usually designer choices such as oscillator selection, and which ports on the chip they will be using for input and output. ``plcmcu.c'' will implement any function calls that are required and take care of any chip initializations. In addition it is ``plcmcu.c'' job to call the user generated ``program.c'' once the chip is fully initialized and setup. The entire framework is then sent to the MPLab C18 compiler, or a compiler of the implementer's choosing. In the next section we will show and comment on some of the sample code for our prototype system.
 
 
-TODO: Describe each section in detail.
+\subsection{Sub-Component Implementations} 
 
-
-\subsection{Chip Initialization} 
 \textbf{File:} plcmcu.h
 
 \textbf{Section:} Chip configuration 
 
-\textbf{Description:} Sets configuration bits for the chip that cannot be done at runtime.
+\textbf{Description:} Sets configuration bits for the chip that cannot be done at run time.
 
 \textbf{Code:}
-\\
-\\
-\begin{minipage}{\textwidth}
+
+
+
 \begin{lstlisting}[frame=single]
 ...
 #pragma config OSC = HSPLL //set occilator to HS-PLL
@@ -32,19 +38,19 @@ TODO: Describe each section in detail.
 #pragma config LVP = OFF //disable low power programming
 ...
 \end{lstlisting}
-\end{minipage}
-\\
-\\
+
+
+
 \textbf{File:} plcmcu.c
 
 \textbf{Routine:} init\_chip(void)
 
-\textbf{Description:} Initializes any chip specific configuration bits that must be done at runtime.
+\textbf{Description:} Initializes any chip specific configuration bits that must be done at run time.
 
 \textbf{Code:}
-\\
-\\
-\begin{minipage}{\textwidth}
+
+
+
 \begin{lstlisting}[frame=single]
 ...
 void init_chip(void)
@@ -54,15 +60,15 @@ void init_chip(void)
 }
 ...
 \end{lstlisting}
-\end{minipage}
-\\
-\\
+
+
+
 \subsection{Hardware Specific Definitions}
 
-Hardware specific definitions are reserved for defining specific characterists of the hardware to match up with the software. For example it may be necessary to define the input and output ports to a specific port on the chip itself.
-\\
-\\
-\begin{minipage}{\textwidth}
+Hardware specific definitions are reserved for defining specific characteristics of the hardware to match up with the software. For example it may be necessary to define the input and output ports to a specific port on the chip itself.
+
+
+
 \begin{lstlisting}[frame=single]
 ...
 /* PORT specification */
@@ -70,17 +76,17 @@ Hardware specific definitions are reserved for defining specific characterists o
 #define PORTIN PORTA
 ...
 \end{lstlisting}
-\end{minipage}
-\\
-\\
+
+
+
 \subsection{Hardware Specific Implementations}
 
-convenience calls from our software that access more complex operations may be required to be implimented directly into hardware. Our current software only requires that the routine for delaying the execution by a number of milliseconds is implimented. It is done as follows (please note for layout reasons we are using underscore when code should be on the same line):
+convenience calls from our software that access more complex operations may be required to be implemented directly into hardware. Our current software only requires that the routine for delaying the execution by a number of milliseconds is implemented. It is done as follows (please note for layout reasons we are using underscore when code should be on the same line):
 
 \textbf{File:}plcmcu.h
-\\
-\\
-\begin{minipage}{\textwidth}
+
+
+
 \begin{lstlisting}[frame=single]
 /* CLOCK specification */
 ...
@@ -119,13 +125,13 @@ convenience calls from our software that access more complex operations may be r
 
 ...
 \end{lstlisting}
-\end{minipage}
-\\
-\\
+
+
+
 \textbf{File:} plcmcu.c
-\\
-\\
-\begin{minipage}{\textwidth}
+
+
+
 \begin{lstlisting}[frame=single]
 ...
 void delayms(int time)
@@ -134,7 +140,7 @@ void delayms(int time)
 }
 ...
 \end{lstlisting}
-\end{minipage}
-\\
-\\
+
+
+
 It is highly recommended to avoid macros where possible however the nature of the PIC18F452 required macros in order to prevent inaccurate delays caused by actually computations.
