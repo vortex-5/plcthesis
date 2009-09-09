@@ -1,8 +1,8 @@
 %Semantics of state charts
-\section{\plcchart s}
+\section{\plcchart}
 \label{sec:statechartsem}
 
-The language used for our project was purposely modelled after \emphasize{UML2 State Machine Diagram}\cite{UML2}. As discussed in section \ref{sec:overviewstatechart} UML2 is essentially standard state machine with extensions added on to describe behaviours in states. The motivation in using \emphasize{UML2 State Machine Diagram}\cite{UML2} as a basis for our state machine system consists of three primary details: First \emphasize{UML2 State Machine Diagram}\cite{UML2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Machine Diagram}\cite{UML2} state machine syntax is more concrete than the other forms of state machines, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Machine Diagram}\cite{UML2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
+The language used for our project was purposely modelled after \emphasize{UML2 State Machine Diagram}\cite{UML2}. As discussed in section \ref{sec:overviewstatechart} UML2 is similar to state machine with extensions added on to describe behaviours in states. The motivation in using \emphasize{UML2 State Machine Diagram}\cite{UML2} as a basis for \emphasize{\plcchart} consists of three primary details: First \emphasize{UML2 State Machine Diagram}\cite{UML2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Machine Diagram}\cite{UML2} state machine syntax is more concrete than the other forms of state machines, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Machine Diagram}\cite{UML2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
 
 The model of \plcchart $\:$ is expressed mathematically as follows:
 
@@ -20,9 +20,9 @@ The model of \plcchart $\:$ is expressed mathematically as follows:
 \end{itemize}
 \end{definition}
 
-In each mode the system is in one or many different states. State spaces in our system are used for variable assignments and all variables are typed. Initial values in the system are given by a vector of elements that come from the state spaces $V$.  Guard conditions are mappings from states spaces to boolean values.
+In each mode the system is in one or many different states. A state space in our system is used for to model variables and all variables are typed. Initial value in the system are given by a vector of elements that come from the state spaces $V$.  Guard conditions are mappings from states spaces to boolean values.
 
-Assignments in our system take the form $V \times Q \rightarrow V$. Suppose we have variables $\langle 1,2 \rangle$ mode $5$ one possible assignment is then $( \langle 1,2 \rangle,5) \rightarrow ( \langle 2,0 \rangle )$. Assignments can be in the form of a constant or an equation.
+Assignments in our system take the form $V \times Q \rightarrow V$. Suppose we have values $\langle 1,2 \rangle$ meaning $v_1 = 1, v_2 = 2$ suppose we are in mode $5$ an assignment $v1 := v2, v_2 := 0$ can be described by: $( \langle 1,2 \rangle,5) \rightarrow ( \langle 2,0 \rangle )$. Assignments are always constants or expressions.
 
 %\begin{align}
 %v_1 := v_0 \label{eqn:assign0} \\ 
@@ -45,18 +45,35 @@ Assignments in our system take the form $V \times Q \rightarrow V$. Suppose we h
 %
 %The advantage of sequential assignments over concurrent assignments can be seen when trying to compute the 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are very useful for the initial step without it many more modes would be required to do each simple assignment. Thus although this design choice slightly deviates from \emphasize{UML2 State Machine Diagram}\cite{UML2} it was decided the benefits to usability was too great to strictly adhere to the \emphasize{UML2 State Machine Diagram}\cite{UML2} semantics.
 
+%\begin{figure}[htp]
+%    \centering
+%    \includegraphics[width=230px]{./images/tool_transition_example.png}
+%    \caption{PLC Edit Example}
+%    \label{fig:tool_transition_example}
+%\end{figure}
+%
+%\begin{figure}[htp]
+%    \centering
+%    \includegraphics[width=230px]{./images/tool_transition_example_bad.png}
+%    \caption{PLC Edit Example With Bad Transitions}
+%    \label{fig:tool_transition_example_bad}
+%\end{figure}
+
+%Transitions in the language must be mutually exclusive. It is invalid to have two transitions that can both be taken at any point. Figure \ref{fig:tool_transition_example} shows an example of this done correctly the two guard conditions ``count $<$ 10'' and ``count $\geq$ 10'' ensure mutual exclusivity. When mutual exclusion is not ensured the behaviour of the language is undefined. \plccharts currently does not allow for concurrent execution. Therefore multiple possible edges are ambiguous and the outcome (as in which edge would be taken) is undefined.
+
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=230px]{./images/tool_transition_example.png}
-    \caption{PLC Edit Example}
-    \label{fig:tool_transition_example}
+    \includegraphics[trim= 10mm 130mm 20mm 10mm, clip, width=\imgmedphoto]{./images/state_transition.pdf}
+    \caption{Example of Basic Transitions}
+    \label{fig:state_transition_cor}
 \end{figure}
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=230px]{./images/tool_transition_example_bad.png}
-    \caption{PLC Edit Example With Bad Transitions}
-    \label{fig:tool_transition_example_bad}
+    \includegraphics[trim= 10mm 130mm 20mm 10mm, clip, width=\imgmedphoto]{./images/state_transition_bad.pdf}
+    \caption{Incorrect Transitions}
+    \label{fig:state_transition_bad}
 \end{figure}
 
-Transitions in the language must be mutually exclusive. It is invalid to have two transitions that can both be taken at any point. Figure \ref{fig:tool_transition_example} shows an example of this done correctly the two guard conditions ``count $<$ 10'' and ``count $\geq$ 10'' ensure mutual exclusivity. When mutual exclusion is not ensured such as in figure \ref{fig:tool_transition_example_bad} the behaviour of the language is undefined. \plccharts currently does not allow for concurrent execution. Therefore multiple possible edges are ambiguous and the outcome (as in which edge would be taken) is undefined.
+Transitions in our system must start from an initial block object and must terminate at another block. Since \emphasize{\plcchart} does not support concurrent execution, transitions must be mutually exclusive to be valid. All edges departing a block must follow with their expressions $E_1, E_2, E_3...E_n$: $\forall(i \neq j \rightarrow E_i \cap E_j = \emptyset)$. In Figure \ref{fig:state_transition_cor} we see three possible outcomes ($T<=3$,``Block A'') $\rightarrow$ ``Block C'',  \\
+($T>5$,``Block A'') $\rightarrow$ ``Block B'', and for $3 < T <= 5$ we stay in ``Block A'' since there is no transition to take us out. An incorrect usage of transitions is shown in Figure \ref{fig:state_transition_bad}. Values of $T <= 3$ will cause both guard conditions to become true, violating our requirement for mutual exclsion. \emphasize{\plcchart} considers the outcome of mutliple possible transitions as undefined and is invalid in the language.

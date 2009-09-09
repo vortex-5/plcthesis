@@ -13,7 +13,7 @@ Abstract syntax of \plcchart $\:$ language:
 
 	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Variable $\mid$ \textbf{Constant}
 	
-	\item Type := \textbf{Char} $\mid$ \textbf{Int} $\mid$ \textbf{Long} $\mid$ \textbf{Bool} $\mid$ \textbf{Float}
+	\item Type := \textbf{byte} $\mid$ \textbf{int} $\mid$ \textbf{long} $\mid$ \textbf{bool} $\mid$ \textbf{float}
 	\item Variable := $[A-Za-z]^+[A-Za-z0-9]^*$
 
 	\item Condition := Expression Eq Expression $\mid$ Variable
@@ -39,7 +39,7 @@ Abstract syntax of \plcchart $\:$ language:
     \label{fig:state_storeblock}
 \end{figure}
 
-In figure \ref{fig:state_storeblock} we see a store block represented as it would be drawn by the \plcchart $\:$ IDE. Each line consists of a type (which in figure \ref{fig:state_storeblock} we have int, and char) an identifier, the equals symbol, and a value. A value can take the form of an expression or a constant as shown in figure \ref{fig:state_storeblock}. Our abstract syntax also allows for many lines in each StoreBlock. This design choice allows formulae to be expressed more efficiently as it can be done in sequence rather than have several blocks together to perform a set of operations.
+In figure \ref{fig:state_storeblock} we see a store block represented as it would be drawn by the \plcchart $\:$ IDE. Each line consists of a type (which in figure \ref{fig:state_storeblock} we have \textbf{int}, and \textbf{byte}) an identifier, the equals symbol, and a value. A value can take the form of an expression or a constant as shown in figure \ref{fig:state_storeblock}. Our abstract syntax also allows for many lines in each StoreBlock. This design choice allows formulae to be expressed more conveniently as it can be done in sequence rather than a sequence of blocks together to perform a set of operations.
 Each assignment line in store blocks are sequential, and is understood to occur one right after the other. This is described in more detail below.
 
 \begin{align}
@@ -47,7 +47,7 @@ v_1 := v_0 \label{eqn:assign0} \\
 v_0 := v_1 \label{eqn:assign1}
 \end{align}
 
-In \emphasize{Finite State Machines}\cite{booth}  it is understood that assignments happen concurrently in such a case equations \ref{eqn:assign0} and \ref{eqn:assign1} when put together would produce a swap where $v'_1 = 'v_0$ and $v'_0 = 'v_1$ (where $'v$ denotes the value of $v$ before the assignments are made and $v'$ the value of $v$ after the assignment is completed). We read assignments such as in equations \ref{eqn:assign0} and \ref{eqn:assign1} as these assignments will take place upon entry of the state. For our in \emphasize{\plcchart s}, we read them in a sequential fashion for example: Upon entry of the mode, first equation \ref{eqn:assign0} is assigned, then equation \ref{eqn:assign1}. That is $v'_1 = 'v_0$ and then $v'_0 = v'_1$ which results in $v'_0 = v'_1 = 'v_0$ after the second assign statement.
+If assignments in \emphasize{\plcchart s} happen concurrently \ref{eqn:assign0} and \ref{eqn:assign1} would produce a swap where $v'_1 =\: 'v_0$ and $v'_0 =\: 'v_1$ (where $'v$ denotes the value of $v$ before the assignments are made and $v'$ the value of $v$ after the assignment is completed). We read assignments such as in equations \ref{eqn:assign0} and \ref{eqn:assign1} as these assignments will take place upon entry of the mode. For \emphasize{\plcchart s} we read them in a sequential fashion for example: Upon entry of the mode, first equation \ref{eqn:assign0} is assigned, then equation \ref{eqn:assign1}. That is $v'_1 =\: 'v_0$ and then $v'_0 = v'_1$ which results in $v'_0 = v'_1 =\: 'v_0$ after the second assign statement.
 
 \begin{figure}[htp]
     \centering
@@ -56,16 +56,7 @@ In \emphasize{Finite State Machines}\cite{booth}  it is understood that assignme
     \label{fig:state_uml2_fir}
 \end{figure}
 
-The advantage of sequential assignments over concurrent assignments can be seen when trying to compute the 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are very useful for the initial step without it many more modes would be required to do each assignment.
-
-Transitions in our system must start from an initial block object and must terminate at another block. Transitions must be mutually exclusive to be valid, meaning for all edges their expressions $E_1, E_2, E_3...E_n$: $\forall(i \neq j \rightarrow E_i \cap E_j = \emptyset)$. In addition given a set of expressions $E_1 \cup E_2 \cup E_3 \cup ... \cup E_n = \mathbb{U}$. In simpler terms all transition conditions must be mutually exclusive and must cover the entire space.  
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[trim= 10mm 130mm 20mm 10mm, clip, width=\imgmedium]{./images/state_transition.pdf}
-    \caption{Example of Basic Transitions}
-    \label{fig:state_transition}
-\end{figure}
+The advantage of sequential assignments over concurrent assignments can be seen when trying to compute a 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are much more convenient when making many small assignments. Without sequential assignments many more modes would be required to achieve the same behaviour.
 
 
 
