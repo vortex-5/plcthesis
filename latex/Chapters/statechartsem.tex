@@ -20,46 +20,9 @@ The model of \plcchart $\:$ is expressed mathematically as follows:
 \end{itemize}
 \end{definition}
 
-In each mode the system is in one or many different states. A state space in our system is used for to model variables and all variables are typed. Initial value in the system are given by a vector of elements that come from the state spaces $V$.  Guard conditions are mappings from states spaces to boolean values.
+Many states in the system can belong to the same mode. A state space in our system is used for to model variables. All variables in \emphasize{\plcchart} are typed. The Initial value in the system is given by a vector of elements that come from the state spaces $V$.  Guard conditions are mappings from states spaces to boolean values.
 
-Assignments in our system take the form $V \times Q \rightarrow V$. Suppose we have values $\langle 1,2 \rangle$ meaning $v_1 = 1, v_2 = 2$ suppose we are in mode $5$ an assignment $v1 := v2, v_2 := 0$ can be described by: $( \langle 1,2 \rangle,5) \rightarrow ( \langle 2,0 \rangle )$. Assignments are always constants or expressions.
-
-%\begin{align}
-%v_1 := v_0 \label{eqn:assign0} \\ 
-%v_0 := v_1 \label{eqn:assign1}
-%\end{align}
-
-%\begin{align}
-%(v_1,q_1) \rightarrow v_0 \label{eqn:assign0} \\ 
-%(v_0,q_1) \rightarrow v_1 \label{eqn:assign1}
-%\end{align}
-%
-%We would see that the result $v_1 = v_0$ it is important to note this since generally in \emphasize{Finite State Machines}\cite{booth}  it is understood that assignments happen concurrently in such a case equations \ref{eqn:assign0} and \ref{eqn:assign1} would produce a swap where $v'_1 = 'v_0$ and $v'_0 = 'v_1$ (where $'v$ denotes the value of $v$ before the assignments are made and $v'$ the value of $v$ after the assignment is completed). In normal state machines we read assignments such as in equations \ref{eqn:assign0} and \ref{eqn:assign1} as these assignments will take place upon entry of the state. For our semantics however, we read them in a sequential fashion for example: Upon entry of the mode, first equation \ref{eqn:assign0} is assigned, then \ref{eqn:assign1} right afterwards.
-%
-%\begin{figure}[htp]
-%    \centering
-%    \includegraphics[trim= 10mm 145mm 10mm 10mm, clip, width=\imgmedium]{./images/state_uml2_fir.pdf}
-%    \caption{5 Tap Fir Filtering}
-%    \label{fig:state_uml2_fir}
-%\end{figure}
-%
-%The advantage of sequential assignments over concurrent assignments can be seen when trying to compute the 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are very useful for the initial step without it many more modes would be required to do each simple assignment. Thus although this design choice slightly deviates from \emphasize{UML2 State Machine Diagram}\cite{UML2} it was decided the benefits to usability was too great to strictly adhere to the \emphasize{UML2 State Machine Diagram}\cite{UML2} semantics.
-
-%\begin{figure}[htp]
-%    \centering
-%    \includegraphics[width=230px]{./images/tool_transition_example.png}
-%    \caption{PLC Edit Example}
-%    \label{fig:tool_transition_example}
-%\end{figure}
-%
-%\begin{figure}[htp]
-%    \centering
-%    \includegraphics[width=230px]{./images/tool_transition_example_bad.png}
-%    \caption{PLC Edit Example With Bad Transitions}
-%    \label{fig:tool_transition_example_bad}
-%\end{figure}
-
-%Transitions in the language must be mutually exclusive. It is invalid to have two transitions that can both be taken at any point. Figure \ref{fig:tool_transition_example} shows an example of this done correctly the two guard conditions ``count $<$ 10'' and ``count $\geq$ 10'' ensure mutual exclusivity. When mutual exclusion is not ensured the behaviour of the language is undefined. \plccharts currently does not allow for concurrent execution. Therefore multiple possible edges are ambiguous and the outcome (as in which edge would be taken) is undefined.
+Assignments in our system take the form $V \times Q \rightarrow V$. Suppose we the state $\langle 1,2 \rangle$ meaning $v_1 = 1, v_2 = 2$ suppose we are in mode $5$ an assignment $v1 := v2, v_2 := 0$ can be described by: $( \langle 1,2 \rangle,5) \rightarrow ( \langle 2,0 \rangle )$. Assignments to variables are always represented by changes to the state.
 
 \begin{figure}[htp]
     \centering
@@ -75,5 +38,5 @@ Assignments in our system take the form $V \times Q \rightarrow V$. Suppose we h
     \label{fig:state_transition_bad}
 \end{figure}
 
-Transitions in our system must start from an initial block object and must terminate at another block. Since \emphasize{\plcchart} does not support concurrent execution, transitions must be mutually exclusive to be valid. All edges departing a block must follow with their expressions $E_1, E_2, E_3...E_n$: $\forall(i \neq j \rightarrow E_i \cap E_j = \emptyset)$. In Figure \ref{fig:state_transition_cor} we see three possible outcomes ($T<=3$,``Block A'') $\rightarrow$ ``Block C'',  \\
+Transitions in our system must start from an block object and must terminate at another block. Since \emphasize{\plcchart} does not support non-deterministic execution, transition conditions must be mutually exclusive to be valid. All edges departing a block must have ${\nexists{\tau} \forall{g \in G} \: \forall{q_1, q_2, q_3\in Q}} {({\tau(g,q_1) \rightarrow q_2} \wedge {\tau(g,q_1) \rightarrow q_3} \wedge {q_2 \neq q_3})}$. In Figure \ref{fig:state_transition_cor} we see three possible outcomes ($T<=3$,``Block A'') $\rightarrow$ ``Block C'',  \\
 ($T>5$,``Block A'') $\rightarrow$ ``Block B'', and for $3 < T <= 5$ we stay in ``Block A'' since there is no transition to take us out. An incorrect usage of transitions is shown in Figure \ref{fig:state_transition_bad}. Values of $T <= 3$ will cause both guard conditions to become true, violating our requirement for mutual exclsion. \emphasize{\plcchart} considers the outcome of mutliple possible transitions as undefined and is invalid in the language.
