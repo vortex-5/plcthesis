@@ -3,7 +3,19 @@
 \chapter{Overview of Existing Technology}
 \section{PLC Hardware Controller Implementations}
 %link to automotive statement: http://www.amci.com/tutorials/tutorials-what-is-programmable-logic-controller.asp
-Programmable Logic Controllers (PLC) have been around for over 30 years and as a result there have been many iterations and designs. The original Programmable Logic Controllers were a quick way for automotive manufacturers to replace traditional relays with digital control. These relays were hooked up to power rails and inputs, and allowed for basic mechanical logic \cite{ebookmorris}. Due to their mechanical nature relays wore out over time causing the logic they were performing to fail. In addition, because hundreds to thousands could be used in a cabinet, it was also difficult to isolate the worn out part. Relays also proved to be inflexible when a small change was required to be added to the program, the entire plant was required to be taken offline in order to make the change. Halting large production plants is often extremely costly and thus eventually the relays were migrated out in favour of microcontrollers that can be reprogrammed on the fly. To this day modern PLC's still use graphical analogies of circuits and relays in order to construct their programmable logic. This visual language is now referred to as ladder logic due to the the finished program having a similar visual structure to a ladder. 
+Programmable Logic Controllers (PLC) have been around for over 30 years and as a result there have 
+been many iterations and designs. The original Programmable Logic Controllers were a quick way for 
+automotive manufacturers to replace traditional relays with digital control. These relays were hooked 
+up to power rails and inputs, and allowed for basic mechanical logic \cite{ebookmorris}. Due to their 
+mechanical nature relays wore out over time causing the logic they were performing to fail. 
+In addition, because hundreds to thousands could be used in a cabinet, it was also difficult to 
+isolate the worn out part. Relays also proved to be inflexible when a small change was required 
+to be added to the program, the entire plant was required to be taken offline in order to make 
+the change. Halting large production plants is often extremely costly and thus eventually the 
+relays were migrated out in favour of microcontrollers that can be reprogrammed on the fly. 
+To this day modern PLC's still use graphical analogies of circuits and relays in order to 
+construct their programmable logic. This visual language is now referred to as ladder logic 
+due to the the finished program having a similar visual structure to a ladder. 
 
 \begin{figure}[htp]
     \centering
@@ -11,7 +23,15 @@ Programmable Logic Controllers (PLC) have been around for over 30 years and as a
     \caption{Mitsubishi PLC All In One Unit \cite{img_c01_MitsubishiPlc}}
     \label{img:mitsubishiplc}
 \end{figure}
-Mitsubishi Automation (\ref{img:mitsubishiplc}), Siemens, and Omron are a few of the big producers of industry standard PLC's although the shape and form factor differ between manufacturers PLC's always consist of 3 distinct parts.  The input module, the main controller unit and the output module (please refer to Figure \ref{img:plcrender_1}). This separation exists due to varying requirements for analog inputs and different output capacity requirements in order to drive heavy machinery. I/O modules may consist of thermal-sensors, ambient light sensors, resistive sensors, or a direct connection to the external circuitry. The output module may also be composed of both analog and digital output pins.
+Mitsubishi Automation (\ref{img:mitsubishiplc}), Siemens, and Omron are a few of the big
+ producers of industry standard PLC's although the shape and form factor differ between 
+ manufacturers PLC's always consist of 3 distinct parts.  The input module, the main 
+ controller unit and the output module (please refer to Figure \ref{img:plcrender_1}). 
+ This separation exists due to varying requirements for analog inputs and different output 
+ capacity requirements in order to drive heavy machinery. I/O modules may consist of 
+ thermal-sensors, ambient light sensors, resistive sensors, or a direct connection to the 
+ external circuitry. The output module may also be composed of both analog and digital output pins.
+ 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=\imgsmlphoto]{./images/c02_plcdev.jpg}
@@ -22,7 +42,12 @@ Mitsubishi Automation (\ref{img:mitsubishiplc}), Siemens, and Omron are a few of
 
 \pagebreak
 %source http://www.sea.siemens.com/step/templates/lesson.mason?plcs:2:3:1
-Executions of programs on a PLC are always done in a loop. An iteration of execution is referred to as a scan. Each scan is further broken up into 4 phases: Self-Test, Input scan, Logic solve / scan, and Output scan. Figure \ref{fig:plcexecution} shows the order in which each of these steps are executed. The jobs performed in each step is described in more detail below:
+Executions of programs on a PLC are always done in a loop. An iteration of execution is referred 
+to as a scan. Each scan is further broken up into 4 phases: Self-Test, Input scan, Logic solve / scan, 
+and Output scan. Figure \ref{fig:plcexecution} shows the order in which each of these steps 
+are executed. The jobs performed in each step is 
+described in more detail below:
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\imgmedphoto]{./images/plcexecution.pdf}
@@ -47,10 +72,46 @@ In each scan operations are modelled as if executions happen concurrently thus, 
     \label{img:plcrender_2}
 \end{figure}
 
-The input and output modules generally connect to the main module via serial links however some manufacturers also include network communication over standard shielded Ethernet \cite{rockwell_io,rockwell_tech_pub}. Generally serial communication is used more often when the input and output modules are at a close distance to the controller unit as in a modular PLC designs  (see Figure \ref{img:plcrender_2}). The network interface on the other hand is used when the input or output module needs to be located far away from the main controller unit \cite{rockwell_tech_pub} as is often the case in automated production facilities. Output modules are generally relay driven and the driving current is provided by a transistor connected to logic pins of the main controller. This is done to isolate the internal circuitry from the high current demands of driving heavy machinery \cite{plcapp}. Alternatively some circuits employ an opto-isolator circuitry to achieve the same effect. The trade off in this design is it will accommodate less current under load but has faster switching and overall better service life \cite{plcapp}. Analog outputs are obtained by passing a binary value through a digital to analog converter (DAC). A reference voltage is usually required in such configurations.
+The input and output modules generally connect to the main module via serial links 
+however some manufacturers also include network communication over standard shielded 
+Ethernet \cite{rockwell_io,rockwell_tech_pub}. Generally serial communication is used 
+more often when the input and output modules are at a close distance to the controller 
+unit as in a modular PLC designs  (see Figure \ref{img:plcrender_2}). The network 
+interface on the other hand is used when the input or output module needs to be located 
+far away from the main controller unit \cite{rockwell_tech_pub} as is often the case in 
+automated production facilities. Output modules are generally relay driven and the 
+driving current is provided by a transistor connected to logic pins of the main controller.
+ This is done to isolate the internal circuitry from the high current demands of 
+ driving heavy machinery \cite{plcapp}. Alternatively some circuits employ an opto-isolator 
+ circuitry to achieve the same effect. The trade off in this design is it will accommodate 
+ less current under load but has faster switching and overall better service life \cite{plcapp}.
+  Analog outputs are obtained by passing a binary value through a digital to analog 
+  converter (DAC). A reference voltage is usually required in such configurations.
 
 %source http://www.toolingu.com/class-450240-plc-inputs-and-outputs.html
-All input and output modules contain some common  features which allow for modularity. Each I/O module is assigned a unique address so that the controller unit running the PLC program can access it. Each controller also has what is referred to as a backpane which contains the necessary connectors to connect to the bus so the CPU can access it. Most I/O modules have multiple channels where each channel is either a single ended wire or a differential pairs. Differential pairs can be commonly seen in analog input modules where it is preferable to compare a signal with the sensor's reference ground. This is done to avoid problems with the ground mismatch between the PLC's CPU and the sensor. Such a mismatch would produce an undesirable floating ground and would induce a permanent error on the input channel. Most modules are designed so that the external inputs and outputs are completely isolated from the CPU circuitry. As such, the CPU is connected to common ground via the serial bus while the input and output modules are usually connected to the power supply via a ground screw (usually marked ``common''). In analog input modules conversion circuitry must exist to convert the sensed input values into quantized values to be sent over the serial bus. The same is true for analog output modules but in reverse. In digital inputs conversion is not needed however circuitry still exists for isolation of the internal bus from the external input, and where applicable the module itself may perform noise correction before the actual input enters the PLC itself. In addition to individual modules some PLC manufacturers opted to have the I/O modules embedded into the main CPU unit. These are generally more commonly found in the micro sized PLC's and are generally less expensive then their expandable counterparts. Although externally they are not expandable internally the configuration of the input modules are actually identical.
+All input and output modules contain some common  features which allow for modularity. 
+Each I/O module is assigned a unique address so that the controller unit running the 
+PLC program can access it. Each controller also has what is referred to as a backpane 
+which contains the necessary connectors to connect to the bus so the CPU can access it.
+Most I/O modules have multiple channels where each channel is either a single ended wire 
+or a differential pairs. Differential pairs can be commonly seen in analog input modules
+where it is preferable to compare a signal with the sensor's reference ground. This is 
+done to avoid problems with the ground mismatch between the PLC's CPU and the sensor. 
+Such a mismatch would produce an undesirable floating ground and would induce a permanent 
+error on the input channel. Most modules are designed so that the external inputs and 
+outputs are completely isolated from the CPU circuitry. As such, the CPU is connected 
+to common ground via the serial bus while the input and output modules are usually connected 
+to the power supply via a ground screw (usually marked ``common''). In analog input 
+modules conversion circuitry must exist to convert the sensed input values into quantized 
+values to be sent over the serial bus. The same is true for analog output modules but 
+in reverse. In digital inputs conversion is not needed however circuitry still exists 
+for isolation of the internal bus from the external input, and where applicable the 
+module itself may perform noise correction before the actual input enters the PLC itself. 
+In addition to individual modules some PLC manufacturers opted to have the I/O modules 
+embedded into the main CPU unit. These are generally more commonly found in the micro 
+sized PLC's and are generally less expensive then their expandable counterparts. 
+Although externally they are not expandable internally the configuration of the input 
+modules are actually identical.
 
 %source ISBN 0-13-025603-X
 Due to the varying requirements of manufacturing over the years a wide variety of I/O modules now exist to fill in every need a short list of common I/O modules for the Allen-Bradley SLC500 series of PLC's is given below \cite{slc500}.
@@ -73,7 +134,21 @@ Due to the varying requirements of manufacturing over the years a wide variety o
 	\item \textbf{TTL Input Module:} Allows reading inputs from TTL devices such as most integrated circuits.
 \end{itemize}
 
-Programmable logic controllers can classified into three categories: Integrated such as a Mitsubishi Melsec FX-32MR seen in Figure \ref{img:mitsubishiplc}, Modular as seen in Figure \ref{img:plcrender_1}, and Large Scale automation. The integrated category includes small one board solutions generally better suited for low power or embedded applications. The modular category consists of PLC's that have a rack that houses the power supply, and several modular slots for both the microcontroller and various input and output modules.
+Programmable logic controllers can classified into three categories: Integrated such 
+as a Mitsubishi Melsec FX-32MR seen in Figure \ref{img:mitsubishiplc}, Modular as seen 
+in Figure \ref{img:plcrender_1}, and Large Scale automation. The integrated category 
+includes small one board solutions generally better suited for low power or embedded 
+applications. The modular category consists of PLC's that have a rack that houses the 
+power supply, and several modular slots for both the microcontroller and various input 
+and output modules.
 
-Compact units such as the Melsec previously mentioned commonly have an input output port range from 8 - 24 these are not expandable due to its all-in-one nature. The Melsec unit has 2000 steps of execution memory. Each step can be loosely thought of as an instruction. However, the nature of Ladder Logic programming tends to obscure what a step is after it is compiled. The output capacity of these compact units can range anywhere from milliamps to a few amps. As an example the Melsec FX-32MR in Figure \ref{img:mitsubishiplc} can output a maximum of 8A on 4 of it's ports and only 2A on the remaining ports. Modular units on the other hand are able to scale to the diverse demands of operating heavy machinery by fitting them with high capacity output units.
+Compact units such as the Melsec previously mentioned commonly have an input output 
+port range from 8 - 24 these are not expandable due to its all-in-one nature. 
+The Melsec unit has 2000 steps of execution memory. Each step can be loosely thought 
+of as an instruction. However, the nature of Ladder Logic programming tends to obscure 
+what a step is after it is compiled. The output capacity of these compact units can range 
+anywhere from milliamps to a few amps. As an example the Melsec FX-32MR in 
+Figure \ref{img:mitsubishiplc} can output a maximum of 8A on 4 of it's ports and only 
+2A on the remaining ports. Modular units on the other hand are able to scale to the 
+diverse demands of operating heavy machinery by fitting them with high capacity output units.
 
