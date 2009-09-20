@@ -1,9 +1,7 @@
 %Introduction to state charts
 \section{Overview of State Machines} \label{sec:overviewstatechart}
 
-Our proposed visual programming language uses state machines with guarded edges. The language differs in a few areas from the  \emphasize{UML2 State Machine Diagram}\cite{UML2} syntax in order to support features of the hardware. To better understand these differences we will first introduce the syntax and semantics of more traditional \emphasize{Finite State Machines}\cite{booth} and \emphasize{UML2 State Machine Diagrams}\cite{UML2}.
-
-A \emphasize{Finite State Machine}\cite{booth} is defined as a diagram describing the behaviour of a discrete system.
+Our proposed visual programming language is modeled by state machines with guarded edges. The language to describe the state machines differs in a few areas from the  \emphasize{UML2 State Machine Diagram} \cite{UML2} syntax in order to support features of the hardware. To better understand these differences we will first introduce the syntax and semantics of more traditional \emphasize{Finite State Machines} \cite{booth} and \emphasize{UML2 State Machine Diagrams} \cite{UML2}.
 
 \begin{definition}
 A \emphasize{Finite State Machine} is defined as $M = \lbrace Q, I, Z, \delta, \omega, q_0\rbrace$
@@ -19,7 +17,7 @@ A \emphasize{Finite State Machine} is defined as $M = \lbrace Q, I, Z, \delta, \
 \end{itemize}
 \end{definition}
 
-A state represents a set of operating conditions. For example in figure \ref{fig:state_blink_light} the states are ``Light On'' and ``Light Off''.
+A state represents an operating condition. For example in figure \ref{fig:state_blink_light} the states are ``Light On'' and ``Light Off''.
 
 \begin{figure}[htp]
     \centering
@@ -39,8 +37,8 @@ Given a state $q_1 \in Q$ an input $i \in I$ a transition is then a function $\d
     \label{fig:state_moore_mealy}
 \end{figure}
 
-There are several ways a starting state can be drawn as seen in figure \ref{fig:state_moore_mealy}.
-One such way is to draw a edge that has no state connected to its tail. In our system we choose incorporate a symbol similar to  the \emphasize{UML}\cite{UML2} symbol where the start state edge has a solid dot connected to the tail as shown in figure \ref{fig:state_uml_light}. {\plccharts} utilizes a special \emphasize{start} state that is functionaly identical to \emphasize{UML's} solid dot symbol.
+To describe our state machines we use diagrams such as done in \emphasize{UML} \cite{UML2}. There are several ways a starting state can be drawn as seen in figure \ref{fig:state_moore_mealy}.
+One such way is to draw a edge that has no state connected to its tail. In our system we choose incorporate a symbol similar to  the \emphasize{UML} \cite{UML2} symbol where the start state edge has a solid dot connected to the tail as shown in figure \ref{fig:state_uml_light}. {\plccharts} utilizes a special \emphasize{start} state that is functionaly identical to \emphasize{UML's} solid dot symbol.
 
 %diagram for UML state machines
 \begin{figure}[htp]
@@ -50,7 +48,7 @@ One such way is to draw a edge that has no state connected to its tail. In our s
     \label{fig:state_uml_light}
 \end{figure}
 
-The \emphasize{UML State Diagram}\cite{UML2} as shown in figure \ref{fig:state_uml_light} also allow for state titles in each state seen at the top of each state. In addition, each state may contain actions that are executed. In Figure \ref{fig:state_uml_light} ``LightOn()'' and ``LightOff()'' refer to executed actions that are called once the ``On'' and ``Off'' states are reached. The behaviour is read as once the state ``On'' is reached ``LightOn()'' is executed right away. More than one instruction to be executed can be listed and is understood that each instruction is executed sequentially\cite{UML2}.
+The \emphasize{UML State Diagram} \cite{UML2} as shown in figure \ref{fig:state_uml_light} also allow for state titles in each state seen at the top of each state. In addition, each state may contain actions that are executed. In Figure \ref{fig:state_uml_light} ``LightOn()'' and ``LightOff()'' refer to executed actions that are called once the ``On'' and ``Off'' states are reached. The behaviour is read as once the state ``On'' is reached ``LightOn()'' is executed right away. More than one instruction to be executed can be listed and is understood that each instruction is executed sequentially \cite{UML2}.
 
 %diagram for UML state machines
 \begin{figure}[htp]
@@ -60,7 +58,7 @@ The \emphasize{UML State Diagram}\cite{UML2} as shown in figure \ref{fig:state_u
     \label{fig:state_uml2}
 \end{figure}
 
-The syntax shown in figure \ref{fig:state_uml_light} is a \emphasize{UML2 State Machine Diagram}\cite{UML2}. \emphasize{UML2 State Machine Diagram}\cite{UML2} allows for additional information to be in each state. In Figure \ref{fig:state_uml2} we note the parts of \emphasize{UML2 State Machine Diagram}\cite{UML2}. Each state in  \emphasize{UML2 State Machine Diagram}\cite{UML2} contains the information defined by definition \ref{def:uml2}. The additional information makes UML2 more useful for representing programs more precisely. In addition  \emphasize{UML2 State Machine Diagram}\cite{UML2} has a more precise syntax when compared to \emphasize{Finite State Machines}\cite{booth}, and \emphasize{UML State Diagram}\cite{UML2}.
+The syntax shown in figure \ref{fig:state_uml_light} is a \emphasize{UML2 State Machine Diagram} \cite{UML2}. \emphasize{UML2 State Machine Diagram} \cite{UML2}. Each state bubble in  \emphasize{UML2 State Machine Diagram} \cite{UML2} contains the information defined by definition \ref{def:uml2} and shown in Figure \ref{fig:state_uml2}. The additional information makes UML2 more useful for representing programs more conveniently.
 
 \begin{definition}
 UML2 State Machine Diagram
