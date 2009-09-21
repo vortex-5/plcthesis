@@ -33,7 +33,11 @@ The model of \plcchart $\:$ is expressed mathematically as follows:
 \end{itemize}
 \end{definition}
 
-Many states in the system can belong to the same mode. The state space in our system is used for model variables. All variables in \emphasize{\plcchart} are typed. The initial value in the system is given by a state $v_init$ in the state space $V$.  Guard conditions are mappings from states spaces to boolean values.
+Many states in the system can belong to the same mode. The state space in our
+system is used for model variables. All variables in \emphasize{\plcchart}
+are typed. The initial value in the system is given by a state $v_init$ in
+the state space $V$.  Guard conditions are mappings from states spaces
+to boolean values.
 
 Assignments in our system take the form $V \times Q \rightarrow V$. Suppose we the state $\langle 1,2 \rangle$ meaning $v_1 = 1, v_2 = 2$ suppose we are in mode $5$ an assignment $v1 := v2, v_2 := 0$ can be described by: $( \langle 1,2 \rangle,5) \rightarrow ( \langle 2,0 \rangle )$. Assignments to variables are always represented by changes to the state.
 

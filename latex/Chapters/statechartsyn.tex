@@ -39,7 +39,7 @@ Abstract syntax of \plcchart $\:$ language:
     \label{fig:state_storeblock}
 \end{figure}
 
-In figure \ref{fig:state_storeblock} we see a store block represented as it would be drawn by the \plcchart $\:$ IDE. Each line consists of a type (which in figure \ref{fig:state_storeblock} we have \textbf{int}, and \textbf{byte}) an identifier, the equals symbol, and a value. A value can take the form of an expression or a constant as shown in figure \ref{fig:state_storeblock}. Our abstract syntax also allows for many lines in each StoreBlock. This design choice allows formulae to be expressed more conveniently as it can be done in sequence rather than a sequence of blocks together to perform a set of operations.
+In Figure \ref{fig:state_storeblock} we see a store block represented as it would be drawn by the \plcchart $\:$ IDE. Each line consists of a type (can be seen in Figure \ref{fig:state_storeblock} we have \textbf{int}, and \textbf{byte}) an identifier, the equals symbol, and a value. A value can take the form of an expression or a constant as shown in figure \ref{fig:state_storeblock}. Our abstract syntax also allows for many lines in each StoreBlock. This design choice allows formulae to be expressed more conveniently as it can be done in sequence rather than a sequence of blocks used together to perform a set of operations.
 Each assignment line in store blocks are sequential, and is understood to occur one right after the other. This is described in more detail below.
 
 \begin{align}
@@ -56,7 +56,7 @@ If assignments in \emphasize{\plcchart s} happen concurrently \ref{eqn:assign0} 
     \label{fig:state_uml2_fir}
 \end{figure}
 
-The advantage of sequential assignments over concurrent assignments can be seen when trying to compute a 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are much more convenient when making many small assignments. Without sequential assignments many more modes would be required to achieve the same behaviour.
+The advantage of sequential assignments over concurrent assignments can be seen when trying to compute a 5 stage fir filter as seen in figure \ref{fig:state_uml2_fir}. In figure \ref{fig:state_uml2_fir} sequential assignments are much more convenient when making many small assignments. Without sequential assignments many more mode blocks would be required to achieve the same behaviour.
 
 
 
