@@ -2,7 +2,20 @@
 \section{\plcchart}
 \label{sec:statechartsem}
 
-The language used for our project was purposely modelled after \emphasize{UML2 State Machine Diagram}\cite{UML2}. As discussed in section \ref{sec:overviewstatechart} UML2 is similar to state machine with extensions added on to describe behaviours in states. The motivation in using \emphasize{UML2 State Machine Diagram}\cite{UML2} as a basis for \emphasize{\plcchart} consists of three primary details: First \emphasize{UML2 State Machine Diagram}\cite{UML2} is quite well known and popular, this improves the potential acceptance of our tool. Secondly \emphasize{UML2 State Machine Diagram}\cite{UML2} state machine syntax is more concrete than the other forms of state machines, giving a strong basis to construct our language around. Finally \emphasize{UML2 State Machine Diagram}\cite{UML2} has the concept of internal activity or internal execution necessary for modelling the behaviour of an actual useful program.
+The language used for our project was purposely modelled after
+\emphasize{UML2 State Machine Diagram} \cite{UML2}. As discussed 
+in section \ref{sec:overviewstatechart} UML2 is similar to state 
+machines with additions to describe behaviours internal to states.
+The motivation in using \emphasize{UML2 State Machine Diagram} \cite{UML2}
+as a basis for \emphasize{\plcchart} consists of are as follows: 
+First \emphasize{UML2 State Machine Diagram} \cite{UML2}
+is quite well known and popular, this improves the potential acceptance
+of our tool. Secondly \emphasize{UML2 State Machine Diagram}\cite{UML2}
+state machine syntax is more concrete than the other forms of state
+machines, giving a strong basis to construct our language around.
+Finally \emphasize{UML2 State Machine Diagram}\cite{UML2} has the
+concept of internal activity or internal execution necessary for modelling
+the behaviour of an actual useful program.
 
 The model of \plcchart $\:$ is expressed mathematically as follows:
 
@@ -20,7 +33,7 @@ The model of \plcchart $\:$ is expressed mathematically as follows:
 \end{itemize}
 \end{definition}
 
-Many states in the system can belong to the same mode. A state space in our system is used for to model variables. All variables in \emphasize{\plcchart} are typed. The Initial value in the system is given by a vector of elements that come from the state spaces $V$.  Guard conditions are mappings from states spaces to boolean values.
+Many states in the system can belong to the same mode. The state space in our system is used for model variables. All variables in \emphasize{\plcchart} are typed. The initial value in the system is given by a state $v_init$ in the state space $V$.  Guard conditions are mappings from states spaces to boolean values.
 
 Assignments in our system take the form $V \times Q \rightarrow V$. Suppose we the state $\langle 1,2 \rangle$ meaning $v_1 = 1, v_2 = 2$ suppose we are in mode $5$ an assignment $v1 := v2, v_2 := 0$ can be described by: $( \langle 1,2 \rangle,5) \rightarrow ( \langle 2,0 \rangle )$. Assignments to variables are always represented by changes to the state.
 
