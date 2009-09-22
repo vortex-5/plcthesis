@@ -1,7 +1,13 @@
 %Correctness
 \section{Correctness}
 
-In this section we will look at the correctness of the code generation process. Correctness for us can be described as the mapping shown in Figure \ref{fig:correctness_graph1}. Expressions in our system are compiled into the program code. Expressions can be evaluated by hand ($\delta$) to produce a value. Likewise the program can be executed to produce a final value. Correctness holds in our system if the value of the evaluation ($\delta$) is the same as a value achieved by execution.
+In this section we will look at the correctness of the code generation process. 
+Correctness can be described as the mapping shown in Figure \ref{fig:correctness_graph1}. 
+Expressions in our system are compiled into the program code. 
+Expressions can be evaluated by hand ($\delta$) to produce a value. 
+Likewise the program can be executed to produce a final value. 
+Correctness holds in the system if the value of the evaluation ($\delta$) is the 
+same as a value achieved by execution.
 
 \begin{figure}[htb]
     \centering
@@ -10,7 +16,15 @@ In this section we will look at the correctness of the code generation process. 
     \label{fig:correctness_graph1}
 \end{figure}
 
-The graph structure of \plccharts is directed graph in which the constructs are discussed in detail in sections \ref{sec:statechartsyn} and \ref{sec:statechartsem}. Our tool constructs executable code from on the diagram constructs.  In addition showing the mapping for Figure \ref{fig:correctness_graph1} we also need to justify the program structure generated from an graph structure is correct. To do so we extend figure \ref{fig:correctness_graph1} to obtain figure \ref{fig:correctness_graph2} to incorporate transitions. If each Figure \ref{fig:correctness_graph1} represents an individual block than the extended Figure \ref{fig:correctness_graph2} represents the several individual blocks with the ability to transition between them.
+The graph structure of \plccharts is directed graph which 
+the constructs are discussed in detail in Sections \ref{sec:statechartsyn} and \ref{sec:statechartsem}. 
+Our tool constructs executable code from the drawn diagram.  To justify the correctness we need 
+to demonstrate the program structure generated from an graph structure is correct. 
+To do so we extend Figure \ref{fig:correctness_graph1} to obtain 
+Figure \ref{fig:correctness_graph2} to incorporate the transition construct. 
+If each Figure \ref{fig:correctness_graph1} represents an individual block 
+than the extended Figure \ref{fig:correctness_graph2} represents the several 
+blocks with the ability to transition between them.
 
 \begin{figure}[htb]
     \centering
@@ -19,12 +33,22 @@ The graph structure of \plccharts is directed graph in which the constructs are 
     \label{fig:correctness_graph2}
 \end{figure}
 
-In this section we will begin by showing that each of the transformations to code are correct examining the basic atoms. We will start by looking at atoms that have the simplest assignments first.
+In this section we will begin by showing that each of the transformations to code are 
+correct by examining the basic atoms. We will start by looking at atoms that have the 
+simplest assignments first.
 
 \clearpage
 \subsection{Atoms}
 
-Each block in \plccharts compiles to their own atomic assign statements. In the case were variables are used the type information is not present in the atomic code generation. Variables are collected at compile time declared and initialized as part of the program construction. By collecting variables in this manner a variable with the same name but given two different types can be identified and will cause a compile error. Also the syntax of \plccharts uses ``:='' as an assign where in the final generated code ``='' will be utilized throughout.
+Each block in \plccharts compiles to their own atomic assign statements.
+In the case were variables are used the type information is not present in 
+the atomic assignment portion of the code generation. 
+Variables are collected at compile time declared and initialized as part of 
+the program construction. By collecting variables in this manner a variable 
+with the same name but given two different types can be identified and will 
+cause a compile error. Also the syntax of \plccharts uses ``:='' as an 
+assign symbol, the final generated code will use the ``='' symbol.
+
 
 \subsubsection{Start Block}
 
@@ -39,7 +63,11 @@ Each block in \plccharts compiles to their own atomic assign statements. In the 
 (No atomic assignments or operations in code)
 \end{lstlisting}
 
-The start atom is the only atom in our system to not generate any actual code for the atom itself. Instead the start atom is used as a place holder so that transitions can be constructed. It also structurally indicates where the program should start. Since the start block contains no atomic code it is trivially correct as it does nothing itself.
+The start atom is the only atom in our system that does not generate any actual 
+code for the atom itself. Instead the start atom is used as a place holder so that 
+transitions can be constructed. It also structurally indicates where the program 
+should start. Since the start block contains no atomic code it is trivially correct 
+as it does nothing itself.
 
 
 \subsubsection{Delay Block}
@@ -55,7 +83,12 @@ The start atom is the only atom in our system to not generate any actual code fo
 delayms(10);
 \end{lstlisting}
 
-The delay atom generates ``delayms($<$expression$>$)''. The expression is the same as in the diagram. The units shown in figure \ref{fig:correctness_atom_delay} as ``ms'' is not included as part of the expression. However the units in the visual representation serves as a reminder that the delay is always measured in milliseconds. Expressions follow the syntax given in the syntax section \ref{sec:statechartsyn} for \plccharts. Since there are no assignments it is trivially correct.
+The delay atom generates ``delayms($<$Expression$>$)''. The expression is mirrored
+in the diagram. The units shown in figure \ref{fig:correctness_atom_delay} as ``ms'' 
+are omitted in the code. The units in the visual representation serves as a reminder to the user 
+that the delay is always measured in milliseconds. Expressions follow the syntax 
+given in Section \ref{sec:statechartsyn}. Since there are no assignments to values,
+the mappin gfrom evaluated values (none) to executed values (none) is trivially correct.
 
 
 \subsubsection{Output Block}
@@ -71,9 +104,19 @@ The delay atom generates ``delayms($<$expression$>$)''. The expression is the sa
 PORTOUT = 0xF2;
 \end{lstlisting}
 
-The output atom generated refers to PORTOUT, which is mapped on a hardware level to the PLC hardware implementer's designation of an appropriate output port. This is done to allow the hardware manufacturer a bit of flexability. In our implementation PORTOUT can be assigned any 8-bit value. Any values larger than 8-bit will be trucated. In our example shown in figure \ref{fig:correctness_atom_output} we can see that the assign line diagram is ``PORTOUT := 0xF2''. We can say that the meaning of this line is $\delta(PORTOUT) = (F2)_{16}$. The final compiled output code is ``PORTOUT = 0xF2''. We can see that $Execution(PORTOUT) = (F2)_{16}$ since we have a direct mapping from the value in diagram to value in execution ($\delta(PORTOUT) = Execution(PORTOUT)$), we can conclude that the assignment in the output block is done correctly with respect to the diagram.
+The output atom generated refers to PORTOUT, which is mapped on a hardware level 
+to the PLC hardware's output port. This is done to allow the hardware manufacturer 
+a bit of flexability. In our implementation PORTOUT can be assigned any 8-bit value. 
+Any values larger than 8-bit will be trucated. 
+In the example shown in Figure \ref{fig:correctness_atom_output} we can see that the 
+assignment in the diagram is ``PORTOUT := 0xF2''. We can say that the meaning of 
+this line is $\delta(PORTOUT) = (F2)_{16}$. The final compiled output code is 
+``PORTOUT = 0xF2''. We can see that $Execution(PORTOUT) = (F2)_{16}$ since we 
+have a direct mapping from the value in diagram to value in 
+execution ($\delta(PORTOUT) = Execution(PORTOUT)$), we can conclude that 
+the assignment in the output block is done correctly with respect to the diagram.
 
-
+\clearpage
 \subsubsection{Input Block}
 
 \begin{figure}[h]
@@ -88,7 +131,19 @@ var = PORTIN;
 \end{lstlisting}
 
 
-We can see in figure \ref{fig:correctness_atom_input} that the diagram clearly shows ``int var := PORTIN''. We can say the meaning of the assignment in the diagram is $\delta(var) = PORTIN$. The final compiled code for the atom is ``var = PORTIN''. The left hand side must be a valid variable name as specified in the syntax of \plccharts. The variable can be any type however PORTIN will always be an 8-bit integer, any variable on the left hand side that is not integer would have PORTIN automatically casted to the appropriate type. Thus we can see that $Execution(var) = PORTIN$. We note that there is a direct mapping from digram $value$ to execution $value$, that is: $\delta(var) = Execution(var)$. Thus by our definition of correctness as defined in the beginning of this section and Figure \ref{fig:correctness_graph1}, we can conclude that the input block is correct.
+We can see in Figure \ref{fig:correctness_atom_input} that the diagram clearly shows
+the assignment ``int var := PORTIN''. We can say the meaning of the assignment in 
+the diagram is $\delta(var) = PORTIN$. The final compiled code for the atom is 
+``var = PORTIN''. The left hand side must be a valid variable name as specified 
+in the syntax of \plccharts (see section \ref{sec:statechartsyn}). 
+The variable can be any type however PORTIN will always be read as an 8-bit integer. 
+Any variable on the left hand side that is not integer would have PORTIN 
+automatically casted to the appropriate type. Thus we can see that 
+$Execution(var) = PORTIN$. We note that there is a direct mapping from diagram
+$value$ to execution $value$, that is: $\delta(var) = Execution(var) = PORTIN$. 
+Thus by our definition of correctness as defined in the beginning of this 
+section and Figure \ref{fig:correctness_graph1}, we can conclude that 
+the input block is correct.
 
 
 \subsubsection{Store Block}
@@ -112,16 +167,47 @@ a = a + 1;
 b = a;
 \end{lstlisting}
 
-The store block is used for assignments. In the left example in figure \ref{fig:correctness_atom_store} we see a store with one assign statement and to the right of figure \ref{fig:correctness_atom_store} we see that store blocks can contain multiple atomic assign statements. 
+The \emphasize{Store Block} is used for assignments. In the left diagram of 
+Figure \ref{fig:correctness_atom_store} we see a \emphasize{Store Block} with one 
+assign statement and in the right diagram of Figure \ref{fig:correctness_atom_store} we see 
+that store blocks can also contain multiple atomic assign statements. 
 
-Looking at the left diagram first we note that the assign statement is ``int a := 0'' that is $\delta(a) = 0$. We see the final generated code is ``$a = 0$'' meaning $Execution(a) = 0$. We see that $\delta(a) = Execution(a)$ that is to say there exists a mapping from the value in the diagram to the value from execution. We can say that that code generated is correct with respect to the diagram. Looking at the right diagram we see that each line of the store block becomes own atomic assign statements. We see that the diagram has ``int a := a +1'' and ``int b := a'' and by evaluation $\delta(a) = a + 1, \delta(b) = a$. The generated code is then ``a = a + 1'' and ``b = a'' and the executed values $Execution(a) = a + 1, Execution(b) = a$. We can see at this point that $\delta(a) = Execution(a)$ and $\delta(b) = Execution(b)$. Thus we can conclude that the Store Block generated code is correct with respect to our diagram. We note that we can create equivalent store atoms by having two single line store atoms. Thus, it is not difficult to see that the right diagram is just a visual grouping of several atomic assigns for visual simplicity when drawn. Being able to group assigns together into one atomic diagram removes the need to have several atomic assign blocks which ends up being visual noise.
+Looking at the left diagram first, we note that the assign statement is ``int a := 0'' 
+that is to mean $\delta(a) = 0$. We see the final generated code is ``$a = 0$'' 
+meaning $Execution(a) = 0$. We see that $\delta(a) = Execution(a)$ that is to 
+say there exists a mapping from the value in the diagram to the value from the execution. 
+We can say that the code generated is correct with respect to the diagram. 
+Looking at the right diagram we see that each line of the \emphasize{Store Block} 
+becomes own atomic assign statement in the code. We see that the diagram 
+has ``int a := a +1'' and ``int b := a'' with evaluations $\delta(a) = a + 1, \delta(b) = a$. 
+The generated code is then ``a = a + 1'' and ``b = a'' with the executed values 
+$Execution(a) = a + 1, Execution(b) = a$. We can see at this point that $\delta(a) = Execution(a)$ 
+and $\delta(b) = Execution(b)$. Thus we can conclude that the \emphasize{Store Block} 
+generated code is correct with respect to our diagram. We note that we can create equivalent 
+diagrams by having two single line store atoms. 
+Thus, it is not difficult to see that the right diagram is just a visual simplification one dual 
+line \emphasize{Store Block}, corresponds to several atomic assigns. Being able to group 
+assigns together into one atomic diagram removes the need to have several atomic assign blocks.
+This is ultimately removes visual clutter and makes the overall diagram simpler.
 
 
 \subsection{Constructors and Transitions}
 
-Aside from atoms compiled code has a few additional constructions. In the example code below we demonstrate the constructed sections for any compiled code. From lines 00-07 is the variable initialization section, any varaibles used are initialized and the type is defined here. Variables in our program are collected at compile time by scanning all the diagram objects and collecting any variables used. Any conflicts between two variable types with the same name are caught and will cause a code generation error. The initialization section will set all variables to a default value after defning the type.
+Constructions takes the atoms and places structural elements around them. 
+In the example code below we demonstrate the constructed sections for any arbitrary 
+compiled code. On lines 00-07 we have the variable initialization section, 
+any varaibles used are initialized and the type is declared here.
+Variables in our program are collected at compile time by scanning all the diagram 
+objects and collecting any variables used. Any conflicts where a variable is given inconsistent types
+are caught and will cause a code generation error. The initialization section will 
+set all variables to a default value after defning the type.
 
-The generated constructs also provide a way for each of the states to terminate the program if no departing transitions exist. This is accomplished by lines 32-33 ``an end of file'' label is generated to mark the end of the program followed by a return statement to end the program and return control to the programmable logic controller chip. On recieving a return the \emphasize{Programmable Logic Controller} will hold all last known values on every port and halt, simulating a stop.
+The generated constructs also exist to provide a way for each of the states to terminate the program
+if no departing transitions exist. This is accomplished by lines 32-33 an ``end of file'' label 
+is generated to mark the end of the program followed by a return statement to end the 
+program and return control to the programmable logic controller chip. On recieving a 
+return the \emphasize{Programmable Logic Controller} will hold all last known values 
+on every port and halt, this simulates a stop.
 
 
 \begin{lstlisting}[frame=single]
@@ -137,7 +223,12 @@ The generated constructs also provide a way for each of the states to terminate 
 33 return;
 \end{lstlisting}
 
-Transitions are used to string together a sequence of atoms in order to perform the computations necessary in our program. In order to show correctness we must show that the transitions are structurally correct that is, we must show Transitions will correctly map modes in the right sequence. Figure \ref{fig:correctness_graph2} shows how transitions factor into our overall structure.
+Transitions are used to string together a sequence of atoms in order to perform the computations 
+necessary in our program. In order to show correctness we must show that the transitions are 
+structurally correct. We must show transitions will correctly map modes in the right sequence. 
+Figure \ref{fig:correctness_graph2} shows how transitions factor into our correctness justification.
+Figure \ref{fig:correctness_graph2} states that in addition to our original correctness justification we
+must also demonstrate that the transitions take us to the same modes and program sections.
 
 \begin{figure}[h]
 	\centering
@@ -183,17 +274,40 @@ Transitions are used to string together a sequence of atoms in order to perform 
 \end{lstlisting}
 %\end{minipage}
 
-Starting by looking at the code above we can see that our first entry point into the program is the ``PROGRAM START'' block. This refers to the start block in our diagram. During compilation the entire diagram is scanned to ensure there is one and only one start block. The generated code for the start block is then placed at the top of the program to ensure it is the first entry point of the program after initializers. 
+Starting by looking at the code above we can see that our first entry point into the 
+program is the ``PROGRAM START'' block. This refers to the \emphasize{Start Block} 
+in our diagram. During compilation the entire diagram is scanned to ensure there 
+is one and only one start block. The generated code for the start block is then 
+placed at the top of the program to ensure it is the first entry point of the 
+program after initializers. 
 
-Transitions in our program are compiled to ``goto'' statements. Each block is given a unique ``Block Unique Identifier'' which is a line label starting with ``BLUID''. BLUID's are generated as each block is scanned at compile time and a monotonically increasing number is appended to the end of the label. The ``goto'' transitions always occur after the atomic block assignments have been made.
+Transitions in our program are compiled to ``goto'' statements. Each block is 
+given a unique ``Block Unique Identifier'' which is a line label starting with 
+``BLUID''. BLUID's are generated as each block is scanned at compile time and 
+a monotonically increasing number is appended to the end of the label. The 
+``goto'' transitions are insertedr after the atomic block assignments have been made.
 
-Looking at diagram \ref{fig:correctness_ex_transition} we note that the start block transitions to ``BLOCK1'' with an edge guarded by ``true''. In the code ``BLOCK1'' has label ``BLUID1'' associated with it's section of code. We see that the generated code for the start block has a ``goto BLUID1'' on line 9. This corresponds to transition leaving the start block. Next we have a transition from ``BLOCK1'' to ``BLOCK2'' in Figure \ref{fig:correctness_ex_transition}. We can see the code corresponding to the transition on line 18 ``goto BUILD2'' where ``BLUID2'' refers to BLOCK2. Finally we note the two guarded transitions leaving ``BLOCK2''. For the guarded edge ``$a >= 3$'' we can see the generated code ``\texttt{if (a >= 3) goto BLUID1}'' on line 27. We note that ``BLUID1'' refers to ``BLOCK1'' in the diagram so the transition goes from ``BLOCK2'' to ``BLOCK1'' which is correct. For the transition guarded by ``$a < 3$'' we note the generated code on line 28 ``\texttt{if (a < 3) goto BLUID2}''. We see that ``BLUID2'' refers to ``BLOCK2'' so the transition is a self loop, which is correct with respect to the diagram in Figure \ref{fig:correctness_ex_transition}.
+Looking at diagram \ref{fig:correctness_ex_transition} we note that the \emphasize{Start Block} 
+transitions to ``BLOCK1'' with an edge guarded by ``true''. In the code ``BLOCK1'' has label 
+``BLUID1'' associated with its section of code. We see that the generated code for the \emphasize{Start Block}
+has a ``goto BLUID1'' on line 9. This corresponds to transition leaving the \emphasize{Start Block}. 
+Next we have a transition from ``BLOCK1'' to ``BLOCK2'' in Figure \ref{fig:correctness_ex_transition}. 
+We can see the code corresponding to the transition on line 18 ``goto BUILD2'' where 
+``BLUID2'' refers to ``BLOCK2''. Finally we note the two guarded transitions 
+leaving ``BLOCK2''. For the guarded edge ``$a >= 3$'' we can see the generated 
+code ``\texttt{if (a >= 3) goto BLUID1}'' on line 27. We note that ``BLUID1'' refers 
+to ``BLOCK1'' in the diagram so the transition goes from ``BLOCK2'' to ``BLOCK1'' 
+which is correct. For the transition guarded by ``$a < 3$'' we note the generated code 
+on line 28 ``\texttt{if (a < 3) goto BLUID2}''. We see that ``BLUID2'' refers to ``BLOCK2'' 
+so the transition is a self loop, which is correct with respect to the diagram in 
+Figure \ref{fig:correctness_ex_transition}. Since all the transitions are generated correctly for
+any arbitrary block we can conlude that the transtions are structurally correct in our system.
 
 
 
 
 
-
+\clearpage
 \subsection{Correctness on Execution}
 
 \subsubsection{Table Representation}
