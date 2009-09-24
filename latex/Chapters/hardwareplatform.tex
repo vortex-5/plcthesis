@@ -1,9 +1,14 @@
 \section{Platform}
 \label{sec:hardwareplatform}
 
-The initial hardware platform chosen for this project was the PIC18F452 however this project was designed from the ground up to allow for other hardware to be untilized with some effort from the hardware support team. The PIC18F452 was chosen due to its popularity in the industry and low cost.
+The initial hardware platform chosen for this project was the PIC18F452 
+however this project was designed from the ground up to allow for other 
+hardware to be untilized with some effort from a hardware support team. 
+The PIC18F452 was chosen for this project due to its popularity in 
+the industry and low cost.
 
-In addition the PIC18F452 has the following features that are essential for PLC operation:
+In addition the PIC18F452 has the following features that are essential 
+for PLC construction:
 
 \begin{itemize}
 \item 8 Digital inputs.
@@ -14,9 +19,16 @@ In addition the PIC18F452 has the following features that are essential for PLC 
 \item On board program memory.
 \end{itemize}
 
-These minimum specification have become the baseline for our hardware requirements. In order to utilize a different chip with our programming software the hardware support team will be required to implement a driver layer as described in section \ref{sec:hardwareframework}.
+These minimum specification have become the baseline for our hardware 
+requirements. In order to utilize a different chip with our programming 
+software the hardware support team will be required to implement a framework 
+layer as described in Section \ref{sec:hardwareframework}.
 
-For real time operation hardware requirements on clock speed will become more critical execution of ``goto'' should occur as close as possible to constant time or O(1). Without the ability to execute ``goto'' in constant time delays between transitions become increasingly harder to predict and account for.
+For real time operation hardware requirements on clock speed will 
+become more critical execution of ``goto'' should occur as close as
+ possible to constant time or O(1). Without the ability to execute 
+ ``goto'' in constant time delays between transitions become 
+ increasingly harder to predict and account for.
 
 The specifications for the PIC18F452 are as follows:
 \begin{itemize}
@@ -28,4 +40,10 @@ The specifications for the PIC18F452 are as follows:
 	\item 10-Bit A/D: 8 inputs channels
 \end{itemize}
 
-As the reader may observe the PIC18F452 exceeds our minimum requirements for hardware that will run our OS and software. In particular we currently do not include provisions to take inputs from our A/D channels which is a quite useful feature. This was done because we wanted separate I/O modules to handle the inputs and outputs. Given more time on this project it would have been possible to fully utilize the on board hardware.
+As the reader may observe the PIC18F452 exceeds our minimum 
+requirements for hardware that will run our OS and software. In 
+particular we currently do not include provisions to take inputs 
+from our A/D channels. This was done because the original design had 
+separate I/O modules to handle the inputs and outputs. Given more 
+time on this project it would have been possible to more fully utilize 
+the on board hardware.
