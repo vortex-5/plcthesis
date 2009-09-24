@@ -96,9 +96,7 @@ For example it may be necessary to define the input and output ports to a specif
 Function calls from our software that access more complex operations 
 may be required to be implemented directly into hardware. Our current 
 software only requires that the routine for delaying the execution by a 
-number of milliseconds is implemented. It is done as follows (please 
-note for layout reasons we are using underscore when code should be 
-on the same line):
+number of milliseconds is implemented. It is done as follows:
 
 \textbf{File:}plcmcu.h
 
@@ -123,19 +121,20 @@ on the same line):
 
 //crystal select block
 #if (MSTCY >= 10000)
-	#define DEFDELAY(timevalms) _
+	#define DEFDELAY(timevalms) \
 	Delay10KTCYx(timevalms * (char) (MSTCY/10000))
 #endif
 #if (MSTCY >= 1000 && MSTCY void delayms(int time)
 {
 	DEFDELAY(time);
 }< 10000)
-	#define DEFDELAY(timevalms) _ 
+	#define DEFDELAY(timevalms) \ 
 	Delay1KTCYx(timevalms * (char) (MSTCY/1000))
 #endif
 #if (MSTCY < 1000)
-	#error "Unsupported OCCILATOR defined by hardware" _ 
-	" manufacturer please ensure crystal is faster than 1Mhz"
+	#error ``Unsupported OCCILATOR defined by'' \
+	``hardware manufacturer please ensure crystal'' \
+	``is faster than 1Mhz''
 #endif
 
 /* End CLOCK specification */
