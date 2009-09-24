@@ -2,7 +2,14 @@
 \label{sec:hardwareframework}
 
 \subsection{Purpose}
-The hardware framework allows different chips to be utilized with the same software code the same generated code from our software package ``PLCEdit'' as described in chapter \ref{ch:software}. Provided the hardware meets the minimum requirements defined by section \ref{sec:hardwareplatform}. The framework consists of a bunch of definitions which map the symbolic software references to hardware specific points. In addition the framework is also responsible for properly initializing the chip and performing any clean up operations once the chip finishes execution.
+The hardware framework allows different chips to be utilized with the same 
+\emphasize{Intermediate Language} code generated from our 
+software package ``PLCEdit''.
+The hardware must meet the minimum requirements defined by Section \ref{sec:hardwareplatform}. 
+The framework consists of a bunch of definitions which map the symbolic software 
+references to hardware specific calls. In addition the framework is also 
+responsible for properly initializing the chip and performing any clean 
+up operations once the chip completes execution.
 
 
 \subsection{Hardware Framework Overview}
@@ -14,18 +21,21 @@ The hardware framework allows different chips to be utilized with the same softw
     \label{fig:hardwareframework}
 \end{figure}
 
-The hardware framework was designed to allow multiple targets. Our IDE generates a program.c file that refers to hardware functions and definitions that must be implemented in ``plcmcu.h'' and ``plcmcu.c'' and combined with an optional ``plcmcu.mcp'' project file if so desired. ``plcmcu.h'' contains definitions of the hardware. These are usually designer choices such as oscillator selection, and which ports on the chip they will be using for input and output. ``plcmcu.c'' will implement any function calls that are required and take care of any chip initializations. In addition it is ``plcmcu.c'' job to call the user generated ``program.c'' once the chip is fully initialized and setup. The entire framework is then sent to the MPLab C18 compiler, or a compiler of the implementer's choosing. In the next section we will show and comment on some of the sample code for our prototype system.
+The hardware framework was designed to allow multiple targets. Our IDE generates 
+a program.c file that refers to hardware functions and definitions implemented 
+in ``plcmcu.h'' and ``plcmcu.c'' to be combined with an optional ``plcmcu.mcp'' 
+project file. ``plcmcu.h'' contains definitions of the hardware. These are usually designer choices such as oscillator selection, and which ports on the chip they will be using for input and output. ``plcmcu.c'' will implement any function calls that are required and take care of any chip initializations. In addition it is ``plcmcu.c'' job to call the user generated ``program.c'' once the chip is fully initialized and setup. The entire framework is then sent to the MPLab C18 compiler, or a compiler of the implementer's choosing. In the next section we will show and comment on some of the sample code for our prototype system.
 
 
 \subsection{Sub-Component Implementations} 
 
-\textbf{File:} plcmcu.h
+\noindent\textbf{File:} plcmcu.h
 
-\textbf{Section:} Chip configuration 
+\noindent\textbf{Section:} Chip configuration 
 
-\textbf{Description:} Sets configuration bits for the chip that cannot be done at run time.
+\noindent\textbf{Description:} Sets configuration bits for the chip that cannot be done at run time.
 
-\textbf{Code:}
+\noindent\textbf{Code:}
 
 
 
@@ -41,13 +51,13 @@ The hardware framework was designed to allow multiple targets. Our IDE generates
 
 
 
-\textbf{File:} plcmcu.c
+\noindent\textbf{File:} plcmcu.c
 
-\textbf{Routine:} init\_chip(void)
+\noindent\textbf{Routine:} init\_chip(void)
 
-\textbf{Description:} Initializes any chip specific configuration bits that must be done at run time.
+\noindent\textbf{Description:} Initializes any chip specific configuration bits that must be done at run time.
 
-\textbf{Code:}
+\noindent\textbf{Code:}
 
 
 
@@ -65,7 +75,9 @@ void init_chip(void)
 
 \subsection{Hardware Specific Definitions}
 
-Hardware specific definitions are reserved for defining specific characteristics of the hardware to match up with the software. For example it may be necessary to define the input and output ports to a specific port on the chip itself.
+Hardware specific definitions are reserved for mapping specific characteristics 
+of the hardware to match up with the references in the \emphasize{Intermediate Language}. 
+For example it may be necessary to define the input and output ports to a specific port on the chip itself.
 
 
 
@@ -81,7 +93,12 @@ Hardware specific definitions are reserved for defining specific characteristics
 
 \subsection{Hardware Specific Implementations}
 
-convenience calls from our software that access more complex operations may be required to be implemented directly into hardware. Our current software only requires that the routine for delaying the execution by a number of milliseconds is implemented. It is done as follows (please note for layout reasons we are using underscore when code should be on the same line):
+Function calls from our software that access more complex operations 
+may be required to be implemented directly into hardware. Our current 
+software only requires that the routine for delaying the execution by a 
+number of milliseconds is implemented. It is done as follows (please 
+note for layout reasons we are using underscore when code should be 
+on the same line):
 
 \textbf{File:}plcmcu.h
 
@@ -143,4 +160,6 @@ void delayms(int time)
 
 
 
-It is highly recommended to avoid macros where possible however the nature of the PIC18F452 required macros in order to prevent inaccurate delays caused by actually computations.
+It is highly recommended to avoid macros where possible however the nature of 
+the PIC18F452 required macros in order to prevent inaccurate delays caused by 
+repeatedly calculating the oscillator conversions at run time.
