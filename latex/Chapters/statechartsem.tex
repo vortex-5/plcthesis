@@ -23,19 +23,19 @@ The model of \plcchart $\:$ is expressed mathematically as follows:
 	\plcchart
 	
 \begin{itemize}
-	\item \textbf{$Q$:} Set of modes.
+	\item \textbf{$Q$:} Set of modes
 	\item \textbf{$V$:} The state space $V = \langle V_0,V_1,V_2,..,V_n \rangle \: where \: V_{i}\in \lbrace \mathbb{Z}_{128}, \mathbb{Z}, \mathbb{B}, \mathbb{R} \rbrace$
-	\item $\mathbf{v}_{init}$: vector of initial values $\mathbf{v}_{init}$: $\langle v_0,..,v_n \rangle \: where \: (v_i \in V_i)$
-	\item \textbf{$G$:} Set of guard conditions. $V \rightarrow \mathbb{B}$
-	\item \textbf{$A$:} Set of assignments. $V \times Q \rightarrow V$
-	\item \textbf{$\tau$:} Set of transitions. $G \times Q \rightarrow Q$
-	\item \textbf{$q_0$:} The initial starting mode.
+	\item $\mathbf{v}_{init}$: vector of initial values $\mathbf{v}_{\mbox{\scriptsize init}}$: $\langle v_0,..,v_n \rangle \: where \: (v_i \in V_i)$
+	\item \textbf{$G$:} Set of guard conditions $V \rightarrow \mathbb{B}$
+	\item \textbf{$A$:} Set of assignments $V \times Q \rightarrow V$
+	\item \textbf{$\tau$:} Set of transitions $G \times Q \rightarrow Q$
+	\item \textbf{$q_0$:} The initial starting mode
 \end{itemize}
 \end{definition}
 
 Many states in the system can belong to the same mode. The state space in our
 system is used for model variables. All variables in \emphasize{\plcchart}
-are typed. The initial value in the system is given by a state $v_init$ in
+are typed. The initial value in the system is given by a state $v_{\mbox{\scriptsize init}}$ in
 the state space $V$.  Guard conditions are mappings from states spaces
 to boolean values.
 

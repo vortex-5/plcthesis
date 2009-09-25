@@ -259,8 +259,8 @@
 
             \newpage
      \begin{tabbing}
-     MASTER OF APPLIED SCIENCE(2003) \hspace{1.5in} \=McMaster University \kill
-     MASTER OF APPLIED SCIENCE(2003) \>McMaster University \\
+     MASTER OF APPLIED SCIENCE(2009) \hspace{1.5in} \=McMaster University \kill
+     MASTER OF APPLIED SCIENCE(2009) \>McMaster University \\
      \>Hamilton, Ontario \\
      \end{tabbing}
      \begin{tabbing}
