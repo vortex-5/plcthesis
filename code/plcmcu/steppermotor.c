@@ -1,0 +1,52 @@
+void program(void)
+{
+
+// VARIABLE DECLARATIONS //
+int blinker;
+BLUID0:
+//////////////////////////////////////
+//        PROGRAM START             //
+//////////////////////////////////////
+goto BLUID1;
+goto EOF;
+
+BLUID1:
+//////////////////////////////////////
+//        STORE                     //
+//////////////////////////////////////
+blinker = 0;
+
+goto BLUID3;
+goto EOF;
+
+BLUID3:
+//////////////////////////////////////
+//        STORE                     //
+//////////////////////////////////////
+blinker = blinker+1;
+
+if (blinker > 255) goto BLUID1;
+if (blinker <= 255) goto BLUID5;
+goto EOF;
+
+BLUID4:
+//////////////////////////////////////
+//        OUTPUT                    //
+//////////////////////////////////////
+PORTOUT = 0x0;
+goto BLUID3;
+goto EOF;
+
+BLUID5:
+//////////////////////////////////////
+//        DELAY                     //
+//////////////////////////////////////
+delayms(1000);
+goto BLUID4;
+goto EOF;
+
+EOF:
+return;
+}
+
+

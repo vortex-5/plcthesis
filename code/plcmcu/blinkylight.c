@@ -1,0 +1,43 @@
+void program(void)
+{
+
+// BEGIN VARIABLE INITIALIZATIONS //
+// END VARIABLE INITIALIZATIONS //
+
+BLUID0:
+//////////////////////////////////////
+//        PROGRAM START             //
+//////////////////////////////////////
+goto BLUID3;
+goto EOF;
+
+BLUID1:
+//////////////////////////////////////
+//        OUTPUT                    //
+//////////////////////////////////////
+PORTOUT = 1;
+goto BLUID2;
+goto EOF;
+
+BLUID2:
+//////////////////////////////////////
+//        DELAY                     //
+//////////////////////////////////////
+delayms(1000);
+if (PORTOUT == 255) goto BLUID3;
+if (PORTOUT == 0) goto BLUID1;
+goto EOF;
+
+BLUID3:
+//////////////////////////////////////
+//        OUTPUT                    //
+//////////////////////////////////////
+PORTOUT = 0;
+goto BLUID2;
+goto EOF;
+
+EOF:
+return;
+}
+
+
