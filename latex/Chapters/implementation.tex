@@ -197,15 +197,14 @@ structure definition. Each block primative's construction
 is detailed below.
 
 \subsubsection{Start Block}
-
-\begin{lstlisting}[frame=single]
 \label{def:cmpstartblock}
-00 \emphasize{BLUID#}:
+\begin{lstlisting}[frame=single]
+00 BLUID#:
 01 //////////////////////////////////////
 02 //        PROGRAM START             //
 03 //////////////////////////////////////
 04 
-05 if (\emphasize{condition}) goto \emphasize{(LABEL)}
+05 if (condition) goto LABEL;
 06 goto EOF;
 \end{lstlisting}
 
@@ -223,16 +222,16 @@ edges exist the program will stay in the block and not execute any
 other block by going to the end of the program.
 
 \subsubsection{Delay Block}
-\begin{lstlisting}[frame=single]
 \label{def:cmpdelayblock}
-00 \emphasize{BLUID#}:
+\begin{lstlisting}[frame=single]
+00 BLUID#:
 01 //////////////////////////////////////
 02 //        DELAY                     //
 03 //////////////////////////////////////
 04
-05 delay_ms(\emphasize{integer});
+05 delay_ms(integer);
 06 
-07 if (\emphasize{condition}) goto \emphasize{(LABEL)}
+07 if (condition) goto LABEL;
 ...
 08 goto EOF;
 \end{lstlisting}
@@ -248,16 +247,16 @@ determine 1ms on hardware. \texttt{delay\_ms} is a call that will
 be implemented on the hardware framework show in Section \ref{sec:hardwareframework}.
 
 \subsubsection{Input Block}
-\begin{lstlisting}[frame=single]
 \label{def:cmpinputblock}
-00 \emphasize{BLUID#}:
+\begin{lstlisting}[frame=single]
+00 BLUID#:
 01 //////////////////////////////////////
 02 //        INPUT                     //
 03 //////////////////////////////////////
 04
 05 variable = PORTIN;
 06 
-07 if (\emphasize{condition}) goto \emphasize{(LABEL)}
+07 if (condition) goto LABEL;
      ...
 08 goto EOF;
 \end{lstlisting}
@@ -271,16 +270,16 @@ our program that can accept a 8 bit integer values.
 
 
 \subsubsection{Output Block}
-\begin{lstlisting}[frame=single]
 \label{def:cmpoutputblock}
-00 \emphasize{BLUID#}:
+\begin{lstlisting}[frame=single]
+00 BLUID#:
 01 //////////////////////////////////////
 02 //        OUTPUT                    //
 03 //////////////////////////////////////
 04
 05 PORTOUT = variable;
 06 
-07 if (\emphasize{condition}) goto \emphasize{(LABEL)}
+07 if (condition) goto LABEL;
      ...
 08 goto EOF;
 \end{lstlisting}
@@ -291,9 +290,9 @@ the input port a value is written to the output port. This is
 accomplished by the line ``PORTOUT = variable;''.
 
 \subsubsection{Store Block}
-\begin{lstlisting}[frame=single]
 \label{def:cmpstoreblock}
-00 \emphasize{BLUID#}:
+\begin{lstlisting}[frame=single]
+00 BLUID#:
 01 //////////////////////////////////////
 02 //        STORE                     //
 03 //////////////////////////////////////
@@ -302,7 +301,7 @@ accomplished by the line ``PORTOUT = variable;''.
 06 variable1 = expression1;
 07 variable2 = expression2;
      ...
-08 if (\emphasize{condition}) goto \emphasize{(LABEL)}
+08 if (condition) goto LABEL;
      ...
 09 goto EOF;
 \end{lstlisting}
