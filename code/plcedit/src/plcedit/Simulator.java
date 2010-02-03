@@ -587,8 +587,8 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                 Object rawResult = expr.evaluate(context);
                 if (rawResult == null)
                 {
-                    throw new Exception("Uninitialized Variable Encountered, Please Initialize the variable before first use in an expression\n\n" +
-                            "Example: \n" +
+                   throw new Exception("Uninitialized Variable Encountered, Please Initialize the variable before first use in an expression\n\n" +
+                           "Example: \n" +
                             "int var = uninit\n" +
                             "Fixed: \n" +
                             "int uninit = 0 \n" +
@@ -605,22 +605,22 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                         switch(simvar.identity.type.getType())
                         {
                             case Bool:
-                                simvar.value = (Boolean)rawResult;
+                                simvar.value = (Number)(rawResult);
                                 break;
                             case Byte:
-                                simvar.value = (Integer)(((Integer)rawResult) & (0xFF));
+                                simvar.value = (Integer)(((Number)(rawResult)).intValue() & (0xFF));
                                 break;
                             case Double:
-                                simvar.value = (Double)rawResult;
+                                simvar.value = ((Number)(rawResult)).doubleValue();
                                 break;
                             case Float:
-                                simvar.value = (Float)rawResult;
+                                simvar.value = ((Number)(rawResult)).floatValue();
                                 break;
                             case Int:
-                                simvar.value = (Integer)rawResult;
+                                simvar.value = ((Number)(rawResult)).intValue();
                                 break;
                             case Long:
-                                simvar.value = (Long)rawResult;
+                                simvar.value = ((Number)(rawResult)).longValue();
                                 break;
                             case Undefined:
                                 throw new RuntimeException("Cannot Cast to an Undefined type!");
