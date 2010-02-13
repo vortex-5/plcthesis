@@ -1,0 +1,20 @@
+Requrements:
+
+Near the beginning:
+- In this talk I'll focus on the usage of the language rather than elements of the semantics
+
+
+Slide 17->18
+- Mention there are commercial tools for ladder logic (not free all different)
+- Flash slide for ladder logic motor controller all together.
+
+Conclusion Slide
+- Developed a simpler programming language
+- We believe that it's easier to learn and much faster to programmer Much easier than ladder logic to learn
+- Developed Development Enviroment
+
+Future Work:
+- AVR Version of this
+- Sub diagrams
+- Make the language provably correct
+- Certified PLC Programs
