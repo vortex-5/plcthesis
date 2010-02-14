@@ -144,18 +144,17 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                 .add(btnStepOnce)
                 .add(18, 18, 18)
                 .add(btnStepNext)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(353, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(TableScrollablePane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 247, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 38, Short.MAX_VALUE)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(btnReset)
                     .add(btnStepOnce)
-                    .add(btnStepNext))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .add(btnStepNext)))
         );
 
         pack();
@@ -608,7 +607,7 @@ public class Simulator extends javax.swing.JFrame implements ActionListener {
                                 simvar.value = (Number)(rawResult);
                                 break;
                             case Byte:
-                                simvar.value = (Integer)(((Number)(rawResult)).intValue() & (0xFF));
+                                simvar.value = (int)(((Number)(rawResult)).intValue());
                                 break;
                             case Double:
                                 simvar.value = ((Number)(rawResult)).doubleValue();
