@@ -26,7 +26,7 @@ due to the the finished program having a similar visual structure to a ladder.
 \end{figure}
 Mitsubishi Automation (\ref{img:mitsubishiplc}), Siemens, and Omron are a few of the big
  producers of industry standard PLC's although the shape and form factor differ between 
- manufacturers PLC's always consist of 3 distinct parts.  The input module, the main 
+ manufacturers PLC's always consist of three distinct parts.  The input module, the main 
  controller unit and the output module (please refer to Figure \ref{img:plcrender_1}). 
  This separation exists due to varying requirements for analog inputs and different output 
  capacity requirements in order to drive heavy machinery. I/O modules may consist of 
@@ -63,7 +63,7 @@ described in more detail below:
 	\item\textbf{Output Scan:} Internal temporary registers are written to their destination registers in one step. External outputs take on the values held by their associated temporary registers. All outputs also take place in one step and the outcome is that it appears that all outputs change simultaneously.
 \end{itemize}
 
-In each scan operations are modelled as if executions happen concurrently thus, the order of individual instructions in each phase is not important. All of this is done since Ladder Logic (please see section \ref{section:ladderlogic}) executes concurrently on multiple rungs since it is based off of electrical circuitry. Internally however PLC's are sequential machines with an deterministic order in which instructions are executed. This is a side effect of using microcontrollers in the main control unit instead of relays and circuitry. Many temporary registers are used to store inputs and outputs so that at the beginning each phase they can be latched in one step. This makes the reading of multiple inputs and outputs occur concurrently.
+In each scan operations are modelled as if executions happen concurrently thus, the order of individual instructions in each phase is not important. All of this is done since Ladder Logic (please see section \ref{section:ladderlogic}) executes concurrently on multiple rungs in order to emulate the behaviour of electrical circuitry. Internally however PLC's are sequential machines with a deterministic order in which instructions are executed. This is a side effect of using microcontrollers in the main control unit instead of relays and circuitry. Many temporary registers are used to store inputs and outputs so that at the beginning of each phase they can be latched in one step. This makes the reading of multiple inputs and outputs occur concurrently.
 
 \begin{figure}[h]
     \centering
@@ -75,19 +75,19 @@ In each scan operations are modelled as if executions happen concurrently thus, 
 
 The input and output modules generally connect to the main module via serial links 
 however some manufacturers also include network communication over standard shielded 
-Ethernet \cite{rockwell_io,rockwell_tech_pub}. Generally serial communication is used 
+Ethernet \cite{rockwell_io,rockwell_tech_pub}. Generally, serial communication is used 
 more often when the input and output modules are at a close distance to the controller 
-unit as in a modular PLC designs  (see Figure \ref{img:plcrender_2}). The network 
+unit as in modular PLC designs  (see Figure \ref{img:plcrender_2}). The network 
 interface on the other hand is used when the input or output module needs to be located 
 far away from the main controller unit \cite{rockwell_tech_pub} as is often the case in 
 automated production facilities. Output modules are generally relay driven and the 
 driving current is provided by a transistor connected to logic pins of the main controller.
- This is done to isolate the internal circuitry from the high current demands of 
- driving heavy machinery \cite{plcapp}. Alternatively some circuits employ an opto-isolator 
- circuitry to achieve the same effect. The trade off in this design is it will accommodate 
- less current under load but has faster switching and overall better service life \cite{plcapp}.
-  Analog outputs are obtained by passing a binary value through a digital to analog 
-  converter (DAC). A reference voltage is usually required in such configurations.
+This is done to isolate the internal circuitry from the high current demands of 
+driving heavy machinery \cite{plcapp}. Alternatively some circuits employ an opto-isolator 
+circuitry to achieve the same effect. The trade off in this design is it will accommodate 
+less current under load but has faster switching and overall better service life \cite{plcapp}.
+Analog outputs are obtained by passing a binary value through a digital to analog 
+converter (DAC). A reference voltage is usually required in such configurations.
 
 %source http://www.toolingu.com/class-450240-plc-inputs-and-outputs.html
 All input and output modules contain some common  features which allow for modularity. 
@@ -115,24 +115,24 @@ Although externally they are not expandable internally the configuration of the 
 modules are actually identical.
 
 %source ISBN 0-13-025603-X
-Due to the varying requirements of manufacturing over the years a wide variety of I/O modules now exist to fill in every need a short list of common I/O modules for the Allen-Bradley SLC500 series of PLC's is given below \cite{slc500}.
+Due to the varying requirements of manufacturing over the years a wide variety of I/O modules now exist to fill in every need. A short list of common I/O modules for the Allen-Bradley SLC500 series of PLC's is given below \cite{slc500}.
 \begin{itemize}
-	\item \textbf{Analog Input Module:} Reads in analog voltages converts them into digital values and sends the information to the control unit.
+	\item \textbf{Analog Input Module:} Reads in analog voltages, converts them into digital values and sends the information to the control unit.
 	\item \textbf{Analog Output Module:} Takes in digital values and produces an appropriate analog voltage level.
-	\item \textbf{ASCII Input Module:} These modules take in character information usually via serial links (RS-232) and convert them into a form the PLC controllers can understand\cite{slc500}.
+	\item \textbf{ASCII Input Module:} These modules take in character information usually via serial links (RS-232) and convert it into a form the PLC controllers can understand\cite{slc500}.
 	\item \textbf{ASCII Output Module:} Takes PLC information converts it to an character representation and sends it out via RS-232.
 	\item \textbf{Barrel-Temperature Module:} This module monitors four zones of an autotuned PID heating or cooling unit for temperature control. Molding machines and extruder employ these modules for controlling barrel temperature while injecting material \cite{slc500}.
 	\item \textbf{BCD Input Module:} This module reads in inputs from devices that output binary-coded decimal (a method of representation where each decimal digit is represented by four bits). An example of such a device is a thumb wheel \cite{slc500}.
-	\item \textbf{BCD Output Module:} Essentially does the reverse of the input module usually used for compatibility when devices expect data in BCD format.
+	\item \textbf{BCD Output Module:} Essentially does the reverse of the input module, usually used for compatibility when devices expect data in BCD format.
 	\item \textbf{Discrete Input Module:} These are isolated digital inputs.
 	\item \textbf{Discrete Output Module:} These are isolated digital output modules.
 	\item \textbf{Encoder Counter Module:} Keeps track of angular positioning of shafts.
-	\item \textbf{Gray Encoder Module:} Receives grey-code signals from a device that produces grey-code.
+	\item \textbf{Grey Encoder Module:} Receives grey-code signals from a device that produces grey-code.
 	\item \textbf{High-Speed Counter-Encoder Module:} This type of module allows counting and encoding at a much faster rate than is normally possible inside a PLC program.
 	\item \textbf{PID Module:} These modules enable the user to perform closed loop automatic control based on proportional integral and derivative values. If properly tuned the module can hold a process at the desired set point.
 	\item \textbf{Synchronized Axes Module:} Provides logic to synchronize machines like hydraulic tailgate loaders, forging machines, and rolling-position operations.
 	\item \textbf{Thermocouple Modules:} These modules allow the PLC to read temperatures of a process and will output usually with Celsius or Fahrenheit.
-	\item \textbf{TTL Input Module:} Allows reading inputs from TTL devices such as most integrated circuits.
+	\item \textbf{TTL Input Module:} Allows reading inputs from TTL\gloassary{name={TTL}, description={Transistor-transistor logic}} devices such as most integrated circuits.
 \end{itemize}
 
 Programmable logic controllers can classified into three categories: Integrated such 
@@ -144,12 +144,12 @@ power supply, and several modular slots for both the microcontroller and various
 and output modules.
 
 Compact units such as the Melsec previously mentioned commonly have an input output 
-port range from 8 - 24 these are not expandable due to its all-in-one nature. 
+port range from 8 - 24, these are not expandable due to its all-in-one nature. 
 The Melsec unit has 2000 steps of execution memory. Each step can be loosely thought 
 of as an instruction. However, the nature of Ladder Logic programming tends to obscure 
 what a step is after it is compiled. The output capacity of these compact units can range 
 anywhere from milliamps to a few amps. As an example the Melsec FX-32MR in 
-Figure \ref{img:mitsubishiplc} can output a maximum of 8A on 4 of it's ports and only 
+Figure \ref{img:mitsubishiplc} can output a maximum of 8A on 4 of its ports and only 
 2A on the remaining ports. Modular units on the other hand are able to scale to the 
 diverse demands of operating heavy machinery by fitting them with high capacity output units.
 
