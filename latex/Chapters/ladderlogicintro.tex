@@ -13,8 +13,8 @@
 %reasons for development
 Ladder logic was originally developed to replace physical relays used in PLC's.
 As a result the ``language'' resembles a circuit diagram. The left most
-and right most ``rung'' represent power rails analogous to GND (or negative)
- and VCC (or positive) what's
+and right most ``rung'' represent power rails analogous to GND\glossary{name={GND}, description={Ground (or negative in electronics)}} (or negative)
+ and VCC\glossary{name={VCC}, description={Voltage at the Common Collector (or postitive voltage in electronics)}} (or positive) what's
 placed in between those rungs are the load components \cite{ebookmorris}. In 
 the case of programming, the entire logic is created from loads you place 
 in between these power rails. Each horizontal ``rung'' is then its own
@@ -64,8 +64,9 @@ $$M=\lbrace in_1 \rbrace, S=\lbrace out_1 \rbrace, C=\lbrace out_1 \rbrace, R=\l
 Note that $rung_1$ is not explicitly labelled in Ladder Logic but we give it a name here
 so we may refer to it and complete our model.
 
-The semantics of figure \ref{fig:intro_fig1} is then: 
-\begin{table}[htp]
+\clearpage
+The semantics of figure \ref{fig:intro_fig1} is then given by: 
+\begin{table}[h]
     \centering
     \begin{tabular}{|l|l|l|}
         \hline
@@ -160,7 +161,7 @@ figure \ref{fig:intro_fig3a}.
 
 Since the semantics are the same for both figure \ref{fig:intro_fig3} and figure \ref{fig:intro_fig3a} we can
 express both outcomes with function table \ref{table:table_for_fig3}.
-As before in table \ref{table:table_for_fig2} in table \ref{table:table_for_fig3} $in_1$ and $in_2$ are composed to form our composed action $@T(in_1 = true \vee in_2 = true)$. However it is also possible to represent this action another way.
+As before in table \ref{table:table_for_fig2} in table \ref{table:table_for_fig3} $in_1$ and $in_2$ are composed to form our composed action $@T(in_1 = true \vee in_2 = true)$. However it is also possible to represent this in another way as we will show below.
 
 \begin{table}[h]
     \centering
@@ -186,7 +187,7 @@ In table \ref{table:table_for_fig3a} we choose to represent $in_1$ and $in_2$ as
 smaller examples table \ref{table:table_for_fig3} make more sense since you can verify relatively simple smaller functions
 quite fast. If a system becomes reasonably large however there might be motivation to use the style shown in 
 table \ref{table:table_for_fig3a} since it will allow more complex functions to be decomposed into simpler inputs.
-Since semantically the two are equivalent this paper will focus to the first convention.
+Since semantically the two are equivalent this thesis will focus to the first convention.
 
 
 \begin{figure}[h]
@@ -211,8 +212,8 @@ Each output assertion is given their own state. Finally in Figure \ref{fig:intro
 
 Thus, each rung can be converted into an equivalent state diagram by examining its 
 function table, assigning the state variables to guard conditions, and creating a
-state for each of the outputs. For completeness we complete this procedure to produce
-a state diagram shown in Figure \ref{fig:intro_or_graph_3a} which is a representation for 
+state for each of the outputs. For thoroughness we complete this procedure to produce
+a state diagram shown in Figure \ref{fig:intro_or_graph_3a} which is a representation of 
 Figure \ref{fig:intro_fig3a} and its
 corresponding table \ref{table:table_for_fig3a}.
 
@@ -224,7 +225,7 @@ corresponding table \ref{table:table_for_fig3a}.
     \label{fig:intro_or_graph_3a}
 \end{figure}
 
-Another concept in ladder logic is latching. Suppose you have a light that you want to be able to turn on and stay on after you push a button. With any of the ladder diagrams shown above the light would go out as soon as the buttons were all released. In order to keep the light on and constantly on after the button is pressed we introduce the a latch. We modify our diagram shown in figure \ref{fig:intro_fig3a} making the output feed back into one of the inputs to our OR circuit. The result is show in figure \ref{fig:intro_fig_latched}.
+Another concept in ladder logic is latching. Suppose you have a light that you want to be able to turn on and stay on after you push a button. With any of the ladder diagrams shown above the light would go out as soon as the buttons were all released. In order to keep the light on and constantly on after the button is pressed we introduce the latch. We modify our diagram shown in figure \ref{fig:intro_fig3a} making the output feed back into one of the inputs to our OR circuit. The result is show in figure \ref{fig:intro_fig_latched}.
 
 %figure for latched circuits 
 \begin{figure}[h]
@@ -234,6 +235,6 @@ Another concept in ladder logic is latching. Suppose you have a light that you w
     \label{fig:intro_fig_latched}
 \end{figure}
 
-The latched circuit operates the same way as the behaviour show in \ref{table:table_for_fig3a} the key difference is the feedback of the OR circuit replaces the second row of the function table. This causes $latched\_out1$ to stay on after the initial input is removed.
+The latched circuit operates the same way as the behaviour show in table \ref{table:table_for_fig3a}; the key difference is the feedback of the OR circuit replaces the second row of the function table. This causes $latched\_out1$ to stay on after the initial input is removed.
 
-All Ladder Logic programs are built off these basic primitives in addition each manufacturer offers their own convenience functions and additional blocks that allow operations like add subtract to be done in one block rather than attempt to construct it through the circuit diagram.
+All Ladder Logic programs are built of these basic primitives in addition each manufacturer offers their own convenience functions and additional blocks. These allow operations like add, subtract, and taking a measurement to be done in one block rather than attempt to construct it through the circuit diagram.
