@@ -26,7 +26,7 @@ A state represents an operating condition. For example in figure \ref{fig:state_
     \label{fig:state_blink_light}
 \end{figure}
 
-Given a state $q_1 \in Q$ an input $i \in I$ a transition is then a function $\delta(i,q_1) = q_2$ where $q_2$ is the next state and $q_2 \in Q$.  Outputs are formalized to $\omega(q_1)=z_1$ where $z_1 \in Z$. Machines that satisfy definition \ref{def:statecharts} are referred to as \emphasize{Moore machines} \cite{booth}. A \emphasize{Mealy machine} is obtained by adjusting outputs to be dependent on inputs as well as states. To obtain a \emphasize{Moore machine} from definition \ref{def:statecharts} we change our output function to $I \times Q \rightarrow Z$. Although figure \ref{fig:state_moore_mealy} contains outputs for all edges, we can define a null or a no change output in order to simulate an edge having no output as well. For purposes of the \plccharts language we do not require the power of a Mealy machine and thus we chose to keep our definitions closer to a Moore machine. More details of this decision can be found in section \ref{sec:statechartsem}.
+Given a state $q_1 \in Q$ an input $i \in I$ a transition is then a function $\delta(i,q_1) = q_2$ where $q_2$ is the next state and $q_2 \in Q$.  Outputs are formalized to $\omega(q_1)=z_1$ where $z_1 \in Z$. Machines that satisfy definition \ref{def:statecharts} are referred to as \emphasize{Moore machines} \cite{booth}. A \emphasize{Mealy machine} is obtained by adjusting outputs to be dependent on inputs as well as states. To obtain a \emphasize{Mealy machine} from definition \ref{def:statecharts} we change our output function to $I \times Q \rightarrow Z$. Although figure \ref{fig:state_moore_mealy} contains outputs for all edges, we can define a null or a no change output in order to simulate an edge having no output as well. For purposes of the \plccharts language we do not require the power of a Mealy machine and thus we chose to keep our definitions closer to a Moore machine. More details of this decision can be found in section \ref{sec:statechartsem}.
 
 %diagram for Moore + Mealy state machines
 \begin{figure}[htp]
@@ -50,6 +50,7 @@ One such way is to draw a edge that has no state connected to its tail. In our s
 
 The \emphasize{UML State Diagram} \cite{UML2} as shown in figure \ref{fig:state_uml_light} also allow for state titles in each state seen at the top of each state. In addition, each state may contain actions that are executed. In Figure \ref{fig:state_uml_light} ``LightOn()'' and ``LightOff()'' refer to executed actions that are called once the ``On'' and ``Off'' states are reached. The behaviour is read as once the state ``On'' is reached ``LightOn()'' is executed right away. More than one instruction to be executed can be listed and is understood that each instruction is executed sequentially \cite{UML2}.
 
+\clearpage
 %diagram for UML state machines
 \begin{figure}[htp]
     \centering
@@ -61,7 +62,7 @@ The \emphasize{UML State Diagram} \cite{UML2} as shown in figure \ref{fig:state_
 The syntax shown in figure \ref{fig:state_uml_light} is a \emphasize{UML2 State Machine Diagram} \cite{UML2}. \emphasize{UML2 State Machine Diagram} \cite{UML2}. Each state bubble in  \emphasize{UML2 State Machine Diagram} \cite{UML2} contains the information defined by definition \ref{def:uml2} and shown in Figure \ref{fig:state_uml2}. The additional information makes UML2 more useful for representing programs more conveniently.
 
 \begin{definition}
-UML2 State Machine Diagram
+UML2 State Machine Diagram is given by the following:
 
 \label{def:uml2}
 \begin{itemize}

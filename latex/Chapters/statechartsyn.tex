@@ -5,30 +5,30 @@
 
 Syntax of \plcchart $\:$ language:
 \begin{definition}
-\plcchart
+\plcchart is given by the following grammar:
 
 \begin{itemize}
-	\item Eq := $\;$ \boldmath$=$\unboldmath $\; \mid \;$ \boldmath$\neq$\unboldmath $\; \mid \;$ \boldmath$<$\unboldmath $\; \mid \;$ \boldmath$\leq$\unboldmath $\; \mid \;$ \boldmath$>$\unboldmath $\; \mid \;$ \boldmath$\geq$\unboldmath	
-	\item Op := $\;$ \boldmath$+$\unboldmath $\; \mid \;$ \boldmath$-$\unboldmath $\; \mid \;$ \boldmath$*$\unboldmath $\; \mid \;$ \boldmath$/$\unboldmath $\; \mid \;$ \boldmath$\%$\unboldmath $\; \mid \;$ \boldmath$\&\&$\unboldmath $\; \mid \;$ \textbf{\texttt{||}} $\; \mid \;$ \boldmath$\mathbin{\char`\^}$\unboldmath
+	\item Eq $\rightarrow$ $\;$ \boldmath$=$\unboldmath $\; \mid \;$ \boldmath$\neq$\unboldmath $\; \mid \;$ \boldmath$<$\unboldmath $\; \mid \;$ \boldmath$\leq$\unboldmath $\; \mid \;$ \boldmath$>$\unboldmath $\; \mid \;$ \boldmath$\geq$\unboldmath	
+	\item Op $\rightarrow$ $\;$ \boldmath$+$\unboldmath $\; \mid \;$ \boldmath$-$\unboldmath $\; \mid \;$ \boldmath$*$\unboldmath $\; \mid \;$ \boldmath$/$\unboldmath $\; \mid \;$ \boldmath$\%$\unboldmath $\; \mid \;$ \boldmath$\&\&$\unboldmath $\; \mid \;$ \textbf{\texttt{||}} $\; \mid \;$ \boldmath$\mathbin{\char`\^}$\unboldmath
 
-	\item Expression := Expression Op Expression $\mid$ Op Expression $\mid$ Variable $\mid$ \textbf{Constant}
+	\item Expression $\rightarrow$ Expression Op Expression $\mid$ Op Expression $\mid$ Variable $\mid$ \textbf{Constant}
 	
-	\item Type := \textbf{byte} $\mid$ \textbf{int} $\mid$ \textbf{long} $\mid$ \textbf{bool} $\mid$ \textbf{float}
-	\item Variable := $[A-Za-z]^+[A-Za-z0-9]^*$
+	\item Type $\rightarrow$ \textbf{byte} $\mid$ \textbf{int} $\mid$ \textbf{long} $\mid$ \textbf{bool} $\mid$ \textbf{float}
+	\item Variable $\rightarrow$ $[A-Za-z]^+[A-Za-z0-9]^*$
 
-	\item Condition := Expression Eq Expression $\mid$ Variable
+	\item Condition $\rightarrow$ Expression Eq Expression $\mid$ Variable
 
 		
-	\item StoreBlock := Type Variable := Expression $\mid$ Type Variable := Expresion; StoreBlock
-	\item DelayBlock := Expression
-	\item OutputBlock := \textbf{PORTOUT} := Variable
-	\item InputBlock := Type Variable := \textbf{PORTIN}
-	\item Block := StoreBlock $\mid$ OutputBlock $\mid$ DelayBlock $\mid$ InputBlock
+	\item StoreBlock $\rightarrow$ Type Variable := Expression $\mid$ Type Variable := Expresion; StoreBlock
+	\item DelayBlock $\rightarrow$ Expression
+	\item OutputBlock $\rightarrow$ \textbf{PORTOUT} := Variable
+	\item InputBlock $\rightarrow$ Type Variable := \textbf{PORTIN}
+	\item Block $\rightarrow$ StoreBlock $\mid$ OutputBlock $\mid$ DelayBlock $\mid$ InputBlock
 
 	
-	\item Transition := \textbf{EMPTY} $\mid$ Block Condition Transition
+	\item Transition $\rightarrow$ \textbf{EMPTY} $\mid$ Block Condition Transition
 	
-	\item Program := \textbf{StartBlock} Transition
+	\item Program $\rightarrow$ \textbf{StartBlock} Transition
 \end{itemize}
 \end{definition}
 
