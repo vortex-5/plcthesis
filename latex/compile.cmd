@@ -1,7 +1,7 @@
 call cleanup.cmd
 pdflatex main
 bibtex main
-makeindex document.glo -s document.ist -t document.glg -o document.gls
+makeindex main.glo -s main.ist -t main.glg -o main.gls
 pdflatex main
 pdflatex main
 pdflatex main
