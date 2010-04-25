@@ -58,14 +58,14 @@ We can define the language of Ladder Logic as follows $Q = \langle M,S,C,R,P \ra
     \label{fig:intro_fig1}
 \end{figure}
 
-The most basic structure of Ladder Logic is shown in figure \ref{fig:intro_fig1}. 
+The most basic structure of Ladder Logic is shown in Figure \ref{fig:intro_fig1}. 
 We have 
 $$M=\lbrace in_1 \rbrace, S=\lbrace out_1 \rbrace, C=\lbrace out_1 \rbrace, R=\lbrace rung_1 \rbrace, P=\lbrace L,R \rbrace.$$
 Note that $rung_1$ is not explicitly labelled in Ladder Logic but we give it a name here
 so we may refer to it and complete our model.
 
 \clearpage
-The semantics of figure \ref{fig:intro_fig1} is then given by: 
+The semantics of Figure \ref{fig:intro_fig1} is then given by: 
 \begin{table}[h]
     \centering
     \begin{tabular}{|l|l|l|}
@@ -131,9 +131,8 @@ becoming true nor do we need to individually calculate the timing on $in_1$ or $
 
 
 In addition to multiple inputs connected to the same rung, inputs can also be branched. A branched rung as
-show in figure \ref{fig:intro_fig3} behaves like a logical OR. In addition two or more rungs can be joined
-as shown in Figure \ref{fig:intro_fig3a}. The semantics are equivalent for both figure \ref{fig:intro_fig3} and 
-figure \ref{fig:intro_fig3a}.
+show in Figure \ref{fig:intro_fig3} behaves like a logical OR. In addition two or more rungs can be joined
+as shown in Figure \ref{fig:intro_fig3a}. The semantics are equivalent for both Figure \ref{fig:intro_fig3} and Figure \ref{fig:intro_fig3a}.
 
 \begin{figure}[h]
     \centering
@@ -159,9 +158,9 @@ figure \ref{fig:intro_fig3a}.
     \label{table:table_for_fig3}
 \end{table}
 
-Since the semantics are the same for both figure \ref{fig:intro_fig3} and figure \ref{fig:intro_fig3a} we can
-express both outcomes with function table \ref{table:table_for_fig3}.
-As before in table \ref{table:table_for_fig2} in table \ref{table:table_for_fig3} $in_1$ and $in_2$ are composed to form our composed action $@T(in_1 = true \vee in_2 = true)$. However it is also possible to represent this in another way as we will show below.
+Since the semantics are the same for both Figure \ref{fig:intro_fig3} and Figure \ref{fig:intro_fig3a} we can
+express both outcomes with function Table \ref{table:table_for_fig3}.
+As before in Table \ref{table:table_for_fig2} in Table \ref{table:table_for_fig3} $in_1$ and $in_2$ are composed to form our composed action $@T(in_1 = true \vee in_2 = true)$. However it is also possible to represent this in another way as we will show below.
 
 \begin{table}[h]
     \centering
@@ -182,18 +181,18 @@ As before in table \ref{table:table_for_fig2} in table \ref{table:table_for_fig3
     \label{table:table_for_fig3a}
 \end{table}
 
-In table \ref{table:table_for_fig3a} we choose to represent $in_1$ and $in_2$ as separate inputs. This matches figure
-\ref{fig:intro_fig3a} more closely but also makes any verification harder than table \ref{table:table_for_fig3}. For
-smaller examples table \ref{table:table_for_fig3} make more sense since you can verify relatively simple smaller functions
+In Table \ref{table:table_for_fig3a} we choose to represent $in_1$ and $in_2$ as separate inputs. This matches Figure
+\ref{fig:intro_fig3a} more closely but also makes any verification harder than Table \ref{table:table_for_fig3}. For
+smaller examples Table \ref{table:table_for_fig3} make more sense since you can verify relatively simple smaller functions
 quite fast. If a system becomes reasonably large however there might be motivation to use the style shown in 
-table \ref{table:table_for_fig3a} since it will allow more complex functions to be decomposed into simpler inputs.
+Table \ref{table:table_for_fig3a} since it will allow more complex functions to be decomposed into simpler inputs.
 Since semantically the two are equivalent this thesis will focus to the first convention.
 
 
 \begin{figure}[h]
     \centering
     \includegraphics[trim= 0 140mm 40mm 10mm, clip, width=250px]{./images/intro_and_graph.pdf} %custom size
-    \caption{State diagram conversion for table \ref{table:table_for_fig2}}
+    \caption{State diagram conversion for Table \ref{table:table_for_fig2}}
     \label{fig:intro_and_graph}
 \end{figure}
 
@@ -206,7 +205,7 @@ Each output assertion is given their own state. Finally in Figure \ref{fig:intro
 \begin{figure}[h]
     \centering
     \includegraphics[trim= 00mm 140mm 40mm 10mm, clip, width=250px]{./images/intro_or_graph.pdf} %custom size
-    \caption{State diagram conversion for table \ref{table:table_for_fig3}}
+    \caption{State diagram conversion for Table \ref{table:table_for_fig3}}
     \label{fig:intro_or_graph}
 \end{figure}
 
@@ -215,17 +214,17 @@ function table, assigning the state variables to guard conditions, and creating 
 state for each of the outputs. For thoroughness we complete this procedure to produce
 a state diagram shown in Figure \ref{fig:intro_or_graph_3a} which is a representation of 
 Figure \ref{fig:intro_fig3a} and its
-corresponding table \ref{table:table_for_fig3a}.
+corresponding Table \ref{table:table_for_fig3a}.
 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\imgmedsmall]{./images/intro_or_graph_3a.pdf} %custom size
-    \caption{State diagram conversion for table \ref{table:table_for_fig3a}}
+    \caption{State diagram conversion for Table \ref{table:table_for_fig3a}}
     \label{fig:intro_or_graph_3a}
 \end{figure}
 
-Another concept in ladder logic is latching. Suppose you have a light that you want to be able to turn on and stay on after you push a button. With any of the ladder diagrams shown above the light would go out as soon as the buttons were all released. In order to keep the light on and constantly on after the button is pressed we introduce the latch. We modify our diagram shown in figure \ref{fig:intro_fig3a} making the output feed back into one of the inputs to our OR circuit. The result is show in figure \ref{fig:intro_fig_latched}.
+Another concept in ladder logic is latching. Suppose you have a light that you want to be able to turn on and stay on after you push a button. With any of the ladder diagrams shown above the light would go out as soon as the buttons were all released. In order to keep the light on and constantly on after the button is pressed we introduce the latch. We modify our diagram shown in Figure \ref{fig:intro_fig3a} making the output feed back into one of the inputs to our OR circuit. The result is show in Figure~\ref{fig:intro_fig_latched}.
 
 %figure for latched circuits 
 \begin{figure}[h]
@@ -235,6 +234,6 @@ Another concept in ladder logic is latching. Suppose you have a light that you w
     \label{fig:intro_fig_latched}
 \end{figure}
 
-The latched circuit operates the same way as the behaviour show in table \ref{table:table_for_fig3a}; the key difference is the feedback of the OR circuit replaces the second row of the function table. This causes $latched\_out1$ to stay on after the initial input is removed.
+The latched circuit operates the same way as the behaviour show in Table \ref{table:table_for_fig3a}; the key difference is the feedback of the OR circuit replaces the second row of the function table. This causes $latched\_out1$ to stay on after the initial input is removed.
 
 All Ladder Logic programs are built of these basic primitives in addition each manufacturer offers their own convenience functions and additional blocks. These allow operations like add, subtract, and taking a measurement to be done in one block rather than attempt to construct it through the circuit diagram.

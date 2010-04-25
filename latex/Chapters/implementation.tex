@@ -20,7 +20,7 @@ The last layer is the chips tools layer. This layer is supplied by the manufacte
 
 The GUI and IDE are both implemented in JAVA with the JHotDraw 7.1 framework. 
 Early on it was decided that the GUI functions like other popular tools for 
-drawing flow charts such as Visio, IBM's Rational software, and Dia. 
+drawing flow charts such as Visio, IBM's Rational Rose software, and Dia. 
 All of these tools are interactive in the drawing of the diagram rather than 
 compile a graph from a descriptive language. The reason for enforcing interactive 
 drawing is that this tool is designed to simplify the original implementation 
@@ -29,9 +29,9 @@ significantly hurt the primary goal of ease of use.
 JAVA was chosen for portability as it was simpler to deploy a JAVA implementation 
 than multiple ports for each target in the the short duration of this project.
 
-The GUI itself remains minimal there is a toolbar in which objects can be 
+The GUI itself remains minimal; there is a toolbar in which objects can be 
 selected from the tools palette and drawn. Properties of an object are 
-directly editable on the object itself once drawn instead of a separate 
+directly editable on the object itself once drawn instead of on a separate 
 property palette. Again this design decision was chosen as it is more 
 immediately understandable and intuitive to the user, rather than for 
 power and expressiveness.
@@ -66,7 +66,7 @@ tools palette then manipulate the object directly in the drawing canvas.
     \label{fig:plcedit_tools}
 \end{figure}
 
-The tools palette is were the user selects their tool to use on the 
+The tools palette is were the user selects his/her tool to use on the 
 canvas shown in Figure \ref{fig:plcedit_tools}. Only one tool can be 
 used at a time. All tools except for compile and simulation are selected
 for use on click. Compile and simulation are immediately executed on click.
@@ -106,7 +106,7 @@ After the compile button is invoked the compile preview window is presented as s
 
 \subparagraph{Simulator Window}
 
-In order to aid in debugging a simulator mode has been added to the visual editor. When the simulator window is brought up it helps the programmer visually identify what their current memory layout looks like as well as which block they are currently executing. In Figure \ref{fig:plcedit_simulator_start} the following view is presented right after the simulator button has been invoked. Note the contents of all variables and all ports are shown. Also the start block is automatically highlighted and the ports are initialized to their starting values.
+In order to aid in debugging, a simulator mode has been added to the visual editor. When the simulator window is brought up it helps the programmer visually identify what their current memory layout looks like as well as which block they are currently executing. In Figure \ref{fig:plcedit_simulator_start} the following view is presented right after the simulator button has been invoked. Note the contents of all variables and all ports are shown. Also the start block is automatically highlighted and the ports are initialized to their starting values.
 
 The \emphasize{Step Once} button allows the user to to step through the current block one step at a time. The \emphasize{Step Next} button finishes all operations in the current block and jumps directly to the next block. Figure \ref{fig:plcedit_simulator_running} demonstrates what the program might look like after a it is allowed to run for a few steps.
 

@@ -1,8 +1,7 @@
 %Correctness
 \section{Correctness}
 
-In this section we will look at the correctness of the code generation process. 
-Correctness can be described as the mapping shown in Figure \ref{fig:correctness_graph1}. 
+In this section we look at the correctness of the code generation process. Correctness can be described as the mapping shown in Figure \ref{fig:correctness_graph1}. 
 Expressions in our system are compiled into the program code. 
 Expressions can be evaluated by hand ($\delta$) to produce a value. 
 Likewise the program can be executed to produce a final value. 
@@ -19,7 +18,7 @@ same as a value achieved by execution.
 Our tool constructs executable code from the drawn diagram the constructs are 
 defined in Sections \ref{sec:statechartsyn} and \ref{sec:statechartsem}. To justify 
 the correctness we need 
-to demonstrate the program structure generated from an graph structure is correct. 
+to demonstrate the program structure generated from a graph structure is correct. 
 To do so we extend Figure \ref{fig:correctness_graph1} to obtain 
 Figure \ref{fig:correctness_graph2} to incorporate the transition construct. 
 If each Figure \ref{fig:correctness_graph1} represents an individual block 
@@ -33,7 +32,7 @@ blocks with the ability to transition between them.
     \label{fig:correctness_graph2}
 \end{figure}
 
-In this section we will begin by showing that each of the transformations to code are 
+In this section we begin by showing that each of the transformations to code are 
 correct by examining the basic atoms. We will start by looking at atoms that have the 
 simplest assignments first.
 
@@ -84,7 +83,7 @@ delayms(10);
 \end{lstlisting}
 
 The delay atom generates ``delayms($<$Expression$>$)''. The expression is mirrored
-in the diagram. The units shown in figure \ref{fig:correctness_atom_delay} as ``ms'' 
+in the diagram. The units shown in Figure \ref{fig:correctness_atom_delay} as ``ms'' 
 are omitted in the code. The units in the visual representation serves as a reminder to the user 
 that the delay is always measured in milliseconds. Expressions follow the syntax 
 given in Section \ref{sec:statechartsyn}. Since there are no assignments to values,
@@ -193,10 +192,10 @@ This is ultimately removes visual clutter and makes the overall diagram simpler.
 
 \subsection{Constructors and Transitions}
 
-Constructions takes the atoms and places structural elements around them. 
+Constructors takes the atoms and places structural elements around them. 
 In the example code below we demonstrate the constructed sections for any arbitrary 
 compiled code. On lines 00-07 we have the variable initialization section, 
-any varaibles used are initialized and the type is declared here.
+any variables used are initialized and the type is declared here.
 Variables in our program are collected at compile time by scanning all the diagram 
 objects and collecting any variables used. Any conflicts where a variable is given inconsistent types
 are caught and will cause a code generation error. The initialization section will 
@@ -223,14 +222,10 @@ on every port and halt, this simulates a stop.
 33 return;
 \end{lstlisting}
 
-Transitions are used to string together a sequence of atoms in order to perform the computations 
-necessary in our program. In order to show correctness we must show that the transitions are 
-structurally correct. We must show transitions will correctly map modes in the right sequence. 
-Figure \ref{fig:correctness_graph2} shows how transitions factor into our correctness justification.
-Figure \ref{fig:correctness_graph2} states that in addition to our original correctness justification we
-must also demonstrate that the transitions take us to the same modes and program sections.
+Transitions are used to string together a sequence of atoms in order to perform the computations necessary in our program. In order to show correctness we must show that the transitions are structurally correct. We must show transitions will correctly map modes in the right sequence. Figure \ref{fig:correctness_graph2} shows how transitions factor into our correctness justification. Figure \ref{fig:correctness_graph2} states that in addition to our original correctness justification we must also demonstrate that the transitions take us to the same modes and program sections.
 
-\begin{figure}[h]
+\clearpage
+\begin{figure}[htp]
 	\centering
 	\includegraphics[width=\imgmedphoto]{./images/correctness_ex_transition.png}
 	\caption{Transitions}
@@ -274,37 +269,11 @@ must also demonstrate that the transitions take us to the same modes and program
 \end{lstlisting}
 %\end{minipage}
 
-Starting by looking at the code above we can see that our first entry point into the 
-program is the ``PROGRAM START'' block. This refers to the \emphasize{Start Block} 
-in our diagram. During compilation the entire diagram is scanned to ensure there 
-is one and only one start block. The generated code for the start block is then 
-placed at the top of the program to ensure it is the first entry point of the 
-program after initializers. 
+Starting by looking at the code above we can see that our first entry point into the program is the ``PROGRAM START'' block. This refers to the \emphasize{Start Block} in our diagram. During compilation the entire diagram is scanned to ensure there is one and only one start block. The generated code for the start block is then placed at the top of the program to ensure it is the first entry point of the program after initializers. 
 
-Transitions in our program are compiled to ``goto'' statements. Each block is 
-given a unique ``Block Unique Identifier'' which is a line label starting with 
-``BLUID''. BLUID's are generated as each block is scanned at compile time and 
-a monotonically increasing number is appended to the end of the label. The 
-``goto'' transitions are insertedr after the atomic block assignments have been made.
+Transitions in our program are compiled to ``goto'' statements. Each block is given a unique ``Block Unique Identifier'' which is a line label starting with ``BLUID''. BLUID's are generated as each block is scanned at compile time and a monotonically increasing number is appended to the end of the label. The ``goto'' transitions are insertedr after the atomic block assignments have been made.
 
-Looking at diagram \ref{fig:correctness_ex_transition} we note that the \emphasize{Start Block} 
-transitions to ``BLOCK1'' with an edge guarded by ``true''. In the code ``BLOCK1'' has label 
-``BLUID1'' associated with its section of code. We see that the generated code for the \emphasize{Start Block}
-has a ``goto BLUID1'' on line 9. This corresponds to transition leaving the \emphasize{Start Block}. 
-Next we have a transition from ``BLOCK1'' to ``BLOCK2'' in Figure \ref{fig:correctness_ex_transition}. 
-We can see the code corresponding to the transition on line 18 ``goto BUILD2'' where 
-``BLUID2'' refers to ``BLOCK2''. Finally we note the two guarded transitions 
-leaving ``BLOCK2''. For the guarded edge ``$a >= 3$'' we can see the generated 
-code ``\texttt{if (a >= 3) goto BLUID1}'' on line 27. We note that ``BLUID1'' refers 
-to ``BLOCK1'' in the diagram so the transition goes from ``BLOCK2'' to ``BLOCK1'' 
-which is correct. For the transition guarded by ``$a < 3$'' we note the generated code 
-on line 28 ``\texttt{if (a < 3) goto BLUID2}''. We see that ``BLUID2'' refers to ``BLOCK2'' 
-so the transition is a self loop, which is correct with respect to the diagram in 
-Figure \ref{fig:correctness_ex_transition}. Since all the transitions are generated correctly for
-any arbitrary block we can conlude that the transtions are structurally correct in our system.
-
-
-
+Looking at the diagram given in Figure \ref{fig:correctness_ex_transition} we note that the \emphasize{Start Block} transitions to ``BLOCK1'' with an edge guarded by ``true''. In the code ``BLOCK1'' has label ``BLUID1'' associated with its section of code. We see that the generated code for the \emphasize{Start Block} has a ``goto BLUID1'' on line 9. This corresponds to transition leaving the \emphasize{Start Block}. Next we have a transition from ``BLOCK1'' to ``BLOCK2'' in Figure \ref{fig:correctness_ex_transition}. We can see the code corresponding to the transition on line 18 ``goto BUILD2'' where ``BLUID2'' refers to ``BLOCK2''. Finally we note the two guarded transitions leaving ``BLOCK2''. For the guarded edge ``$a >= 3$'' we can see the generated code ``\texttt{if (a >= 3) goto BLUID1}'' on line 27. We note that ``BLUID1'' refers to ``BLOCK1'' in the diagram so the transition goes from ``BLOCK2'' to ``BLOCK1'' which is correct. For the transition guarded by ``$a < 3$'' we note the generated code on line 28 ``\texttt{if (a < 3) goto BLUID2}''. We see that ``BLUID2'' refers to ``BLOCK2'' so the transition is a self loop, which is correct with respect to the diagram in Figure \ref{fig:correctness_ex_transition}. Since all the transitions are generated correctly for any arbitrary block we can conlude that the transtions are structurally correct in our system.
 
 
 \clearpage
@@ -409,7 +378,7 @@ merge the two tables side by side so we can directly compare each executed
 line to its associated graph.
 
 \begin{table}[htcb]
-	\caption{Start code execution combined table. For figure \ref{fig:correctness_ex_start}}
+	\caption{Start code execution combined table. For Figure \ref{fig:correctness_ex_start}}
 	\centering
 	\tablefontsize
 		\begin{tabular}{| p{0.06\textwidth} | p{0.1\textwidth} | p{0.15\textwidth} | p{0.06\textwidth} | p{0.05\textwidth} | p{0.1\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
@@ -481,7 +450,7 @@ Generated \emphasize{IL} code for diagram in Figure \ref{fig:correctness_ex_dela
 
 
 \begin{table}[h]
-	\caption{Delay code execution combined table. For figure \ref{fig:correctness_ex_delay}}
+	\caption{Delay code execution combined table. For Figure \ref{fig:correctness_ex_delay}}
 	\centering
 	\tablefontsize
 		\begin{tabular}{| p{0.06\textwidth} | p{0.1\textwidth} | p{0.15\textwidth} | p{0.06\textwidth} | p{0.05\textwidth} | p{0.1\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
@@ -547,7 +516,7 @@ Generated \emphasize{IL} code for diagram in Figure \ref{fig:correctness_ex_outp
 \end{lstlisting}
 
 \begin{table}[htcb]
-	\caption{Output code execution combined table. For figure \ref{fig:correctness_ex_output}}
+	\caption{Output code execution combined table. For Figure \ref{fig:correctness_ex_output}}
 	\centering
 	\tablefontsize
 		\begin{tabular}{| p{0.05\textwidth} | p{0.1\textwidth} | p{0.14\textwidth} | p{0.05\textwidth} | p{0.05\textwidth} | p{0.12\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
@@ -618,7 +587,7 @@ Generated \emphasize{IL} code for the diagram in Figure \ref{fig:correctness_ex_
 \end{lstlisting}
 
 \begin{table}[htcb]
-	\caption{Input code execution combined table. For figure \ref{fig:correctness_ex_input}}
+	\caption{Input code execution combined table. For Figure \ref{fig:correctness_ex_input}}
 	\centering
 	\tablefontsize
 		\begin{tabular}{| p{0.05\textwidth} | p{0.1\textwidth} | p{0.14\textwidth} | p{0.05\textwidth} | p{0.05\textwidth} | p{0.12\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
@@ -713,7 +682,7 @@ Generated \emphasize{IL} code for diagram in Figure \ref{fig:correctness_ex_stor
 
 
 \begin{table}[htcb]
-	\caption{Store code execution combined table. For figure \ref{fig:correctness_ex_store}}
+	\caption{Store code execution combined table. For Figure \ref{fig:correctness_ex_store}}
 	\centering
 	\tablefontsize
 		\begin{tabular}{|p{0.01\textwidth} | p{0.05\textwidth} | p{0.1\textwidth} | p{0.14\textwidth} | p{0.05\textwidth} | p{0.05\textwidth} | p{0.12\textwidth} | p{0.2\textwidth} | p{0.07\textwidth} |}
@@ -775,7 +744,7 @@ Generated \emphasize{IL} code for diagram in Figure \ref{fig:correctness_ex_stor
 
 The reader should note that we have shortened ``no change'' in the previous tables to ``NC'' in order to fit
 it in the tables.  Similar to the input example the store example also has variables that must be initialized 
-before it can enter it's first state. Lines 00-02 in the table \ref{table:StoreExecCombined} represent the 
+before it can enter it's first state. Lines 00-02 in the Table \ref{table:StoreExecCombined} represent the 
 ``house keeping'' steps required in order to define, setup and initialize the variables. The entry of the start
 mode represents the start of our diagram. The reader can see from Table \ref{table:StoreExecCombined} the two
 variables are considered initialized to 0 in the diagram, that is ``a = 0, b = 0''. We may also note that this

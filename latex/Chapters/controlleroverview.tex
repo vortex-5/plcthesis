@@ -24,10 +24,10 @@ due to the the finished program having a similar visual structure to a ladder.
     \caption{Mitsubishi PLC All In One Unit \cite{img_c01_MitsubishiPlc}}
     \label{img:mitsubishiplc}
 \end{figure}
-Mitsubishi Automation (\ref{img:mitsubishiplc}), Siemens, and Omron are a few of the big
+Mitsubishi Automation see Figure (\ref{img:mitsubishiplc}), Siemens, and Omron are a few of the big
  producers of industry standard PLC's although the shape and form factor differ between 
- manufacturers PLC's always consist of three distinct parts.  The input module, the main 
- controller unit and the output module (please refer to Figure \ref{img:plcrender_1}). 
+ manufacturers PLC's always consist of three distinct parts:  The input module, the main 
+ controller unit and the output module (see Figure \ref{img:plcrender_1}). 
  This separation exists due to varying requirements for analog inputs and different output 
  capacity requirements in order to drive heavy machinery. I/O modules may consist of 
  thermal-sensors, ambient light sensors, resistive sensors, or a direct connection to the 
@@ -63,7 +63,7 @@ described in more detail below:
 	\item\textbf{Output Scan:} Internal temporary registers are written to their destination registers in one step. External outputs take on the values held by their associated temporary registers. All outputs also take place in one step and the outcome is that it appears that all outputs change simultaneously.
 \end{itemize}
 
-In each scan operations are modelled as if executions happen concurrently thus, the order of individual instructions in each phase is not important. All of this is done since Ladder Logic (please see section \ref{section:ladderlogic}) executes concurrently on multiple rungs in order to emulate the behaviour of electrical circuitry. Internally however PLC's are sequential machines with a deterministic order in which instructions are executed. This is a side effect of using microcontrollers in the main control unit instead of relays and circuitry. Many temporary registers are used to store inputs and outputs so that at the beginning of each phase they can be latched in one step. This makes the reading of multiple inputs and outputs occur concurrently.
+In each scan operations are modelled as if executions happen concurrently thus, the order of individual instructions in each phase is not important. All of this is done since Ladder Logic (we refer the reader to Section \ref{section:ladderlogic}) executes concurrently on multiple rungs in order to emulate the behaviour of electrical circuitry. Internally however PLC's are sequential machines with a deterministic order in which instructions are executed. This is a side effect of using microcontrollers in the main control unit instead of relays and circuitry. Many temporary registers are used to store inputs and outputs so that at the beginning of each phase they can be latched in one step. This makes the reading of multiple inputs and outputs occur concurrently.
 
 \begin{figure}[h]
     \centering
