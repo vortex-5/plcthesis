@@ -171,35 +171,13 @@ any block to be jumped to should we want to. The block header which comes
 right after is an identifier to the type of block being generated. 
 
 In the ``(Program Code)'' section of Definition \ref{def:genCodeStruct} 
-sits the generated \emphasize{IL} code. This code is the same for each target platform. 
-Each \emphasize{IL} target will have appropriate implementations that will map \emphasize{IL} 
-calls to hardware specific calls. These calls can be found in Section \ref{sec:hardwareframework}. 
-The generated \emphasize{IL} code resembles C code with specific calls to lower level 
-functions that are supported by the PLC target's hardware framework.
+sits the generated \emphasize{IL}\glossary{name={IL}, description={Intermediate Language}} code. This code is the same for each target platform. Each \emphasize{IL}\glossary{name={IL}, description={Intermediate Language}} target will have appropriate implementations that will map \emphasize{IL}\glossary{name={IL}, description={Intermediate Language}} calls to hardware specific calls. These calls can be found in Section \ref{sec:hardwareframework}. The generated \emphasize{IL}\glossary{name={IL}, description={Intermediate Language}} code resembles C code with specific calls to lower level functions that are supported by the PLC target's hardware framework.
 
 The final block of if statements implement the edges leaving the block. 
 Each edge is guarded by an if statement, and will have the goto portion 
-point the the correct \emphasize{BLUID} as specified by the diagram. 
-\emphasize{goto} was chosen over conventional control structures as it
-provided several advantages. The first is that translation from graph 
-structure to code is fundamentally easier. \emphasize{goto}'s are analogous 
-to graph edges where trying to analyze the diagram and fit structures 
-like \emphasize{for} \emphasize{while} are inherently much harder and 
-prone to error. In addition these structures are more at home in textual 
-programming languages and do not improve the structure of the 
-graphical programming language. The next advantage was during code 
-generation when trying to unroll structure from our graphical programming language 
-not using \emphasize{goto}'s will cause the order of items to be important. This
-makes it necessary to form a dependency tree of blocks to each other if they 
-started requiring each other. All these problems were easily avoided by staying 
-with a simple goto structure inside the actual 
-generated \emphasize{Intermediate Language} code itself. The trade off in this 
-design decision is the resulting generated code becomes a machine 
-generated code and is not very user editable. 
+point the the correct \emphasize{BLUID}\glossary{name={BLUID}, description={Block Unique Identifier}} as specified by the diagram. \emphasize{goto} was chosen over conventional control structures as it provided several advantages. The first is that translation from graph structure to code is fundamentally easier. \emphasize{goto}'s are analogous to graph edges where trying to analyze the diagram and fit structures like \emphasize{for} \emphasize{while} are inherently much harder and prone to error. In addition these structures are more at home in textual programming languages and do not improve the structure of the graphical programming language. The next advantage was during code generation when trying to unroll structure from our graphical programming language not using \emphasize{goto}'s will cause the order of items to be important. This makes it necessary to form a dependency tree of blocks to each other if they started requiring each other. All these problems were easily avoided by staying with a simple goto structure inside the actual generated \emphasize{Intermediate Language} code itself. The trade off in this design decision is the resulting generated code becomes a machine generated code and is not very user editable. 
 
-Finally if at any point no edges are valid the the program will 
-terminate by going to the label ``EOF'' which will be located 
-at the end of the file.
+Finally if at any point no edges are valid the the program will terminate by going to the label ``EOF'' which will be located at the end of the file.
 
 
 \subsection{Compiled Structure}
