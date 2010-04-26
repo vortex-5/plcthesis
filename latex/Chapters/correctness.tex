@@ -1,11 +1,7 @@
 %Correctness
 \section{Correctness}
 
-In this section we look at the correctness of the code generation process. Correctness can be described as the mapping shown in Figure \ref{fig:correctness_graph1}. 
-Expressions in our system are compiled into the program code. 
-Expressions can be evaluated by hand ($\delta$) to produce a value. 
-Likewise the program can be executed to produce a final value. 
-Correctness holds in the system if the value of the evaluation ($\delta$) is the 
+In this section we look at the correctness of the code generation process. Correctness can be described as the mapping shown in Figure \ref{fig:correctness_graph1}. Expressions in our system are compiled into the program code. Expressions can be evaluated by hand ($\delta$) to produce a value. Likewise the program can be executed to produce a final value. Correctness holds in the system if the value of the evaluation ($\delta$) is the 
 same as a value achieved by execution.
 
 \begin{figure}[htb]
@@ -281,12 +277,7 @@ Looking at the diagram given in Figure \ref{fig:correctness_ex_transition} we no
 
 \subsubsection{Table Representation}
 
-In order to show the correctness of the execution it is necessary to identify the differences 
-between graphical evaluation and execution. Both contain a ``mode'' in execution the 
-mode is directly associated to a set of line numbers. Line numbers are not in the diagram view. 
-Both have variables and modes, and correct execution can be defined as a trace where all 
-modes and variables are identical. We will use tables to compare the diagram trace vs the execution.
-We will start with a simple start diagram as shown in Figure \ref{fig:correctness_ex_start}.
+In order to show the correctness of the translation process it is necessary to identify the differences between graphical evaluation and execution. Both contain a ``mode'' in the translated code the mode is directly associated to a set of line numbers. Line numbers are not in the diagram view. Both have variables and modes, and correct execution can be defined as a trace where all modes and variables are identical. We will use tables to compare the diagram trace vs the execution. We will start with a simple start diagram as shown in Figure \ref{fig:correctness_ex_start}.
 A diagram trace is shown in Table \ref{table:BasicDiagOnly}. 
 
 \begin{figure}[h]
